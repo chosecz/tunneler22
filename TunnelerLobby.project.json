@@ -1,5 +1,6 @@
 {
-   "name": "project",
+   "name": "TunnelerLobby",
+   "servePlaceIds": [6827927589],
    "tree": {
       "$className": "DataModel",
       "HttpService": {
@@ -11,12 +12,12 @@
       "Workspace": {
          "$className": "Workspace",
          "$ignoreUnknownInstances": true,
-         "$path": "src/Workspace"
+         "$path": "src/Workspace/Lobby"
       },
       "ServerStorage": {
          "$className": "ServerStorage",
          "$ignoreUnknownInstances": true,
-         "$path": "src/ServerStorage"
+         "$path": "src/ServerStorage/Lobby"
       },
       "ReplicatedStorage": {
          "$className": "ReplicatedStorage",
@@ -26,24 +27,24 @@
       "ServerScriptService": {
          "$className": "ServerScriptService",
          "$ignoreUnknownInstances": true,
-         "$path": "src/Server"
+         "$path": "src/Server/Lobby"
       },
       "StarterGui": {
          "$className": "StarterGui",
          "$ignoreUnknownInstances": true,
-         "$path": "src/StarterGui"
+         "$path": "src/StarterGui/Lobby"
       },
       "StarterPlayer": {
          "$className": "StarterPlayer",
          "StarterCharacterScripts": {
             "$className": "StarterCharacterScripts",
             "$ignoreUnknownInstances": true,
-            "$path": "src/CharacterScripts"
+            "$path": "src/CharacterScripts/Lobby"
          },
          "StarterPlayerScripts": {
             "$className": "StarterPlayerScripts",
             "$ignoreUnknownInstances": true,
-            "$path": "src/Client"
+            "$path": "src/Client/Lobby"
          },
          "$ignoreUnknownInstances": true
       }

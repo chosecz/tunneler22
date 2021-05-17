@@ -1,0 +1,52 @@
+{
+   "name": "TunnelerArena",
+   "servePlaceIds": [6828489273],
+   "tree": {
+      "$className": "DataModel",
+      "HttpService": {
+         "$className": "HttpService",
+         "$properties": {
+            "HttpEnabled": true
+         }
+     },
+      "Workspace": {
+         "$className": "Workspace",
+         "$ignoreUnknownInstances": true,
+         "$path": "src/Workspace/Arena"
+      },
+      "ServerStorage": {
+         "$className": "ServerStorage",
+         "$ignoreUnknownInstances": true,
+         "$path": "src/ServerStorage/Arena"
+      },
+      "ReplicatedStorage": {
+         "$className": "ReplicatedStorage",
+         "$ignoreUnknownInstances": true,
+         "$path": "src/Shared"
+      },
+      "ServerScriptService": {
+         "$className": "ServerScriptService",
+         "$ignoreUnknownInstances": true,
+         "$path": "src/Server/Arena"
+      },
+      "StarterGui": {
+         "$className": "StarterGui",
+         "$ignoreUnknownInstances": true,
+         "$path": "src/StarterGui/Arena"
+      },
+      "StarterPlayer": {
+         "$className": "StarterPlayer",
+         "StarterCharacterScripts": {
+            "$className": "StarterCharacterScripts",
+            "$ignoreUnknownInstances": true,
+            "$path": "src/CharacterScripts/Arena"
+         },
+         "StarterPlayerScripts": {
+            "$className": "StarterPlayerScripts",
+            "$ignoreUnknownInstances": true,
+            "$path": "src/Client/Arena"
+         },
+         "$ignoreUnknownInstances": true
+      }
+   }
+}
