@@ -70,27 +70,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>11.5775623</X>
-					<Y>8.20774174</Y>
-					<Z>-8.33200264</Z>
-					<R00>-0.626646459</R00>
-					<R01>-0.313256681</R01>
-					<R02>0.713571608</R02>
+					<X>-16.3040752</X>
+					<Y>26.6238747</Y>
+					<Z>3.4759016</Z>
+					<R00>0.475669533</R00>
+					<R01>0.656778634</R01>
+					<R02>-0.585132658</R02>
 					<R10>-0</R10>
-					<R11>0.915652871</R11>
-					<R12>0.401969969</R12>
-					<R20>-0.77930367</R20>
-					<R21>0.251893044</R21>
-					<R22>-0.57379061</R22>
+					<R11>0.665207624</R11>
+					<R12>0.746658385</R12>
+					<R20>0.879624009</R20>
+					<R21>-0.35516265</R21>
+					<R22>0.316419035</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>10.1504192</X>
-					<Y>7.40380192</Y>
-					<Z>-7.18442154</Z>
+					<X>-15.13381</X>
+					<Y>25.130558</Y>
+					<Z>2.84306359</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -1041,14 +1041,7 @@ local MyClientService = require(LocalPlayer.PlayerScripts:WaitForChild('Services
 
 print('Player started')
 
-MyClientService.Exec()
-
--- test creating gui
-local playerGui = LocalPlayer:WaitForChild("PlayerGui")
-local screenGui = Instance.new("ScreenGui", playerGui)
-screenGui.IgnoreGuiInset = true
-screenGui.Enabled = false
-screenGui.Name = "Test"]]></ProtectedString>
+MyClientService.Exec()]]></ProtectedString>
 					<int64 name="SourceAssetId">-1</int64>
 					<BinaryString name="Tags"></BinaryString>
 				</Properties>
@@ -1066,8 +1059,7 @@ screenGui.Name = "Test"]]></ProtectedString>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">MyClientService</string>
 						<string name="ScriptGuid">{ac514306-6f3c-4f8c-9641-eaa165fe897a}</string>
-						<ProtectedString name="Source"><![CDATA[
-local UtilServices = game.ReplicatedStorage:WaitForChild('Utils')
+						<ProtectedString name="Source"><![CDATA[local UtilServices = game.ReplicatedStorage:WaitForChild('Utils')
 local MyUtilService = require(UtilServices:WaitForChild('MyUtilService'))
 local MyMathService = require(UtilServices:WaitForChild('MyMathService'))
 
@@ -1108,14 +1100,6 @@ return MyClientService]]></ProtectedString>
 			<int64 name="SourceAssetId">-1</int64>
 			<BinaryString name="Tags"></BinaryString>
 		</Properties>
-		<Item class="Folder" referent="RBX411fec12c40a4dc69532a407989237d3">
-			<Properties>
-				<BinaryString name="AttributesSerialize"></BinaryString>
-				<string name="Name">Screen</string>
-				<int64 name="SourceAssetId">-1</int64>
-				<BinaryString name="Tags"></BinaryString>
-			</Properties>
-		</Item>
 		<Item class="Folder" referent="RBX25fb2d5ece4d4cb9863d021876da2110">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -1123,25 +1107,6 @@ return MyClientService]]></ProtectedString>
 				<int64 name="SourceAssetId">-1</int64>
 				<BinaryString name="Tags"></BinaryString>
 			</Properties>
-			<Item class="LocalScript" referent="RBXd624c753897347509d4e8e6bee6c081b">
-				<Properties>
-					<BinaryString name="AttributesSerialize"></BinaryString>
-					<bool name="Disabled">false</bool>
-					<Content name="LinkedSource"><null></null></Content>
-					<string name="Name">HandleButton</string>
-					<string name="ScriptGuid">{6cd372fc-0af2-4199-9091-a85893980097}</string>
-					<ProtectedString name="Source"><![CDATA[local button = script.Parent:WaitForChild('Screen'):WaitForChild('GamesButton')
-
-local function onButtonActivated()
-	print("button pressed!")
-end
-
-button.Activated:Connect(onButtonActivated)
-]]></ProtectedString>
-					<int64 name="SourceAssetId">-1</int64>
-					<BinaryString name="Tags"></BinaryString>
-				</Properties>
-			</Item>
 			<Item class="ScreenGui" referent="RBXdabf165f715744d7937ad4774143e79d">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
@@ -1156,7 +1121,7 @@ button.Activated:Connect(onButtonActivated)
 					<BinaryString name="Tags"></BinaryString>
 					<token name="ZIndexBehavior">0</token>
 				</Properties>
-				<Item class="TextButton" referent="RBX94d05d11699f472999751d284f08002d">
+				<Item class="TextButton" referent="RBX815c7883316c48f88ade18e020af2486">
 					<Properties>
 						<bool name="Active">true</bool>
 						<Vector2 name="AnchorPoint">
@@ -1187,7 +1152,7 @@ button.Activated:Connect(onButtonActivated)
 						<float name="LineHeight">1</float>
 						<int name="MaxVisibleGraphemes">-1</int>
 						<bool name="Modal">false</bool>
-						<string name="Name">Button</string>
+						<string name="Name">GamesButton</string>
 						<Ref name="NextSelectionDown">null</Ref>
 						<Ref name="NextSelectionLeft">null</Ref>
 						<Ref name="NextSelectionRight">null</Ref>
@@ -1237,6 +1202,45 @@ button.Activated:Connect(onButtonActivated)
 						<int name="ZIndex">1</int>
 					</Properties>
 				</Item>
+			</Item>
+			<Item class="LocalScript" referent="RBXa05d2207734b4889b2acfd6a020ad07f">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="Disabled">false</bool>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">GamesButton</string>
+					<string name="ScriptGuid"></string>
+					<ProtectedString name="Source"><![CDATA[local gamesButton = script.Parent:WaitForChild('Screen'):WaitForChild('GamesButton')
+
+local function onButtonActivated()
+	print("button pressed!")
+end
+
+gamesButton.Activated:Connect(onButtonActivated)
+]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
+			</Item>
+		</Item>
+		<Item class="Folder" referent="RBX5af114d5d87d4238abcafcb14c6b6f8e">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<string name="Name">GamesScreens</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+			<Item class="LocalScript" referent="RBXa5debdf97bda40b489b66282767f2dfa">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="Disabled">false</bool>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">GamesScreens</string>
+					<string name="ScriptGuid"></string>
+					<ProtectedString name="Source">print(&quot;GameScreen localScript&quot;)</ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+				</Properties>
 			</Item>
 		</Item>
 	</Item>
