@@ -1,12 +1,12 @@
 repeat wait() until game.Players.LocalPlayer.Character
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
+local Players = game:GetService('Players')
+local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
 
 local function onButtonActivated()
 	print("button pressed!")
 end
 
-local Players = game:GetService('Players')
-local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
 
 -- create screen gui
 local screenGui = Instance.new("ScreenGui")
