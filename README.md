@@ -20,6 +20,6 @@ Describe as much detail as possible to get the problem reproduced and eventually
 4. Create a new Pull Request
 
 ## License
-This code is distributed under the terms and conditions of the [MIT license](LICENSE).
+This code is distributed under the terms and conditions of the [GNU General Public License](LICENSE).
 
 [GitHub issues]: https://github.com/chosecz/tunneler22/issues
