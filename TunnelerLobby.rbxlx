@@ -70,27 +70,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>19.8418102</X>
-					<Y>19.2617531</Y>
-					<Z>-14.8190517</Z>
-					<R00>-0.512071908</R00>
-					<R01>-0.417754054</R01>
-					<R02>0.750509083</R02>
-					<R10>-0</R10>
-					<R11>0.873759329</R11>
-					<R12>0.486358523</R12>
-					<R20>-0.858942568</R20>
-					<R21>0.249050543</R21>
-					<R22>-0.44742763</R22>
+					<X>20.1553936</X>
+					<Y>19.3429928</Y>
+					<Z>-18.6626244</Z>
+					<R00>-0.770534992</R00>
+					<R01>-0.335894346</R01>
+					<R02>0.541710973</R02>
+					<R10>-1.49011612e-08</R10>
+					<R11>0.849879146</R11>
+					<R12>0.526977658</R12>
+					<R20>-0.637397707</R20>
+					<R21>0.406054735</R21>
+					<R22>-0.654861629</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>18.3407917</X>
-					<Y>18.2890358</Y>
-					<Z>-13.9241962</Z>
+					<X>19.0719719</X>
+					<Y>18.2890377</Y>
+					<Z>-17.3529015</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -516,8 +516,8 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<bool name="EnableScriptCollabByDefaultOnLoad">false</bool>
 			<string name="Name">StudioData</string>
 			<int64 name="SourceAssetId">-1</int64>
-			<int64 name="SrcPlaceId">0</int64>
-			<int64 name="SrcUniverseId">0</int64>
+			<int64 name="SrcPlaceId">6827927589</int64>
+			<int64 name="SrcUniverseId">2595887978</int64>
 			<BinaryString name="Tags"></BinaryString>
 		</Properties>
 	</Item>
