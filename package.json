@@ -7,8 +7,9 @@
    "scripts": {
       "lobby": "rojo serve TunnelerLobby.project.json",
       "arena": "rojo serve TunnelerArena.project.json",
-      "buildLobby" : "rojo build TunnelerLobby.project.json -o TunnelerLobby.rbxlx",
-      "buildArena" : "rojo build TunnelerArena.project.json -o TunnelerArena.rbxlx"
+      "build": "npm run build-lobby; npm run build-arena",
+      "build-lobby" : "rojo build TunnelerLobby.project.json -o TunnelerLobby.rbxlx",
+      "build-arena" : "rojo build TunnelerArena.project.json -o TunnelerArena.rbxlx"
    },
    "devDependencies": {
       "cpx": "1.5.0",
