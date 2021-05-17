@@ -7,7 +7,6 @@ local function onButtonActivated()
 	print("button pressed!")
 end
 
-
 -- create screen gui
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
