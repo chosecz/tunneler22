@@ -1,6 +1,6 @@
 {
    "name": "TunnelerLobby",
-   "servePlaceIds": [6827927589],
+   "servePlaceIds": [0, 6827927589],
    "tree": {
       "$className": "DataModel",
       "HttpService": {

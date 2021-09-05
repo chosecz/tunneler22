@@ -1,19 +1,16 @@
 {
   "ClassName": "Folder",
   "Children": [
-      {
-          "Name": "RootPart",
-          "ClassName": "Part",
-          "Properties": {
-              "Size": {
-                  "Type": "Vector3",
-                  "Value": [4, 4, 4]
-              }
-          }
-      },
-      {
-          "Name": "SendMoney",
-          "ClassName": "RemoteEvent"
+    {
+      "Name": "RootPart",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [4, 4, 4]
       }
+    },
+    {
+      "Name": "SendMoney",
+      "ClassName": "RemoteEvent"
+    }
   ]
 }
