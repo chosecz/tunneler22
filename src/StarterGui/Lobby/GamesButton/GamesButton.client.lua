@@ -15,7 +15,7 @@ screenGui.Enabled = true
 -- create button
 local gamesButton = Instance.new("TextButton")
 gamesButton.Parent = screenGui
-gamesButton.Text = "Games"
+gamesButton.Text = "List of Games"
 gamesButton.Font = "Arcade"
 gamesButton.Size = UDim2.new(0.2, 0, 0.05, 0)
 gamesButton.Position = UDim2.new(0.4, 0, 0.025, 0)
