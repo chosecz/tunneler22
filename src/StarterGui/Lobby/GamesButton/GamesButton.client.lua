@@ -1,5 +1,5 @@
 repeat wait() until game.Players.LocalPlayer.Character
-local CONST = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
+
 local FUNCTIONS = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local Players = game:GetService('Players')
 local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
