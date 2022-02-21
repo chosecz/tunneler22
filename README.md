@@ -8,7 +8,7 @@ If you like this game you can contribute in many ways to this project. Just writ
 
 ### Reporting Issues
 
-If you have encountered a problem with this component please file a defect on [GitHub issues].
+If you have encountered a problem with this game please file a defect on [GitHub issues].
 
 Describe as much detail as possible to get the problem reproduced and eventually corrected.
 
