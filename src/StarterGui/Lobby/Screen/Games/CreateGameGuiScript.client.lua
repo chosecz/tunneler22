@@ -2,16 +2,20 @@ repeat wait() until game.Players.LocalPlayer.Character
 
 local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
-local Players = game:GetService('Players')
-local gameGui = Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("ScreenGui"):WaitForChild("GamesGui")
+local gameGui = game:GetService('Players').LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("ScreenGui"):WaitForChild("GamesGui")
+local BindableEvents = game:GetService("ReplicatedStorage"):WaitForChild('BindableEvents')
+local createGameButtonPressed = BindableEvents:WaitForChild('CreateGameButtonPressed')
+local publicGamesButtonPressed = BindableEvents:WaitForChild('PublicGamesButtonPressed')
 
 local createGameGui = Instance.new("Frame")
 createGameGui.Name = "CreateGameGui"
 createGameGui.Parent = gameGui
-createGameGui.BackgroundColor3 = C.COLOR.DARK_SLATE_GRAY
-createGameGui.BackgroundTransparency = 0.5
+-- good for debuging
+-- createGameGui.BackgroundColor3 = C.COLOR.DARK_SLATE_GRAY
+createGameGui.BackgroundTransparency = 1
 createGameGui.Position = UDim2.new(0, 0, 0.15, 0)
 createGameGui.Size = UDim2.new(1, 0, 0.85, 0)
+createGameGui.Visible = false
 
 local gameType = nil
 local gameMode = nil
@@ -106,3 +110,12 @@ local continueButton = F.createButton({
     print('continueButtonPressed', gameType, gameMode)
   end
 })
+
+-- BINDABLE EVENTS
+createGameButtonPressed.Event:Connect(function()
+  createGameGui.Visible = true
+end)
+
+publicGamesButtonPressed.Event:Connect(function()
+  createGameGui.Visible = false
+end)

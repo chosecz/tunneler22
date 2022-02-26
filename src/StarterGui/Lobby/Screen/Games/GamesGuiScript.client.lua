@@ -22,40 +22,50 @@ gamesGuiFrame.Parent = screenGui
 
 local closeButton = FUNCTIONS.createButton({
   Text = "X",
+  Parent = gamesGuiFrame,
   Size = UDim2.new(0.05, 0, 0.09, 0),
   Position = UDim2.new(0.95, 0, 0.01, 0),
   BackgroundTransparency = 1,
   TextColor3 = Color3.fromRGB(0, 0, 0),
+  Activated = function()
+    gamesGuiFrameClosed:Fire()
+  end
 })
-closeButton.Parent = gamesGuiFrame
-closeButton.Activated:Connect(function()
-  gamesGuiFrameClosed:Fire()
-end)
-
-local createGameButton = FUNCTIONS.createButton({
-  Text = "Create Game",
-  Size = UDim2.new(0.2, 0, 0.05, 0),
-  Position = UDim2.new(0.6, 0, 0.05, 0),
-  TextColor3 = Color3.fromRGB(255, 255, 255),
-})
-createGameButton.Parent = gamesGuiFrame
-FUNCTIONS.makeButtonInactive(createGameButton)
-createGameButton.Activated:Connect(function()
-  createGameButtonPressed:Fire()
-end)
 
 local publicGamesButton = FUNCTIONS.createButton({
+  Parent = gamesGuiFrame,
   Text = "Public Games",
   Size = UDim2.new(0.2, 0, 0.05, 0),
-  Position = UDim2.new(0.2, 0, 0.05, 0),
+  Position = UDim2.new(0.1, 0, 0.05, 0),
   TextColor3 = Color3.fromRGB(255, 255, 255),
+  Activated = function()
+    publicGamesButtonPressed:Fire()
+  end
 })
-publicGamesButton.Parent = gamesGuiFrame
-publicGamesButton.Activated:Connect(function()
-  publicGamesButtonPressed:Fire()
-end)
 
-print("GamesGui: Done")
+local friendGamesButton = FUNCTIONS.createButton({
+  Parent = gamesGuiFrame,
+  Text = "Friend Games",
+  Size = UDim2.new(0.2, 0, 0.05, 0),
+  Position = UDim2.new(0.4, 0, 0.05, 0),
+  TextColor3 = Color3.fromRGB(255, 255, 255),
+  Activated = function()
+    -- fire bindable event
+  end
+})
+FUNCTIONS.makeButtonInactive(friendGamesButton)
+
+local createGameButton = FUNCTIONS.createButton({
+  Parent = gamesGuiFrame,
+  Text = "Create Game",
+  Size = UDim2.new(0.2, 0, 0.05, 0),
+  Position = UDim2.new(0.7, 0, 0.05, 0),
+  TextColor3 = Color3.fromRGB(255, 255, 255),
+  Activated = function()
+    createGameButtonPressed:Fire()
+  end
+})
+FUNCTIONS.makeButtonInactive(createGameButton)
 
 -- Shows party gui frame when user click on Games Button
 gamesButtonPressed.Event:Connect(function()
@@ -76,3 +86,5 @@ publicGamesButtonPressed.Event:Connect(function()
   FUNCTIONS.makeButtonActive(publicGamesButton)
   FUNCTIONS.makeButtonInactive(createGameButton)
 end)
+
+print("GamesGui: Done")
