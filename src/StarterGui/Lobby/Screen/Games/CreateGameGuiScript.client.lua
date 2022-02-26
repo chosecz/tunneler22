@@ -2,8 +2,8 @@ repeat wait() until game.Players.LocalPlayer.Character
 
 local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
-local gameGui = game:GetService('Players').LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("ScreenGui"):WaitForChild("GamesGui")
-local BindableEvents = game:GetService("ReplicatedStorage"):WaitForChild('BindableEvents')
+local gameGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui'):WaitForChild('GamesGui')
+local BindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
 local createGameButtonPressed = BindableEvents:WaitForChild('CreateGameButtonPressed')
 local publicGamesButtonPressed = BindableEvents:WaitForChild('PublicGamesButtonPressed')
 
