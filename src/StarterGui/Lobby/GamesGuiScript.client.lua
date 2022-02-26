@@ -18,7 +18,7 @@ gamesGuiFrame.Visible = false
 gamesGuiFrame.Parent = screenGui
 
 local closeButton = FUNCTIONS.createButton({
-  Text = "XX",
+  Text = "X",
   Size = UDim2.new(0.05, 0, 0.09, 0),
   Position = UDim2.new(0.95, 0, 0.01, 0),
   BackgroundTransparency = 1,
