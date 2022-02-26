@@ -8,6 +8,14 @@
     {
       "Name": "GamesGuiFrameClosed",
       "ClassName": "BindableEvent"
+    },
+    {
+      "Name": "CreateGameButtonPressed",
+      "ClassName": "BindableEvent"
+    },
+    {
+      "Name": "PublicGamesButtonPressed",
+      "ClassName": "BindableEvent"
     }
   ]
 }
