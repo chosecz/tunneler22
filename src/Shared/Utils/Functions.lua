@@ -1,8 +1,9 @@
 local CONST = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
-local Functions = {}
+local F = {}
 
-function Functions.createButton(options)
+function F.createButton(options)
   local button = Instance.new("TextButton")
+	button.Parent = options.Parent or nil
 	button.Text = options.Text
 	button.Font = options.TextScale or "Arcade"
 	button.Size = options.Size or UDim2.new(0.2, 0, 0.05, 0)
@@ -13,19 +14,35 @@ function Functions.createButton(options)
 	button.BorderColor3 = options.BorderColor3 or CONST.COLOR.MING
 	button.BorderSizePixel = options.BorderSizePixel or 10
 	button.TextColor3 = options.TextColor3 or Color3.fromRGB(255, 255, 255)
+	if (options.Activated) then 
+		button.Activated:Connect(options.Activated) 
+	end
 	return button
 end
 
-function Functions.makeButtonActive(button)
+function F.makeButtonActive(button)
 	button.BackgroundColor3 = CONST.COLOR.BLUE_MUNSELL
   button.BorderColor3 = CONST.COLOR.MING
-	return button
 end
 
-function Functions.makeButtonInactive(button)
+function F.makeButtonInactive(button)
 	button.BackgroundColor3 = CONST.COLOR.RUBY_RED
   button.BorderColor3 = CONST.COLOR.CATAWBA
-	return button
 end
 
-return Functions
+function F.createTextLabel(options)
+	local label = Instance.new("TextLabel")
+	if options.Name then
+		label.Name = options.Name
+	end
+	label.Text = options.Text or nil
+	label.Font = options.Font or "Arcade"
+	label.Parent = options.Parent or nil
+	label.Size = options.Size or UDim2.new(0.2, 0, 0.1, 0)
+	label.Position = options.Position or UDim2.new(0.4, 0, 0.4, 0)
+	label.TextScaled = options.TextScaled or true
+	label.BackgroundTransparency = options.BackgroundTransparency or 1
+	return label
+end
+
+return F

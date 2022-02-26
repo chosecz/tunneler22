@@ -8,5 +8,13 @@ return {
     MING = Color3.fromRGB(50, 103, 113),
     BLUE_MUNSELL = Color3.fromRGB(44, 140, 153),
     TURQUOISE = Color3.fromRGB(66, 217, 200),
-  }
+  },
+  GAME_TYPE = {
+    PUBLIC = 'PUBLIC',
+    FRIENDS = 'FRIENDS',
+  },
+  GAME_MODE = {
+    ONE = '1VS1',
+    TWO = '2VS2',
+  },
 }
