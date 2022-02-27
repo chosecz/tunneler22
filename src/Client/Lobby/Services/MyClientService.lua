@@ -1,11 +1,11 @@
 local UtilServices = game.ReplicatedStorage:WaitForChild('Utils')
-local MyUtilService = require(UtilServices:WaitForChild('MyUtilService'))
+local GamesService = require(UtilServices:WaitForChild('GamesService'))
 
 local MyClientService = {}
 
 function MyClientService.Exec()
    print('MyClientService.Exec')
-   MyUtilService.Exec()
+   GamesService.Exec()
 end
 
 return MyClientService
