@@ -8,6 +8,8 @@ local gamesButtonPressed = BindableEvents:WaitForChild('GamesButtonPressed')
 local gamesGuiFrameClosed = BindableEvents:WaitForChild('GamesGuiFrameClosed')
 local createGameButtonPressed = BindableEvents:WaitForChild('CreateGameButtonPressed')
 local publicGamesButtonPressed = BindableEvents:WaitForChild('PublicGamesButtonPressed')
+local friendGamesButtonPressed = BindableEvents:WaitForChild('FriendGamesButtonPressed')
+
 
 -- party screen
 print("GamesGui: Creating")
@@ -50,7 +52,7 @@ local friendGamesButton = FUNCTIONS.createButton({
   Position = UDim2.new(0.4, 0, 0.05, 0),
   TextColor3 = Color3.fromRGB(255, 255, 255),
   Activated = function()
-    -- fire bindable event
+    friendGamesButtonPressed:Fire()
   end
 })
 FUNCTIONS.makeButtonInactive(friendGamesButton)
@@ -80,11 +82,19 @@ end)
 createGameButtonPressed.Event:Connect(function()
   FUNCTIONS.makeButtonActive(createGameButton)
   FUNCTIONS.makeButtonInactive(publicGamesButton)
+  FUNCTIONS.makeButtonInactive(friendGamesButton)
 end)
 
 publicGamesButtonPressed.Event:Connect(function()
   FUNCTIONS.makeButtonActive(publicGamesButton)
   FUNCTIONS.makeButtonInactive(createGameButton)
+  FUNCTIONS.makeButtonInactive(friendGamesButton)
+end)
+
+friendGamesButtonPressed.Event:Connect(function()
+  FUNCTIONS.makeButtonActive(friendGamesButton)
+  FUNCTIONS.makeButtonInactive(createGameButton)
+  FUNCTIONS.makeButtonInactive(publicGamesButton)
 end)
 
 print("GamesGui: Done")

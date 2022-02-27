@@ -16,6 +16,10 @@
     {
       "Name": "PublicGamesButtonPressed",
       "ClassName": "BindableEvent"
+    },
+    {
+      "Name": "FriendGamesButtonPressed",
+      "ClassName": "BindableEvent"
     }
   ]
 }

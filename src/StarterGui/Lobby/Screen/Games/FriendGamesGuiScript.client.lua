@@ -8,25 +8,26 @@ local createGameButtonPressed = BindableEvents:WaitForChild('CreateGameButtonPre
 local publicGamesButtonPressed = BindableEvents:WaitForChild('PublicGamesButtonPressed')
 local friendGamesButtonPressed = BindableEvents:WaitForChild('FriendGamesButtonPressed')
 
-local publicGamesGui = Instance.new("Frame")
-publicGamesGui.Name = "PublicGamesGui"
-publicGamesGui.Parent = gameGui
+local friendGamesGui = Instance.new("Frame")
+friendGamesGui.Name = "FriendGamesGui"
+friendGamesGui.Parent = gameGui
 -- good for debuging
-publicGamesGui.BackgroundColor3 = C.COLOR.DARK_SLATE_GRAY
-publicGamesGui.BackgroundTransparency = 0.5
-publicGamesGui.Position = UDim2.new(0, 0, 0.15, 0)
-publicGamesGui.Size = UDim2.new(1, 0, 0.85, 0)
-publicGamesGui.Visible = true
+friendGamesGui.BackgroundColor3 = C.COLOR.RUBY_RED
+friendGamesGui.BackgroundTransparency = 0.5
+friendGamesGui.Position = UDim2.new(0, 0, 0.15, 0)
+friendGamesGui.Size = UDim2.new(1, 0, 0.85, 0)
+friendGamesGui.Visible = false
 
 -- BINDABLE EVENTS
 publicGamesButtonPressed.Event:Connect(function()
-  publicGamesGui.Visible = true
+  friendGamesGui.Visible = false
 end)
 
 friendGamesButtonPressed.Event:Connect(function()
-  publicGamesGui.Visible = false
+  friendGamesGui.Visible = true
 end)
 
 createGameButtonPressed.Event:Connect(function()
-  publicGamesGui.Visible = false
+  friendGamesGui.Visible = false
 end)
+

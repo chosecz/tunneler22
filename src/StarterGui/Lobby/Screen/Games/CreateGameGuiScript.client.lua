@@ -6,6 +6,7 @@ local gameGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui')
 local BindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
 local createGameButtonPressed = BindableEvents:WaitForChild('CreateGameButtonPressed')
 local publicGamesButtonPressed = BindableEvents:WaitForChild('PublicGamesButtonPressed')
+local friendGamesButtonPressed = BindableEvents:WaitForChild('FriendGamesButtonPressed')
 
 local createGameGui = Instance.new("Frame")
 createGameGui.Name = "CreateGameGui"
@@ -112,10 +113,14 @@ local continueButton = F.createButton({
 })
 
 -- BINDABLE EVENTS
-createGameButtonPressed.Event:Connect(function()
-  createGameGui.Visible = true
-end)
-
 publicGamesButtonPressed.Event:Connect(function()
   createGameGui.Visible = false
+end)
+
+friendGamesButtonPressed.Event:Connect(function()
+  createGameGui.Visible = false
+end)
+
+createGameButtonPressed.Event:Connect(function()
+  createGameGui.Visible = true
 end)
