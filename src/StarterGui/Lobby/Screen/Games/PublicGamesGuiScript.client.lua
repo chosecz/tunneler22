@@ -8,7 +8,6 @@ local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('Remot
 local createGameButtonPressed = bindableEvents:WaitForChild('CreateGameButtonPressed')
 local publicGamesButtonPressed = bindableEvents:WaitForChild('PublicGamesButtonPressed')
 local friendGamesButtonPressed = bindableEvents:WaitForChild('FriendGamesButtonPressed')
--- local GamesService = require(game.ServerScriptService:WaitForChild('Services'):WaitForChild('GamesService'))
 
 local publicGamesGui = Instance.new("Frame")
 publicGamesGui.Name = "PublicGamesGui"
