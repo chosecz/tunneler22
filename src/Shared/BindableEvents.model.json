@@ -6,7 +6,7 @@
       "ClassName": "BindableEvent"
     },
     {
-      "Name": "GamesGuiFrameClosed",
+      "Name": "GamesCloseButtonPressed",
       "ClassName": "BindableEvent"
     },
     {
@@ -19,6 +19,14 @@
     },
     {
       "Name": "FriendGamesButtonPressed",
+      "ClassName": "BindableEvent"
+    },
+    {
+      "Name": "GamesGuiVisibilityChanged",
+      "ClassName": "BindableEvent"
+    },
+    {
+      "Name": "GameCreated",
       "ClassName": "BindableEvent"
     }
   ]

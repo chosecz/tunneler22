@@ -9,6 +9,7 @@ local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('Remot
 local createGameButtonPressed = bindableEvents:WaitForChild('CreateGameButtonPressed')
 local publicGamesButtonPressed = bindableEvents:WaitForChild('PublicGamesButtonPressed')
 local friendGamesButtonPressed = bindableEvents:WaitForChild('FriendGamesButtonPressed')
+local gameCreated = bindableEvents:WaitForChild('GameCreated')
 
 local createGameGui = Instance.new("Frame")
 createGameGui.Name = "CreateGameGui"
@@ -115,6 +116,7 @@ F.createButton({
       GameType = gameType,
       GameMode = gameMode,
     })
+    gameCreated:Fire()
     print("Game created", response)
   end
 })

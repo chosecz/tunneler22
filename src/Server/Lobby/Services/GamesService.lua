@@ -2,15 +2,32 @@ local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Con
 local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('RemoteFunctions')
 local GamesService = {}
 
-GamesService.PublicGames = {}
-GamesService.FriendGames = {}
+GamesService.Games = {}
 
 local function generateGameId(userId)
    return "GID_"..userId
 end
 
 function GamesService.ListOfPublicGames()
-   return GamesService.PublicGames
+   -- TODO: filter only public games
+   return GamesService.Games
+end
+
+function GamesService.AddPlayerToGame(player, gameId)
+   print("GamesService.AddPlayerToGame", player, gameId)
+   local game = GamesService.Games[gameId]
+
+   -- add player to list
+   table.insert(game.Players, {
+      Player = player,
+      Team = "TODO",
+      Ready = false,
+   })
+
+   -- set gameId for player
+   player:SetAttribute("gameId", gameId)
+
+   print("GamesService.AddPlayerToGame: Players:", game.Players)
 end
 
 function GamesService.CreateGame(player, options)
@@ -19,15 +36,15 @@ function GamesService.CreateGame(player, options)
    local game = {
       GameType = options.GameType,
       GameMode = options.GameMode,
-      Owner = player
+      Owner = player,
+      Players = {},
    }
 
-   -- is public or friend game
-   if options.GameType == C.GAME_TYPE.PUBLIC then
-      GamesService.PublicGames[gameId] = game
-   elseif options.GameType == C.GAME_TYPE.FRIEND then
-      GamesService.FriendGames[gameId] = game
-   end
+   -- add to game list
+   GamesService.Games[gameId] = game
+
+   -- add player to game
+   GamesService.AddPlayerToGame(player, gameId)
 
    print("Server: Game created", gameId)
    return gameId
