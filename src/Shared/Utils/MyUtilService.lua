@@ -1,6 +1,4 @@
-local MyUtilService = {
-
-}
+local MyUtilService = {}
 
 function MyUtilService.Exec()
    print('MyUtilService.Exec')
