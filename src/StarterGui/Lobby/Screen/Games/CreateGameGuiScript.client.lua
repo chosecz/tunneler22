@@ -4,11 +4,11 @@ local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Fun
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local localPlayer = game:GetService('Players').LocalPlayer
 local gameGui = localPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui'):WaitForChild('GamesGui')
-local BindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
+local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
 local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('RemoteFunctions')
-local createGameButtonPressed = BindableEvents:WaitForChild('CreateGameButtonPressed')
-local publicGamesButtonPressed = BindableEvents:WaitForChild('PublicGamesButtonPressed')
-local friendGamesButtonPressed = BindableEvents:WaitForChild('FriendGamesButtonPressed')
+local createGameButtonPressed = bindableEvents:WaitForChild('CreateGameButtonPressed')
+local publicGamesButtonPressed = bindableEvents:WaitForChild('PublicGamesButtonPressed')
+local friendGamesButtonPressed = bindableEvents:WaitForChild('FriendGamesButtonPressed')
 
 local createGameGui = Instance.new("Frame")
 createGameGui.Name = "CreateGameGui"

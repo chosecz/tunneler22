@@ -3,12 +3,12 @@ repeat task.wait() until game.Players.LocalPlayer.Character
 local FUNCTIONS = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local CONST = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local screenGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui')
-local BindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
-local gamesButtonPressed = BindableEvents:WaitForChild('GamesButtonPressed')
-local gamesGuiFrameClosed = BindableEvents:WaitForChild('GamesGuiFrameClosed')
-local createGameButtonPressed = BindableEvents:WaitForChild('CreateGameButtonPressed')
-local publicGamesButtonPressed = BindableEvents:WaitForChild('PublicGamesButtonPressed')
-local friendGamesButtonPressed = BindableEvents:WaitForChild('FriendGamesButtonPressed')
+local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
+local gamesButtonPressed = bindableEvents:WaitForChild('GamesButtonPressed')
+local gamesGuiFrameClosed = bindableEvents:WaitForChild('GamesGuiFrameClosed')
+local createGameButtonPressed = bindableEvents:WaitForChild('CreateGameButtonPressed')
+local publicGamesButtonPressed = bindableEvents:WaitForChild('PublicGamesButtonPressed')
+local friendGamesButtonPressed = bindableEvents:WaitForChild('FriendGamesButtonPressed')
 
 
 -- party screen
