@@ -1,4 +1,4 @@
-repeat wait() until game.Players.LocalPlayer.Character
+repeat task.wait() until game.Players.LocalPlayer.Character
 
 local Players = game:GetService('Players')
 local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui")

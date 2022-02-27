@@ -1,4 +1,4 @@
-repeat wait() until game.Players.LocalPlayer.Character
+repeat task.wait() until game.Players.LocalPlayer.Character
 
 local FUNCTIONS = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local CONST = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
