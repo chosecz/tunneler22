@@ -34,8 +34,6 @@ local function generatePublicGamesList(listOfPublicGames)
 
   local gamesCounter = 0
   for gameId, game in pairs(listOfPublicGames) do
-    print("gameId", gameId)
-    print("game", game)
     F.createGameRow({
       Parent = scrollingFrame,
       Name = game.Owner.DisplayName.."|"..game.GameMode,
