@@ -2,8 +2,10 @@ repeat task.wait() until game.Players.LocalPlayer.Character
 
 local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
-local gameGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui'):WaitForChild('GamesGui')
+local localPlayer = game:GetService('Players').LocalPlayer
+local gameGui = localPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui'):WaitForChild('GamesGui')
 local BindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
+local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('RemoteFunctions')
 local createGameButtonPressed = BindableEvents:WaitForChild('CreateGameButtonPressed')
 local publicGamesButtonPressed = BindableEvents:WaitForChild('PublicGamesButtonPressed')
 local friendGamesButtonPressed = BindableEvents:WaitForChild('FriendGamesButtonPressed')
@@ -72,9 +74,6 @@ friendsOnlyButton = F.createButton({
   end
 })
 
--- preselect game type Public
-ChangeGameType(C.GAME_TYPE.PUBLIC)
-
 local chooseGameType = F.createTextLabel({
   Parent = createGameGui,
   Text = "Choose game mode",
@@ -100,15 +99,23 @@ button2vs2 = F.createButton({
   end
 })
 
+-- preselect game type Public
+ChangeGameType(C.GAME_TYPE.PUBLIC)
+
 -- preselect game mode 1 VS 1
 ChangeGameMode(C.GAME_MODE.ONE)
 
-local continueButton = F.createButton({
+F.createButton({
   Text = "Continue",
   Position = UDim2.new(0.4, 0, 0.7, 0),
   Parent = createGameGui,
   Activated = function()
-    print('continueButtonPressed', gameType, gameMode)
+    print('Going to call remote function CreateGame:', gameType, gameMode)
+    local response = remoteFunctions.CreateGame:InvokeServer({
+      GameType = gameType,
+      GameMode = gameMode,
+    })
+    print("Game created", response)
   end
 })
 
