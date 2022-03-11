@@ -25,7 +25,7 @@ function GamesService.AddPlayerToGame(player, gameId)
    -- 1vs1
    if (gameMode == C.GAME_MODE.ONE) then
       -- 1vs1
-      if (#redPlayers == 0) then
+      if (#redPlayers < 1) then
          team = C.GAME_TEAM.RED
       else
          team = C.GAME_TEAM.BLUE
