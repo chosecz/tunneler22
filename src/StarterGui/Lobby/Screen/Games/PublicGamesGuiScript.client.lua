@@ -2,6 +2,7 @@ repeat task.wait() until game.Players.LocalPlayer.Character
 
 local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
+local GF = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('GamesFunctions'))
 local gameGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui'):WaitForChild('GamesGui')
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
 local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('RemoteFunctions')
@@ -34,7 +35,7 @@ local function generatePublicGamesList(listOfPublicGames)
 
   local gamesCounter = 0
   for gameId, game in pairs(listOfPublicGames) do
-    F.createGameRow({
+    GF.createGameRow({
       Game = game,
       Parent = scrollingFrame,
       Index = gamesCounter,

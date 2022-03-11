@@ -12,6 +12,10 @@
     {
       "Name": "ListOfPublicGames",
       "ClassName": "RemoteFunction"
+    },
+    {
+      "Name": "GetGame",
+      "ClassName": "RemoteFunction"
     }
   ]
 }

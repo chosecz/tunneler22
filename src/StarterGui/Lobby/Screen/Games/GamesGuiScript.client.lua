@@ -1,6 +1,6 @@
 repeat task.wait() until game.Players.LocalPlayer.Character
 
-local FUNCTIONS = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
+local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local CONST = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local screenGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui')
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
@@ -27,7 +27,7 @@ gamesGuiFrame:GetPropertyChangedSignal("Visible"):Connect(function()
   gamesGuiVisibilityChanged:Fire(gamesGuiFrame.Visible)
 end)
 
-local closeButton = FUNCTIONS.createButton({
+local closeButton = F.createButton({
   Text = "X",
   Parent = gamesGuiFrame,
   Size = UDim2.new(0.05, 0, 0.09, 0),
@@ -39,7 +39,7 @@ local closeButton = FUNCTIONS.createButton({
   end
 })
 
-local publicGamesButton = FUNCTIONS.createButton({
+local publicGamesButton = F.createButton({
   Parent = gamesGuiFrame,
   Text = "Public Games",
   Size = UDim2.new(0.2, 0, 0.05, 0),
@@ -50,7 +50,7 @@ local publicGamesButton = FUNCTIONS.createButton({
   end
 })
 
-local friendGamesButton = FUNCTIONS.createButton({
+local friendGamesButton = F.createButton({
   Parent = gamesGuiFrame,
   Text = "Friend Games",
   Size = UDim2.new(0.2, 0, 0.05, 0),
@@ -60,9 +60,9 @@ local friendGamesButton = FUNCTIONS.createButton({
     friendGamesButtonPressed:Fire()
   end
 })
-FUNCTIONS.makeButtonInactive(friendGamesButton)
+F.makeButtonInactive(friendGamesButton)
 
-local createGameButton = FUNCTIONS.createButton({
+local createGameButton = F.createButton({
   Parent = gamesGuiFrame,
   Text = "Create Game",
   Size = UDim2.new(0.2, 0, 0.05, 0),
@@ -72,7 +72,7 @@ local createGameButton = FUNCTIONS.createButton({
     createGameButtonPressed:Fire()
   end
 })
-FUNCTIONS.makeButtonInactive(createGameButton)
+F.makeButtonInactive(createGameButton)
 
 -- Shows party gui frame when user click on Games Button
 gamesButtonPressed.Event:Connect(function()
@@ -85,21 +85,21 @@ gamesCloseButtonPressed.Event:Connect(function()
 end)
 
 createGameButtonPressed.Event:Connect(function()
-  FUNCTIONS.makeButtonActive(createGameButton)
-  FUNCTIONS.makeButtonInactive(publicGamesButton)
-  FUNCTIONS.makeButtonInactive(friendGamesButton)
+  F.makeButtonActive(createGameButton)
+  F.makeButtonInactive(publicGamesButton)
+  F.makeButtonInactive(friendGamesButton)
 end)
 
 publicGamesButtonPressed.Event:Connect(function()
-  FUNCTIONS.makeButtonActive(publicGamesButton)
-  FUNCTIONS.makeButtonInactive(createGameButton)
-  FUNCTIONS.makeButtonInactive(friendGamesButton)
+  F.makeButtonActive(publicGamesButton)
+  F.makeButtonInactive(createGameButton)
+  F.makeButtonInactive(friendGamesButton)
 end)
 
 friendGamesButtonPressed.Event:Connect(function()
-  FUNCTIONS.makeButtonActive(friendGamesButton)
-  FUNCTIONS.makeButtonInactive(createGameButton)
-  FUNCTIONS.makeButtonInactive(publicGamesButton)
+  F.makeButtonActive(friendGamesButton)
+  F.makeButtonInactive(createGameButton)
+  F.makeButtonInactive(publicGamesButton)
 end)
 
 function hideGamesGui()

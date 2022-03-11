@@ -84,11 +84,16 @@ function GamesService.CreateGame(player, options)
    return gameId
 end
 
+function GamesService.GetGame(player, gameId)
+   return GamesService.Games[gameId]
+end;
+
 function GamesService.Exec()
    print('GamesService.Exec')
    remoteFunctions.CreateGame.OnServerInvoke = GamesService.CreateGame
    remoteFunctions.AddPlayerToGame.OnServerInvoke = GamesService.AddPlayerToGame
    remoteFunctions.ListOfPublicGames.OnServerInvoke = GamesService.ListOfPublicGames
+   remoteFunctions.GetGame.OnServerInvoke = GamesService.GetGame
 end
 
 return GamesService
