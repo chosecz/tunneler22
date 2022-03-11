@@ -1,5 +1,8 @@
-local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local F = {}
+local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
+local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('RemoteFunctions')
+local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
+local addedPlayerToGame = bindableEvents:WaitForChild('AddedPlayerToGame')
 
 function F.createButton(options)
   local button = Instance.new("TextButton")
@@ -58,7 +61,7 @@ function F.createGameRow(options)
 	gameNameTextLabel.Size = UDim2.new(0.74, 0, 1, 0)
 	gameNameTextLabel.BackgroundColor3 = C.COLOR.BLUE_MUNSELL
 	-- gameNameTextLabel.BackgroundTransparency = 1
-	gameNameTextLabel.Text = options.Name or "Nazev hry"
+	gameNameTextLabel.Text = options.Game.Owner.DisplayName.."|"..options.Game.GameMode
 	gameNameTextLabel.TextXAlignment = "Left"
 
 	local gameJoinButton = Instance.new("TextButton")
@@ -66,6 +69,12 @@ function F.createGameRow(options)
 	gameJoinButton.Position = UDim2.new(0.75, 0, 0, 0)
 	gameJoinButton.Size = UDim2.new(0.25, 0, 1, 0)
 	gameJoinButton.Text = "Join"
+	gameJoinButton.Activated:Connect(function()
+		print("Going join to game")
+		local response = remoteFunctions.AddPlayerToGame:InvokeServer(options.Game.Id)
+    print("Game joined", response)
+    addedPlayerToGame:Fire()
+	end)
 
 	return gameRowFrame
 end

@@ -6,6 +6,10 @@
       "ClassName": "RemoteFunction"
     },
     {
+      "Name": "AddPlayerToGame",
+      "ClassName": "RemoteFunction"
+    },
+    {
       "Name": "ListOfPublicGames",
       "ClassName": "RemoteFunction"
     }

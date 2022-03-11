@@ -28,6 +28,10 @@
     {
       "Name": "GameCreated",
       "ClassName": "BindableEvent"
+    },
+    {
+      "Name": "AddedPlayerToGame",
+      "ClassName": "BindableEvent"
     }
   ]
 }

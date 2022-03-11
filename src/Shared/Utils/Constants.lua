@@ -14,7 +14,11 @@ return {
     FRIENDS = 'FRIENDS',
   },
   GAME_MODE = {
-    ONE = '1VS1',
-    TWO = '2VS2',
+    ONE = 'ONE',
+    TWO = 'TWO',
+  },
+  GAME_TEAM = {
+    RED = 'RED',
+    BLUE = 'BLUE',
   },
 }

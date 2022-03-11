@@ -11,6 +11,7 @@ local publicGamesButtonPressed = bindableEvents:WaitForChild('PublicGamesButtonP
 local friendGamesButtonPressed = bindableEvents:WaitForChild('FriendGamesButtonPressed')
 local gamesGuiVisibilityChanged = bindableEvents:WaitForChild('GamesGuiVisibilityChanged')
 local gameCreated = bindableEvents:WaitForChild('GameCreated')
+local addedPlayerToGame = bindableEvents:WaitForChild('AddedPlayerToGame')
 
 -- party screen
 print("GamesGui: Creating")
@@ -101,8 +102,11 @@ friendGamesButtonPressed.Event:Connect(function()
   FUNCTIONS.makeButtonInactive(publicGamesButton)
 end)
 
-gameCreated.Event:Connect(function()
+function hideGamesGui()
   gamesGuiFrame.Visible = false
-end)
+end
+
+gameCreated.Event:Connect(hideGamesGui)
+addedPlayerToGame.Event:Connect(hideGamesGui)
 
 print("GamesGui: Done")

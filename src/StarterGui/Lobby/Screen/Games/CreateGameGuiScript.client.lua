@@ -116,8 +116,8 @@ F.createButton({
       GameType = gameType,
       GameMode = gameMode,
     })
-    gameCreated:Fire()
     print("Game created", response)
+    gameCreated:Fire()
   end
 })
 

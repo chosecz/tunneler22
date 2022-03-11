@@ -5,6 +5,7 @@ local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Con
 local gameGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui'):WaitForChild('GamesGui')
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
 local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('RemoteFunctions')
+local remoteEvents = game:GetService('ReplicatedStorage'):WaitForChild('RemoteEvents')
 local createGameButtonPressed = bindableEvents:WaitForChild('CreateGameButtonPressed')
 local publicGamesButtonPressed = bindableEvents:WaitForChild('PublicGamesButtonPressed')
 local friendGamesButtonPressed = bindableEvents:WaitForChild('FriendGamesButtonPressed')
@@ -34,8 +35,8 @@ local function generatePublicGamesList(listOfPublicGames)
   local gamesCounter = 0
   for gameId, game in pairs(listOfPublicGames) do
     F.createGameRow({
+      Game = game,
       Parent = scrollingFrame,
-      Name = game.Owner.DisplayName.."|"..game.GameMode,
       Index = gamesCounter,
     })
     gamesCounter += 1
@@ -43,9 +44,19 @@ local function generatePublicGamesList(listOfPublicGames)
   print("gamesCounter", gamesCounter)
 end
 
+-- change visibility handler
+publicGamesGui:GetPropertyChangedSignal("Visible"):Connect(function()
+  -- generate list of games
+  generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
+end)
+
+-- remote events
+remoteEvents.GameCreated.OnClientEvent:Connect(function()
+  generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
+end)
+
 -- BINDABLE EVENTS
 publicGamesButtonPressed.Event:Connect(function()
-  generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
   publicGamesGui.Visible = true
 end)
 
@@ -56,6 +67,3 @@ end)
 createGameButtonPressed.Event:Connect(function()
   publicGamesGui.Visible = false
 end)
-
--- generate list of games
-generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
