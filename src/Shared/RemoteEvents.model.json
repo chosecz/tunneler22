@@ -4,6 +4,10 @@
     {
       "Name": "GameCreated",
       "ClassName": "RemoteEvent"
+    },
+    {
+      "Name": "PlayerJoinedGame",
+      "ClassName": "RemoteEvent"
     }
   ]
 }

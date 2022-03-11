@@ -44,7 +44,7 @@ function CreateMyGameGui()
       -- publicGamesButtonPressed:Fire()
     end
   })
-  F.makeButtonInactive(leaveButton)
+  leaveButton.Unselect()
 
   local readyButton = F.createButton({
     Parent = myGameGui,
@@ -52,10 +52,10 @@ function CreateMyGameGui()
     Size = UDim2.new(0.8, 0, 0.05, 0),
     Position = UDim2.new(0.1, 0, 0.9, 0),
   })
-  F.makeButtonInactive(readyButton)
+  readyButton.Unselect()
   readyButton.Activated:Connect(function()
     print("ready")
-    F.makeButtonActive(readyButton)
+    readyButton.Selected()
   end)
 
   -- for 1 vs 1
@@ -92,10 +92,10 @@ function CreateMyGameGui()
     })
 
     if (#game.Teams[C.GAME_TEAM.RED] > 0) then
-      red1name.Text = game.Teams[C.GAME_TEAM.RED][1].Player.DisplayName
+      red1name.Text = game.Teams[C.GAME_TEAM.RED][1].DisplayName
     end
     if (#game.Teams[C.GAME_TEAM.BLUE] > 0) then
-      blue1name.Text = game.Teams[C.GAME_TEAM.BLUE][1].Player.DisplayName
+      blue1name.Text = game.Teams[C.GAME_TEAM.BLUE][1].DisplayName
     end
   end
 

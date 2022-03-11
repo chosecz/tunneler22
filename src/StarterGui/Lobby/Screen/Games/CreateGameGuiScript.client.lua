@@ -3,7 +3,7 @@ repeat task.wait() until game.Players.LocalPlayer.Character
 local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local localPlayer = game:GetService('Players').LocalPlayer
-local gameGui = localPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui'):WaitForChild('GamesGui')
+local gamesGui = localPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui'):WaitForChild('GamesGui')
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
 local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('RemoteFunctions')
 local createGameButtonPressed = bindableEvents:WaitForChild('CreateGameButtonPressed')
@@ -13,7 +13,7 @@ local gameCreated = bindableEvents:WaitForChild('GameCreated')
 
 local createGameGui = Instance.new("Frame")
 createGameGui.Name = "CreateGameGui"
-createGameGui.Parent = gameGui
+createGameGui.Parent = gamesGui
 -- good for debuging
 -- createGameGui.BackgroundColor3 = C.COLOR.DARK_SLATE_GRAY
 createGameGui.BackgroundTransparency = 1
@@ -30,22 +30,22 @@ local button2vs2 = nil
 
 local function ChangeGameType(type)
   if (type == C.GAME_TYPE.PUBLIC) then
-    F.makeButtonActive(publicGameButton);
-    F.makeButtonInactive(friendsOnlyButton);
+    publicGameButton.Selected()
+    friendsOnlyButton.Unselect()
   elseif (type == C.GAME_TYPE.FRIENDS) then
-    F.makeButtonInactive(publicGameButton);
-    F.makeButtonActive(friendsOnlyButton);
+    publicGameButton.Unselect()
+    friendsOnlyButton.Selected()
   end
   gameType = type
 end
 
 local function ChangeGameMode(mode)
   if (mode == C.GAME_MODE.ONE) then
-    F.makeButtonActive(button1vs1);
-    F.makeButtonInactive(button2vs2);
+    button1vs1.Selected()
+    button2vs2.Unselect()
   elseif (mode == C.GAME_MODE.TWO) then
-    F.makeButtonInactive(button1vs1);
-    F.makeButtonActive(button2vs2);
+    button1vs1.Unselect()
+    button2vs2.Selected()
   end
   gameMode = mode
 end

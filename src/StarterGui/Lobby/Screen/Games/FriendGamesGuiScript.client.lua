@@ -2,7 +2,7 @@ repeat task.wait() until game.Players.LocalPlayer.Character
 
 local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
-local gameGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui'):WaitForChild('GamesGui')
+local gamesGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui'):WaitForChild('GamesGui')
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
 local createGameButtonPressed = bindableEvents:WaitForChild('CreateGameButtonPressed')
 local publicGamesButtonPressed = bindableEvents:WaitForChild('PublicGamesButtonPressed')
@@ -10,7 +10,7 @@ local friendGamesButtonPressed = bindableEvents:WaitForChild('FriendGamesButtonP
 
 local friendGamesGui = Instance.new("Frame")
 friendGamesGui.Name = "FriendGamesGui"
-friendGamesGui.Parent = gameGui
+friendGamesGui.Parent = gamesGui
 -- good for debuging
 friendGamesGui.BackgroundColor3 = C.COLOR.RUBY_RED
 friendGamesGui.BackgroundTransparency = 0.5

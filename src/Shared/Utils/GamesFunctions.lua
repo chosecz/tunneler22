@@ -7,7 +7,7 @@ local addedPlayerToGame = bindableEvents:WaitForChild('AddedPlayerToGame')
 function GF.createGameRow(options)
 	local gameRowFrame = Instance.new("Frame")
 	gameRowFrame.Parent = options.Parent
-	gameRowFrame.Position = options.Position or UDim2.new(0, 0, options.Index * 0.05, 0)
+	gameRowFrame.Position = options.Position or UDim2.new(0, 0, options.Index * 0.05 + 0.01, 0)
 	gameRowFrame.Size = UDim2.new(1, 0, 0.05, 0)
 	gameRowFrame.BackgroundColor3 = C.COLOR.TURQUOISE
 

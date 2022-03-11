@@ -3,25 +3,42 @@ local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('Remot
 local remoteEvents = game:GetService('ReplicatedStorage'):WaitForChild('RemoteEvents')
 local GamesService = {}
 
-GamesService.Games = {}
+-- holds list of all games
+local games = {}
 
 local function generateGameId(userId)
    return "GID_"..userId
 end
 
-function GamesService.ListOfPublicGames()
+local function ListOfPublicGames()
    -- TODO: filter only public games
-   return GamesService.Games
+   return games
 end
 
-function GamesService.AddPlayerToGame(player, gameId)
-   print("GamesService.AddPlayerToGame", player, gameId)
-   local game = GamesService.Games[gameId]
-   local gameMode = GamesService.Games[gameId].GameMode
-   local team = nil
+local function updateGameStatus(game)
+   local gameId = game.Id
+   local gameMode = games[gameId].GameMode
    local redPlayers = game.Teams[C.GAME_TEAM.RED]
    local bluePlayers = game.Teams[C.GAME_TEAM.BLUE]
+   local players = #redPlayers + #bluePlayers
+   -- for GAME_MODE.TWO
+   local maxPlayers = 2
 
+   if (gameMode == C.GAME_MODE.TWO) then
+      maxPlayers = 4
+   end
+
+   if (players < maxPlayers) then
+      games[gameId].Full = false
+   else
+      games[gameId].Full = true
+   end
+end
+
+local function resolveTeamForPlayer(game)
+   local gameMode = game.GameMode
+   local redPlayers = game.Teams[C.GAME_TEAM.RED]
+   local team = nil
    -- 1vs1
    if (gameMode == C.GAME_MODE.ONE) then
       -- 1vs1
@@ -40,25 +57,30 @@ function GamesService.AddPlayerToGame(player, gameId)
          team = C.GAME_TEAM.BLUE
       end
    end
+   return team
+end
+
+local function AddPlayerToGame(player, gameId)
+   print("GamesService.AddPlayerToGame", player, gameId)
+   local game = games[gameId]
+   local team = resolveTeamForPlayer(game)
 
    -- add player to list
-   table.insert(game.Teams[team], {
-      Player = player,
-      Ready = false,
-   })
+   table.insert(game.Teams[team], player)
 
-   print("gameMode", gameMode)
-   print("redPlayers", #redPlayers)
-   print("bluePlayers", #bluePlayers)
+   -- update status of game
+   updateGameStatus(game)
 
    -- set gameId for player
    player:SetAttribute("gameId", gameId)
+   player:SetAttribute("ready", false)
 
    print("GamesService.AddPlayerToGame:", game)
+   remoteEvents.PlayerJoinedGame:FireAllClients({ Game = game, Player = player })
    return gameId
 end
 
-function GamesService.CreateGame(player, options)
+local function CreateGame(player, options)
    print("Server: CreateGame", options)
    local gameId = generateGameId(player.UserId);
    local game = {
@@ -66,6 +88,7 @@ function GamesService.CreateGame(player, options)
       GameType = options.GameType,
       GameMode = options.GameMode,
       Owner = player,
+      Full = false,
       Teams = {
          [C.GAME_TEAM.RED] = {},
          [C.GAME_TEAM.BLUE] = {},
@@ -73,27 +96,27 @@ function GamesService.CreateGame(player, options)
    }
 
    -- add to game list
-   GamesService.Games[gameId] = game
+   games[gameId] = game
 
    -- add player to game
-   GamesService.AddPlayerToGame(player, gameId)
+   AddPlayerToGame(player, gameId)
    print("Server: Game created", gameId)
 
    -- notify all clients, that new game was created
-   remoteEvents.GameCreated:FireAllClients()
+   remoteEvents.GameCreated:FireAllClients({ Game = game, Player = player })
    return gameId
 end
 
-function GamesService.GetGame(player, gameId)
-   return GamesService.Games[gameId]
+local function GetGame(player, gameId)
+   return games[gameId]
 end;
 
 function GamesService.Exec()
    print('GamesService.Exec')
-   remoteFunctions.CreateGame.OnServerInvoke = GamesService.CreateGame
-   remoteFunctions.AddPlayerToGame.OnServerInvoke = GamesService.AddPlayerToGame
-   remoteFunctions.ListOfPublicGames.OnServerInvoke = GamesService.ListOfPublicGames
-   remoteFunctions.GetGame.OnServerInvoke = GamesService.GetGame
+   remoteFunctions.CreateGame.OnServerInvoke = CreateGame
+   remoteFunctions.AddPlayerToGame.OnServerInvoke = AddPlayerToGame
+   remoteFunctions.ListOfPublicGames.OnServerInvoke = ListOfPublicGames
+   remoteFunctions.GetGame.OnServerInvoke = GetGame
 end
 
 return GamesService

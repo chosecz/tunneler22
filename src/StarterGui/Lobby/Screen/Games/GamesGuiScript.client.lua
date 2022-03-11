@@ -1,31 +1,27 @@
 repeat task.wait() until game.Players.LocalPlayer.Character
 
 local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
-local CONST = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
+local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local screenGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui')
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
-local gamesButtonPressed = bindableEvents:WaitForChild('GamesButtonPressed')
-local gamesCloseButtonPressed = bindableEvents:WaitForChild('GamesCloseButtonPressed')
-local createGameButtonPressed = bindableEvents:WaitForChild('CreateGameButtonPressed')
-local publicGamesButtonPressed = bindableEvents:WaitForChild('PublicGamesButtonPressed')
-local friendGamesButtonPressed = bindableEvents:WaitForChild('FriendGamesButtonPressed')
-local gamesGuiVisibilityChanged = bindableEvents:WaitForChild('GamesGuiVisibilityChanged')
-local gameCreated = bindableEvents:WaitForChild('GameCreated')
-local addedPlayerToGame = bindableEvents:WaitForChild('AddedPlayerToGame')
 
 -- party screen
 print("GamesGui: Creating")
 local gamesGuiFrame = Instance.new("Frame")
 gamesGuiFrame.Name = "GamesGui"
-gamesGuiFrame.BackgroundColor3 = CONST.COLOR.TURQUOISE
+gamesGuiFrame.BackgroundColor3 = C.COLOR.TURQUOISE
 gamesGuiFrame.BackgroundTransparency = 0.5
 gamesGuiFrame.Position = UDim2.new(0.1, 0, 0, 0)
 gamesGuiFrame.Size = UDim2.new(0.8, 0, 0.9, 0)
 gamesGuiFrame.Visible = false
 gamesGuiFrame.Parent = screenGui
 gamesGuiFrame:GetPropertyChangedSignal("Visible"):Connect(function()
-  gamesGuiVisibilityChanged:Fire(gamesGuiFrame.Visible)
+  bindableEvents.GamesGuiVisibilityChanged:Fire(gamesGuiFrame.Visible)
 end)
+
+local function hideGamesGui()
+  gamesGuiFrame.Visible = false
+end
 
 local closeButton = F.createButton({
   Text = "X",
@@ -35,7 +31,7 @@ local closeButton = F.createButton({
   BackgroundTransparency = 1,
   TextColor3 = Color3.fromRGB(0, 0, 0),
   Activated = function()
-    gamesCloseButtonPressed:Fire()
+    bindableEvents.GamesCloseButtonPressed:Fire()
   end
 })
 
@@ -46,8 +42,9 @@ local publicGamesButton = F.createButton({
   Position = UDim2.new(0.1, 0, 0.05, 0),
   TextColor3 = Color3.fromRGB(255, 255, 255),
   Activated = function()
-    publicGamesButtonPressed:Fire()
-  end
+    bindableEvents.PublicGamesButtonPressed:Fire()
+  end,
+  Selected = true,
 })
 
 local friendGamesButton = F.createButton({
@@ -57,10 +54,9 @@ local friendGamesButton = F.createButton({
   Position = UDim2.new(0.4, 0, 0.05, 0),
   TextColor3 = Color3.fromRGB(255, 255, 255),
   Activated = function()
-    friendGamesButtonPressed:Fire()
-  end
+    bindableEvents.FriendGamesButtonPressed:Fire()
+  end,
 })
-F.makeButtonInactive(friendGamesButton)
 
 local createGameButton = F.createButton({
   Parent = gamesGuiFrame,
@@ -69,44 +65,39 @@ local createGameButton = F.createButton({
   Position = UDim2.new(0.7, 0, 0.05, 0),
   TextColor3 = Color3.fromRGB(255, 255, 255),
   Activated = function()
-    createGameButtonPressed:Fire()
-  end
+    bindableEvents.CreateGameButtonPressed:Fire()
+  end,
 })
-F.makeButtonInactive(createGameButton)
 
 -- Shows party gui frame when user click on Games Button
-gamesButtonPressed.Event:Connect(function()
+bindableEvents.GamesButtonPressed.Event:Connect(function()
   gamesGuiFrame.Visible = true
 end)
 
 -- Hides party gui when user clicks on Close Button
-gamesCloseButtonPressed.Event:Connect(function()
+bindableEvents.GamesCloseButtonPressed.Event:Connect(function()
   gamesGuiFrame.Visible = false
 end)
 
-createGameButtonPressed.Event:Connect(function()
-  F.makeButtonActive(createGameButton)
-  F.makeButtonInactive(publicGamesButton)
-  F.makeButtonInactive(friendGamesButton)
+bindableEvents.CreateGameButtonPressed.Event:Connect(function()
+  createGameButton.Selected()
+  publicGamesButton.Unselect()
+  friendGamesButton.Unselect()
 end)
 
-publicGamesButtonPressed.Event:Connect(function()
-  F.makeButtonActive(publicGamesButton)
-  F.makeButtonInactive(createGameButton)
-  F.makeButtonInactive(friendGamesButton)
+bindableEvents.PublicGamesButtonPressed.Event:Connect(function()
+  publicGamesButton.Selected()
+  createGameButton.Unselect()
+  friendGamesButton.Unselect()
 end)
 
-friendGamesButtonPressed.Event:Connect(function()
-  F.makeButtonActive(friendGamesButton)
-  F.makeButtonInactive(createGameButton)
-  F.makeButtonInactive(publicGamesButton)
+bindableEvents.FriendGamesButtonPressed.Event:Connect(function()
+  friendGamesButton.Selected()
+  createGameButton.Unselect()
+  publicGamesButton.Unselect()
 end)
 
-function hideGamesGui()
-  gamesGuiFrame.Visible = false
-end
-
-gameCreated.Event:Connect(hideGamesGui)
-addedPlayerToGame.Event:Connect(hideGamesGui)
+bindableEvents.GameCreated.Event:Connect(hideGamesGui)
+bindableEvents.AddedPlayerToGame.Event:Connect(hideGamesGui)
 
 print("GamesGui: Done")
