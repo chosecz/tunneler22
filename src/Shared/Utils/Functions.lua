@@ -2,6 +2,7 @@ local F = {}
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local Wrapper = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Wrapper'))
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
+local LocalPlayer = game:GetService('Players').LocalPlayer
 
 local function customButtonFunctions(button)
 	return {
@@ -23,6 +24,13 @@ function F.listenToBindableEvents(list, f)
 	for i, event in pairs(list) do
 		bindableEvents[event].Event:Connect(f)
 	end
+end
+
+function F.isMyGame(game)
+  if (game.Id == LocalPlayer:getAttribute("gameId")) then
+    return true
+  end
+  return false
 end
 
 function F.createButton(options)

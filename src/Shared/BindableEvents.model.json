@@ -10,19 +10,15 @@
       "ClassName": "BindableEvent"
     },
     {
-      "Name": "CreateGameButtonPressed",
+      "Name": "ShowCreateGameGui",
       "ClassName": "BindableEvent"
     },
     {
-      "Name": "PublicGamesButtonPressed",
+      "Name": "ShowPublicGamesGui",
       "ClassName": "BindableEvent"
     },
     {
-      "Name": "FriendGamesButtonPressed",
-      "ClassName": "BindableEvent"
-    },
-    {
-      "Name": "GamesGuiVisibilityChanged",
+      "Name": "ShowFriendGamesGui",
       "ClassName": "BindableEvent"
     },
     {

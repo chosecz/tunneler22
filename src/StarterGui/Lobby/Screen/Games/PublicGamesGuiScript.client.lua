@@ -70,15 +70,15 @@ end)
 
 
 -- BINDABLE EVENTS
-bindableEvents.PublicGamesButtonPressed.Event:Connect(function()
+bindableEvents.ShowPublicGamesGui.Event:Connect(function()
   publicGamesGui.Visible = true
 end)
 
-bindableEvents.FriendGamesButtonPressed.Event:Connect(function()
+bindableEvents.ShowFriendGamesGui.Event:Connect(function()
   publicGamesGui.Visible = false
 end)
 
-bindableEvents.CreateGameButtonPressed.Event:Connect(function()
+bindableEvents.ShowCreateGameGui.Event:Connect(function()
   publicGamesGui.Visible = false
 end)
 

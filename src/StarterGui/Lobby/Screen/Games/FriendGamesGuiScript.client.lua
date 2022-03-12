@@ -16,15 +16,15 @@ friendGamesGui.Size = UDim2.new(1, 0, 0.85, 0)
 friendGamesGui.Visible = false
 
 -- BINDABLE EVENTS
-bindableEvents.PublicGamesButtonPressed.Event:Connect(function()
+bindableEvents.ShowPublicGamesGui.Event:Connect(function()
   friendGamesGui.Visible = false
 end)
 
-bindableEvents.FriendGamesButtonPressed.Event:Connect(function()
+bindableEvents.ShowFriendGamesGui.Event:Connect(function()
   friendGamesGui.Visible = true
 end)
 
-bindableEvents.CreateGameButtonPressed.Event:Connect(function()
+bindableEvents.ShowCreateGameGui.Event:Connect(function()
   friendGamesGui.Visible = false
 end)
 

@@ -6,6 +6,10 @@ local blur = Instance.new("BlurEffect")
 blur.Enabled = false
 blur.Parent = lighting
 
-bindableEvents.GamesGuiVisibilityChanged.Event:Connect(function(enabled)
-  blur.Enabled = enabled
+bindableEvents.ShowGamesGui.Event:Connect(function()
+  blur.Enabled = true
+end)
+
+bindableEvents.HideGamesGui.Event:Connect(function()
+  blur.Enabled = false
 end)

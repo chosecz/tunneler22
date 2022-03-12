@@ -17,15 +17,12 @@ gamesGuiFrame.Position = UDim2.new(0.1, 0, 0, 0)
 gamesGuiFrame.Size = UDim2.new(0.8, 0, 0.9, 0)
 gamesGuiFrame.Visible = false
 gamesGuiFrame.Parent = screenGui
-gamesGuiFrame:GetPropertyChangedSignal("Visible"):Connect(function()
-  bindableEvents.GamesGuiVisibilityChanged:Fire(gamesGuiFrame.Visible)
-end)
 
-local function showGamesGui()
+local function show()
   gamesGuiFrame.Visible = true
 end
 
-local function hideGamesGui()
+local function hide()
   gamesGuiFrame.Visible = false
 end
 
@@ -48,7 +45,7 @@ local publicGamesButton = F.createButton({
   Position = UDim2.new(0.1, 0, 0.05, 0),
   TextColor3 = Color3.fromRGB(255, 255, 255),
   Activated = function()
-    bindableEvents.PublicGamesButtonPressed:Fire()
+    bindableEvents.ShowPublicGamesGui:Fire()
   end,
   Selected = true,
 })
@@ -60,7 +57,7 @@ local friendGamesButton = F.createButton({
   Position = UDim2.new(0.4, 0, 0.05, 0),
   TextColor3 = Color3.fromRGB(255, 255, 255),
   Activated = function()
-    bindableEvents.FriendGamesButtonPressed:Fire()
+    bindableEvents.ShowFriendGamesGui:Fire()
   end,
 })
 
@@ -71,47 +68,45 @@ local createGameButton = F.createButton({
   Position = UDim2.new(0.7, 0, 0.05, 0),
   TextColor3 = Color3.fromRGB(255, 255, 255),
   Activated = function()
-    bindableEvents.CreateGameButtonPressed:Fire()
+    bindableEvents.ShowCreateGameGui:Fire()
   end,
 })
 
 -- Shows party gui frame when user click on Games Button
-bindableEvents.ShowGamesGui.Event:Connect(showGamesGui)
+bindableEvents.ShowGamesGui.Event:Connect(show)
 
 -- Hides party gui when user clicks on Close Button
-bindableEvents.HideGamesGui.Event:Connect(hideGamesGui)
+bindableEvents.HideGamesGui.Event:Connect(hide)
 
 -- buttons toggl
-bindableEvents.CreateGameButtonPressed.Event:Connect(function()
+bindableEvents.ShowCreateGameGui.Event:Connect(function()
   createGameButton.Select()
   publicGamesButton.Unselect()
   friendGamesButton.Unselect()
 end)
 
-bindableEvents.PublicGamesButtonPressed.Event:Connect(function()
+bindableEvents.ShowPublicGamesGui.Event:Connect(function()
   publicGamesButton.Select()
   createGameButton.Unselect()
   friendGamesButton.Unselect()
 end)
 
-bindableEvents.FriendGamesButtonPressed.Event:Connect(function()
+bindableEvents.ShowFriendGamesGui.Event:Connect(function()
   friendGamesButton.Select()
   createGameButton.Unselect()
   publicGamesButton.Unselect()
 end)
 
 -- hide games when player created a game
-bindableEvents.GameCreated.Event:Connect(hideGamesGui)
+bindableEvents.GameCreated.Event:Connect(hide)
 
 -------------------
 -- REMOTE EVENTS --
 -------------------
 -- game games when player connected to a game
 remoteEvents.PlayerJoinedGame.OnClientEvent:Connect(function(options)
-  local gameId = options.Game.Id
-  local MyGameId = LocalPlayer:getAttribute("gameId")
-  if (gameId == MyGameId) then
-    hideGamesGui()
+  if (F.isMyGame(options.Game)) then
+    hide()
   end
 end)
 

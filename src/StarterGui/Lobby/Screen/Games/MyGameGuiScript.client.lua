@@ -137,25 +137,17 @@ function RenderMyGameGui()
 
 end
 
--- check if game is mine
-local function isMyGame(game)
-  if (game.Id == LocalPlayer:getAttribute("gameId")) then
-    return true
-  end
-  return false
-end
-
 -- REMOTE EVENTS
 remoteEvents.PlayerJoinedGame.OnClientEvent:Connect(function(options)
   print("some player joined game", options)
-  if (isMyGame(options.Game)) then
+  if (F.isMyGame(options.Game)) then
     RenderMyGameGui()
   end
 end)
 
 remoteEvents.PlayerLeftGame.OnClientEvent:Connect(function(options)
   print("some player left game", options)
-  if (isMyGame(options.Game)) then
+  if (F.isMyGame(options.Game)) then
     RenderMyGameGui()
   end
 end)
