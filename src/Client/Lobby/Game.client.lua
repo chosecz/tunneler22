@@ -3,8 +3,8 @@ repeat task.wait() until game.Players.LocalPlayer.Character
 local Players = game:GetService('Players')
 local LocalPlayer = Players.LocalPlayer
 
-local MyClientService = require(LocalPlayer.PlayerScripts:WaitForChild('Services'):WaitForChild('MyClientService'))
+local ClientService = require(LocalPlayer.PlayerScripts:WaitForChild('Services'):WaitForChild('ClientService'))
 
 print('Player started')
 
-MyClientService.Exec()
+ClientService.Exec()

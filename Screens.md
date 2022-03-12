@@ -1,18 +1,18 @@
 Screens
 
 Lobby
-- Start Screen
+- StartScreen
     - Games
     - LeaderBoards
         - Me
         - Top players
 
-Game Types Screen
-    - Public Games
-    - Friend Games
-    - Create game
+GameTypesScreen
+    - PublicGames
+    - FriendGames
+    - CreateGame
 
-My Game Screen
+MyGameScreen
     - Leave
     - Ready
     - Teams

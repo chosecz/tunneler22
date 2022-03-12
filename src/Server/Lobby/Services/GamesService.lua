@@ -7,7 +7,7 @@ local GamesService = {}
 local games = {}
 
 local function generateGameId(userId)
-   return "GID_"..userId
+   return "GID_"..userId.."_"..math.random(0,999)
 end
 
 local function ListOfPublicGames()
@@ -15,10 +15,18 @@ local function ListOfPublicGames()
    return games
 end
 
+local function combine(a1, a2)
+   local new = table.create(#a1 + #a2)
+   table.move(a1, 1, #a1, 1, new)
+   table.move(a2, 1, #a2, 1, new)
+   return new
+end
+
 local function updateGameStatus(game)
    local redPlayers = game.Teams[C.GAME_TEAM.RED]
    local bluePlayers = game.Teams[C.GAME_TEAM.BLUE]
-   local players = #redPlayers + #bluePlayers
+   local numberOfPlayers = #redPlayers + #bluePlayers
+   local allPlayers = {table.unpack(redPlayers),table.unpack(bluePlayers)}
 
    -- for GAME_MODE.ONE
    local maxPlayers = 2
@@ -29,15 +37,18 @@ local function updateGameStatus(game)
    end
 
    -- check max number of player
-   if (players < maxPlayers) then
+   if (numberOfPlayers < maxPlayers) then
       game.Full = false
    else
       game.Full = true
    end
 
    -- everyboody left, so we can delete game
-   if (players == 0) then
+   if (numberOfPlayers == 0) then
       games[game.Id] = nil
+   else
+      -- we owner is fist player in list
+      game.Owner = allPlayers[1]
    end
 
    print("Server: updateGameStatus", game)
@@ -98,7 +109,7 @@ local function LeaveGame(player, gameId)
    local playersInTeam = game.Teams[team];
 
    for i, p in pairs(playersInTeam) do
-		if (p.userId == player.userId) then
+		if (p.UserId == player.UserId) then
          table.remove(playersInTeam, i)
       end
 	end
