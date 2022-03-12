@@ -4,33 +4,39 @@ local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Fun
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local LocalPlayer = game:GetService('Players').LocalPlayer
 local screenGui = LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui')
-
 local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('RemoteFunctions')
-local getGame = remoteFunctions:WaitForChild('GetGame')
-
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
 
 -- create button
 print("MyGameGui: Creating")
 
-function CreateMyGameGui()
+local myGameGui = Instance.new("Frame")
+myGameGui.Name = "MyGameGui"
+myGameGui.BackgroundColor3 = C.COLOR.TURQUOISE
+myGameGui.BackgroundTransparency = 0.5
+myGameGui.Position = UDim2.new(0.8, 0, 0.3, 0)
+myGameGui.Size = UDim2.new(0.2, 0, 0.6, 0)
+myGameGui.Visible = false
+myGameGui.Parent = screenGui
+myGameGui:GetPropertyChangedSignal("Visible"):Connect(function()
+  -- gamesGuiVisibilityChanged:Fire(myGameGui.Visible)
+end)
+
+function RenderMyGameGui()
   print("creating my game gui")
+
+  myGameGui.Visible = true
+
   local gameId = LocalPlayer:getAttribute("gameId")
 
-  local game = getGame:InvokeServer(gameId)
+  local game = remoteFunctions.GetGame:InvokeServer(gameId)
   print("game from server", game)
 
-  local myGameGui = Instance.new("Frame")
-  myGameGui.Name = "MyGameGui"
-  myGameGui.BackgroundColor3 = C.COLOR.TURQUOISE
-  myGameGui.BackgroundTransparency = 0.5
-  myGameGui.Position = UDim2.new(0.8, 0, 0.3, 0)
-  myGameGui.Size = UDim2.new(0.2, 0, 0.6, 0)
-  myGameGui.Visible = true
-  myGameGui.Parent = screenGui
-  myGameGui:GetPropertyChangedSignal("Visible"):Connect(function()
-    -- gamesGuiVisibilityChanged:Fire(myGameGui.Visible)
-  end)
+  -- clear if exists
+  local list = myGameGui:GetChildren()
+	for i, row in pairs(list) do
+		row:Destroy()
+	end
 
   local leaveButton = F.createButton({
     Parent = myGameGui,
@@ -116,10 +122,10 @@ function CreateMyGameGui()
 end
 
 -- BINDABLE EVENTS
-bindableEvents.GameCreated.Event:Connect(CreateMyGameGui)
-bindableEvents.AddedPlayerToGame.Event:Connect(CreateMyGameGui)
+bindableEvents.GameCreated.Event:Connect(RenderMyGameGui)
+bindableEvents.AddedPlayerToGame.Event:Connect(RenderMyGameGui)
 
 -- for debug
--- CreateMyGameGui()
+-- RenderMyGameGui()
 
 print("MyGameGui: Done")
