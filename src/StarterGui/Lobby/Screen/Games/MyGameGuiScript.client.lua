@@ -5,6 +5,7 @@ local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Con
 local LocalPlayer = game:GetService('Players').LocalPlayer
 local screenGui = LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui')
 local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('RemoteFunctions')
+local remoteEvents = game:GetService('ReplicatedStorage'):WaitForChild('RemoteEvents')
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
 
 -- create button
@@ -45,19 +46,34 @@ function RenderMyGameGui()
     Position = UDim2.new(0.1, 0, 0.8, 0),
     Activated = function()
       print("leaveButton")
-      -- publicGamesButtonPressed:Fire()
+      remoteFunctions.LeaveGame:InvokeServer(gameId)
+      bindableEvents.ShowGamesButton:Fire()
+      myGameGui.Visible = false
     end
   })
 
   local readyButton = F.createButton({
     Parent = myGameGui,
-    Text = "Ready",
+    Text = "Ready?",
     Size = UDim2.new(0.8, 0, 0.05, 0),
     Position = UDim2.new(0.1, 0, 0.9, 0),
-    Activated = function()
-      print("ready")
-    end
   })
+  readyButton.Activated(function()
+    local ready = LocalPlayer:GetAttribute("ready")
+    if (ready) then
+      readyButton.Unselect()
+      readyButton.Text = "Ready?"
+    else
+      readyButton.Select()
+      readyButton.Text = "Yes, I am ready!"
+    end
+
+    -- not ready will invert value of ready
+    ready = not ready
+
+    -- update player attrs
+    LocalPlayer:SetAttribute("ready", ready)
+  end)
 
   -- for 1 vs 1
   if (game.GameMode == C.GAME_MODE.ONE) then
@@ -121,11 +137,27 @@ function RenderMyGameGui()
 
 end
 
--- BINDABLE EVENTS
-bindableEvents.GameCreated.Event:Connect(RenderMyGameGui)
-bindableEvents.AddedPlayerToGame.Event:Connect(RenderMyGameGui)
+-- check if game is mine
+local function isMyGame(game)
+  if (game.Id == LocalPlayer:getAttribute("gameId")) then
+    return true
+  end
+  return false
+end
 
--- for debug
--- RenderMyGameGui()
+-- REMOTE EVENTS
+remoteEvents.PlayerJoinedGame.OnClientEvent:Connect(function(options)
+  print("some player joined game", options)
+  if (isMyGame(options.Game)) then
+    RenderMyGameGui()
+  end
+end)
+
+remoteEvents.PlayerLeftGame.OnClientEvent:Connect(function(options)
+  print("some player left game", options)
+  if (isMyGame(options.Game)) then
+    RenderMyGameGui()
+  end
+end)
 
 print("MyGameGui: Done")

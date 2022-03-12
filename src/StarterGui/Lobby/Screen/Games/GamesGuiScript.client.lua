@@ -2,8 +2,10 @@ repeat task.wait() until game.Players.LocalPlayer.Character
 
 local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
-local screenGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui')
+local LocalPlayer = game:GetService('Players').LocalPlayer
+local screenGui = LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui')
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
+local remoteEvents = game:GetService('ReplicatedStorage'):WaitForChild('RemoteEvents')
 
 -- party screen
 print("GamesGui: Creating")
@@ -19,6 +21,10 @@ gamesGuiFrame:GetPropertyChangedSignal("Visible"):Connect(function()
   bindableEvents.GamesGuiVisibilityChanged:Fire(gamesGuiFrame.Visible)
 end)
 
+local function showGamesGui()
+  gamesGuiFrame.Visible = true
+end
+
 local function hideGamesGui()
   gamesGuiFrame.Visible = false
 end
@@ -31,7 +37,7 @@ local closeButton = F.createButton({
   BackgroundTransparency = 1,
   TextColor3 = Color3.fromRGB(0, 0, 0),
   Activated = function()
-    bindableEvents.GamesCloseButtonPressed:Fire()
+    bindableEvents.HideGamesGui:Fire()
   end
 })
 
@@ -70,15 +76,12 @@ local createGameButton = F.createButton({
 })
 
 -- Shows party gui frame when user click on Games Button
-bindableEvents.GamesButtonPressed.Event:Connect(function()
-  gamesGuiFrame.Visible = true
-end)
+bindableEvents.ShowGamesGui.Event:Connect(showGamesGui)
 
 -- Hides party gui when user clicks on Close Button
-bindableEvents.GamesCloseButtonPressed.Event:Connect(function()
-  gamesGuiFrame.Visible = false
-end)
+bindableEvents.HideGamesGui.Event:Connect(hideGamesGui)
 
+-- buttons toggl
 bindableEvents.CreateGameButtonPressed.Event:Connect(function()
   createGameButton.Select()
   publicGamesButton.Unselect()
@@ -97,7 +100,19 @@ bindableEvents.FriendGamesButtonPressed.Event:Connect(function()
   publicGamesButton.Unselect()
 end)
 
+-- hide games when player created a game
 bindableEvents.GameCreated.Event:Connect(hideGamesGui)
-bindableEvents.AddedPlayerToGame.Event:Connect(hideGamesGui)
+
+-------------------
+-- REMOTE EVENTS --
+-------------------
+-- game games when player connected to a game
+remoteEvents.PlayerJoinedGame.OnClientEvent:Connect(function(options)
+  local gameId = options.Game.Id
+  local MyGameId = LocalPlayer:getAttribute("gameId")
+  if (gameId == MyGameId) then
+    hideGamesGui()
+  end
+end)
 
 print("GamesGui: Done")

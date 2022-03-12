@@ -2,11 +2,11 @@
   "ClassName": "Folder",
   "Children": [
     {
-      "Name": "GamesButtonPressed",
+      "Name": "ShowGamesGui",
       "ClassName": "BindableEvent"
     },
     {
-      "Name": "GamesCloseButtonPressed",
+      "Name": "HideGamesGui",
       "ClassName": "BindableEvent"
     },
     {
@@ -30,7 +30,11 @@
       "ClassName": "BindableEvent"
     },
     {
-      "Name": "AddedPlayerToGame",
+      "Name": "ShowGamesButton",
+      "ClassName": "BindableEvent"
+    },
+    {
+      "Name": "HideGamesButton",
       "ClassName": "BindableEvent"
     }
   ]

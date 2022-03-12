@@ -10,8 +10,6 @@ local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('Remot
 local createGameGui = Instance.new("Frame")
 createGameGui.Name = "CreateGameGui"
 createGameGui.Parent = gamesGui
--- good for debuging
--- createGameGui.BackgroundColor3 = C.COLOR.DARK_SLATE_GRAY
 createGameGui.BackgroundTransparency = 1
 createGameGui.Position = UDim2.new(0, 0, 0.15, 0)
 createGameGui.Size = UDim2.new(1, 0, 0.85, 0)
@@ -107,13 +105,14 @@ F.createButton({
   Position = UDim2.new(0.4, 0, 0.7, 0),
   Parent = createGameGui,
   Activated = function()
-    print('Going to call remote function CreateGame:', gameType, gameMode)
-    local response = remoteFunctions.CreateGame:InvokeServer({
+    local game = remoteFunctions.CreateGame:InvokeServer({
       GameType = gameType,
       GameMode = gameMode,
     })
-    print("Game created", response)
-    bindableEvents.GameCreated:Fire()
+    print("Game successfully created", game)
+
+    -- fire bindable event
+    bindableEvents.GameCreated:Fire(game)
   end
 })
 

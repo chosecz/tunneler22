@@ -16,23 +16,32 @@ local function ListOfPublicGames()
 end
 
 local function updateGameStatus(game)
-   local gameId = game.Id
-   local gameMode = games[gameId].GameMode
    local redPlayers = game.Teams[C.GAME_TEAM.RED]
    local bluePlayers = game.Teams[C.GAME_TEAM.BLUE]
    local players = #redPlayers + #bluePlayers
-   -- for GAME_MODE.TWO
+
+   -- for GAME_MODE.ONE
    local maxPlayers = 2
 
-   if (gameMode == C.GAME_MODE.TWO) then
+   -- for GAME_MODE.TWO
+   if (game.GameMode == C.GAME_MODE.TWO) then
       maxPlayers = 4
    end
 
+   -- check max number of player
    if (players < maxPlayers) then
-      games[gameId].Full = false
+      game.Full = false
    else
-      games[gameId].Full = true
+      game.Full = true
    end
+
+   -- everyboody left, so we can delete game
+   if (players == 0) then
+      games[game.Id] = nil
+   end
+
+   print("Server: updateGameStatus", game)
+   return game
 end
 
 local function resolveTeamForPlayer(game)
@@ -60,8 +69,8 @@ local function resolveTeamForPlayer(game)
    return team
 end
 
-local function AddPlayerToGame(player, gameId)
-   print("GamesService.AddPlayerToGame", player, gameId)
+local function JoinToGame(player, gameId)
+   print("Server: JoinToGame", player, gameId)
    local game = games[gameId]
    local team = resolveTeamForPlayer(game)
 
@@ -69,15 +78,41 @@ local function AddPlayerToGame(player, gameId)
    table.insert(game.Teams[team], player)
 
    -- update status of game
-   updateGameStatus(game)
+   game = updateGameStatus(game)
 
    -- set gameId for player
    player:SetAttribute("gameId", gameId)
+   player:SetAttribute("team", team)
    player:SetAttribute("ready", false)
 
-   print("GamesService.AddPlayerToGame:", game)
+   print("Server: PlayerJoinedGame:", game, player)
    remoteEvents.PlayerJoinedGame:FireAllClients({ Game = game, Player = player })
    return gameId
+end
+
+local function LeaveGame(player, gameId)
+   print("Server: LeaveGame", player, gameId)
+   local game = games[gameId]
+
+   local team = player:GetAttribute("team")
+   local playersInTeam = game.Teams[team];
+
+   for i, p in pairs(playersInTeam) do
+		if (p.userId == player.userId) then
+         table.remove(playersInTeam, i)
+      end
+	end
+
+   player:SetAttribute("gameId", nil)
+   player:SetAttribute("team", nil)
+   player:SetAttribute("ready", nil)
+
+   -- update status of game
+   game = updateGameStatus(game)
+
+   remoteEvents.PlayerLeftGame:FireAllClients({ Game = game, Player = player })
+
+   return true
 end
 
 local function CreateGame(player, options)
@@ -99,12 +134,13 @@ local function CreateGame(player, options)
    games[gameId] = game
 
    -- add player to game
-   AddPlayerToGame(player, gameId)
+   JoinToGame(player, gameId)
+
    print("Server: Game created", gameId)
 
    -- notify all clients, that new game was created
    remoteEvents.GameCreated:FireAllClients({ Game = game, Player = player })
-   return gameId
+   return game
 end
 
 local function GetGame(player, gameId)
@@ -114,7 +150,8 @@ end;
 function GamesService.Exec()
    print('GamesService.Exec')
    remoteFunctions.CreateGame.OnServerInvoke = CreateGame
-   remoteFunctions.AddPlayerToGame.OnServerInvoke = AddPlayerToGame
+   remoteFunctions.JoinToGame.OnServerInvoke = JoinToGame
+   remoteFunctions.LeaveGame.OnServerInvoke = LeaveGame
    remoteFunctions.ListOfPublicGames.OnServerInvoke = ListOfPublicGames
    remoteFunctions.GetGame.OnServerInvoke = GetGame
 end

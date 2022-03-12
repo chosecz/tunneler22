@@ -33,4 +33,5 @@ function Wrapper.new(Object, Interface)
   })
   return meta
 end
+
 return Wrapper

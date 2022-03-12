@@ -8,6 +8,10 @@
     {
       "Name": "PlayerJoinedGame",
       "ClassName": "RemoteEvent"
+    },
+    {
+      "Name": "PlayerLeftGame",
+      "ClassName": "RemoteEvent"
     }
   ]
 }

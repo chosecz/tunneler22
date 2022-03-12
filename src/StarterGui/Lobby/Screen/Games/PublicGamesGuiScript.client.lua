@@ -61,6 +61,13 @@ end)
 remoteEvents.GameCreated.OnClientEvent:Connect(function()
   generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
 end)
+remoteEvents.PlayerJoinedGame.OnClientEvent:Connect(function()
+  generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
+end)
+remoteEvents.PlayerLeftGame.OnClientEvent:Connect(function()
+  generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
+end)
+
 
 -- BINDABLE EVENTS
 bindableEvents.PublicGamesButtonPressed.Event:Connect(function()

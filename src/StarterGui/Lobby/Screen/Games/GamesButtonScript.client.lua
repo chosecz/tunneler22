@@ -10,16 +10,26 @@ local gamesButton = F.createButton({
 	Text = 'Games',
 	Parent = screenGui,
 	Activated = function()
-		bindableEvents.GamesButtonPressed:Fire()
+		bindableEvents.ShowGamesGui:Fire()
 	end
 })
 print("GamesButton: Done")
 
-bindableEvents.GamesButtonPressed.Event:Connect(function()
-  gamesButton.Visible = false
-end)
+local function show()
+	gamesButton.Visible = true
+end
+local function hide()
+	gamesButton.Visible = false
+end
 
--- Show Games button when party screen is closed
-bindableEvents.GamesCloseButtonPressed.Event:Connect(function()
-  gamesButton.Visible = true
-end)
+function listenToBindableEvents(list, f)
+	for i, event in pairs(list) do
+		bindableEvents[event].Event:Connect(f)
+	end
+end
+
+-- Show Games button
+listenToBindableEvents({ "HideGamesGui", "ShowGamesButton" }, show)
+
+-- Hide Games button
+listenToBindableEvents({ "ShowGamesGui", "HideGamesButton" }, hide)
