@@ -12,6 +12,9 @@ local function customButtonFunctions(button)
 			button.BackgroundColor3 = C.COLOR.BLUE_MUNSELL
 			button.BorderColor3 = C.COLOR.MING
 		end,
+		Activated = function(...)
+			button.Activated:Connect(...)
+		end,
 	}
 end
 
@@ -30,7 +33,7 @@ function F.createButton(options)
 	button.BorderSizePixel = options.BorderSizePixel or 10
 	button.TextColor3 = options.TextColor3 or Color3.fromRGB(255, 255, 255)
 	if (options.Activated) then
-		button.Object.Activated:Connect(options.Activated)
+		button.Activated(options.Activated)
 	end
 	if (options.Selected == true) then
 		button.Select()
