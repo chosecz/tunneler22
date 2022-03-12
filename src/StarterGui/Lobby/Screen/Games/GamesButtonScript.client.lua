@@ -1,28 +1,25 @@
 repeat task.wait() until game.Players.LocalPlayer.Character
 
-local FUNCTIONS = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
+local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local screenGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui')
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
 
-local gamesButtonPressed = bindableEvents:WaitForChild('GamesButtonPressed')
-local gamesCloseButtonPressed = bindableEvents:WaitForChild('GamesCloseButtonPressed')
-
 -- create button
 print("GamesButton: Creating")
-local gamesButton = FUNCTIONS.createButton({
+local gamesButton = F.createButton({
 	Text = 'Games',
 	Parent = screenGui,
 	Activated = function()
-		gamesButtonPressed:Fire()
+		bindableEvents.GamesButtonPressed:Fire()
 	end
 })
 print("GamesButton: Done")
 
-gamesButtonPressed.Event:Connect(function()
+bindableEvents.GamesButtonPressed.Event:Connect(function()
   gamesButton.Visible = false
 end)
 
 -- Show Games button when party screen is closed
-gamesCloseButtonPressed.Event:Connect(function()
+bindableEvents.GamesCloseButtonPressed.Event:Connect(function()
   gamesButton.Visible = true
 end)

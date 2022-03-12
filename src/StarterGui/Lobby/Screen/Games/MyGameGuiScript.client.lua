@@ -9,8 +9,6 @@ local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('Remot
 local getGame = remoteFunctions:WaitForChild('GetGame')
 
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
-local gameCreated = bindableEvents:WaitForChild('GameCreated')
-local addedPlayerToGame = bindableEvents:WaitForChild('AddedPlayerToGame')
 
 -- create button
 print("MyGameGui: Creating")
@@ -55,7 +53,7 @@ function CreateMyGameGui()
   readyButton.Unselect()
   readyButton.Activated:Connect(function()
     print("ready")
-    readyButton.Selected()
+    readyButton.Select()
   end)
 
   -- for 1 vs 1
@@ -121,8 +119,8 @@ function CreateMyGameGui()
 end
 
 -- BINDABLE EVENTS
-gameCreated.Event:Connect(CreateMyGameGui)
-addedPlayerToGame.Event:Connect(CreateMyGameGui)
+bindableEvents.GameCreated.Event:Connect(CreateMyGameGui)
+bindableEvents.AddedPlayerToGame.Event:Connect(CreateMyGameGui)
 
 -- for debug
 -- CreateMyGameGui()

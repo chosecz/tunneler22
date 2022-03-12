@@ -2,7 +2,6 @@ local GF = {}
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('RemoteFunctions')
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
-local addedPlayerToGame = bindableEvents:WaitForChild('AddedPlayerToGame')
 
 function GF.createGameRow(options)
 	local gameRowFrame = Instance.new("Frame")
@@ -29,7 +28,7 @@ function GF.createGameRow(options)
 		print("Going join to game")
 		local response = remoteFunctions.AddPlayerToGame:InvokeServer(options.Game.Id)
     print("Game joined", response)
-    addedPlayerToGame:Fire()
+    bindableEvents.AddedPlayerToGame:Fire()
 	end)
 
 	return gameRowFrame

@@ -1,24 +1,10 @@
 local F = {}
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
-
-local function Wrap(Object, Interface)
-	local Proxy = newproxy(true)
-	local Meta = getmetatable(Proxy)
-
-	function Meta:__index(Key)
-		return Interface[Key] or Object[Key]
-	end
-
-	function Meta:__newindex(Key, Value)
-		Object[Key] = Value
-	end
-
-	return Proxy
-end
+local Wrapper = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Wrapper'))
 
 local function customButtonFunctions(button)
 	return {
-		Selected = function ()
+		Select = function ()
 			button.BackgroundColor3 = C.COLOR.RUBY_RED
 			button.BorderColor3 = C.COLOR.CATAWBA
 		end,
@@ -31,7 +17,7 @@ end
 
 function F.createButton(options)
   local button = Instance.new("TextButton")
-	button = Wrap(button, customButtonFunctions(button))
+	button = Wrapper.new(button, customButtonFunctions(button))
 	button.Parent = options.Parent or nil
 	button.Text = options.Text or "Default"
 	button.Font = options.Font or "Arcade"
@@ -44,10 +30,10 @@ function F.createButton(options)
 	button.BorderSizePixel = options.BorderSizePixel or 10
 	button.TextColor3 = options.TextColor3 or Color3.fromRGB(255, 255, 255)
 	if (options.Activated) then
-		button.Activated:Connect(options.Activated)
+		button.Object.Activated:Connect(options.Activated)
 	end
 	if (options.Selected == true) then
-		button.Selected()
+		button.Select()
 	end
 	return button
 end
@@ -57,6 +43,7 @@ function F.createTextLabel(options)
 	if options.Name then
 		label.Name = options.Name
 	end
+
 	label.Text = options.Text or nil
 	label.Font = options.Font or "Arcade"
 	label.Parent = options.Parent or nil
@@ -67,7 +54,6 @@ function F.createTextLabel(options)
 		label.BackgroundColor3 = options.BackgroundColor3
 	end
 	label.BackgroundTransparency = options.BackgroundTransparency or 1
-	return label
 end
 
 return F

@@ -6,10 +6,6 @@ local localPlayer = game:GetService('Players').LocalPlayer
 local gamesGui = localPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui'):WaitForChild('GamesGui')
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
 local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('RemoteFunctions')
-local createGameButtonPressed = bindableEvents:WaitForChild('CreateGameButtonPressed')
-local publicGamesButtonPressed = bindableEvents:WaitForChild('PublicGamesButtonPressed')
-local friendGamesButtonPressed = bindableEvents:WaitForChild('FriendGamesButtonPressed')
-local gameCreated = bindableEvents:WaitForChild('GameCreated')
 
 local createGameGui = Instance.new("Frame")
 createGameGui.Name = "CreateGameGui"
@@ -30,22 +26,22 @@ local button2vs2 = nil
 
 local function ChangeGameType(type)
   if (type == C.GAME_TYPE.PUBLIC) then
-    publicGameButton.Selected()
+    publicGameButton.Select()
     friendsOnlyButton.Unselect()
   elseif (type == C.GAME_TYPE.FRIENDS) then
     publicGameButton.Unselect()
-    friendsOnlyButton.Selected()
+    friendsOnlyButton.Select()
   end
   gameType = type
 end
 
 local function ChangeGameMode(mode)
   if (mode == C.GAME_MODE.ONE) then
-    button1vs1.Selected()
+    button1vs1.Select()
     button2vs2.Unselect()
   elseif (mode == C.GAME_MODE.TWO) then
     button1vs1.Unselect()
-    button2vs2.Selected()
+    button2vs2.Select()
   end
   gameMode = mode
 end
@@ -117,19 +113,19 @@ F.createButton({
       GameMode = gameMode,
     })
     print("Game created", response)
-    gameCreated:Fire()
+    bindableEvents.GameCreated:Fire()
   end
 })
 
 -- BINDABLE EVENTS
-publicGamesButtonPressed.Event:Connect(function()
+bindableEvents.PublicGamesButtonPressed.Event:Connect(function()
   createGameGui.Visible = false
 end)
 
-friendGamesButtonPressed.Event:Connect(function()
+bindableEvents.FriendGamesButtonPressed.Event:Connect(function()
   createGameGui.Visible = false
 end)
 
-createGameButtonPressed.Event:Connect(function()
+bindableEvents.CreateGameButtonPressed.Event:Connect(function()
   createGameGui.Visible = true
 end)

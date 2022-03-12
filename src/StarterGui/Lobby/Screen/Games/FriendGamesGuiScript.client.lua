@@ -4,9 +4,6 @@ local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Fun
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local gamesGui = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('ScreenGui'):WaitForChild('GamesGui')
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
-local createGameButtonPressed = bindableEvents:WaitForChild('CreateGameButtonPressed')
-local publicGamesButtonPressed = bindableEvents:WaitForChild('PublicGamesButtonPressed')
-local friendGamesButtonPressed = bindableEvents:WaitForChild('FriendGamesButtonPressed')
 
 local friendGamesGui = Instance.new("Frame")
 friendGamesGui.Name = "FriendGamesGui"
@@ -19,15 +16,15 @@ friendGamesGui.Size = UDim2.new(1, 0, 0.85, 0)
 friendGamesGui.Visible = false
 
 -- BINDABLE EVENTS
-publicGamesButtonPressed.Event:Connect(function()
+bindableEvents.PublicGamesButtonPressed.Event:Connect(function()
   friendGamesGui.Visible = false
 end)
 
-friendGamesButtonPressed.Event:Connect(function()
+bindableEvents.FriendGamesButtonPressed.Event:Connect(function()
   friendGamesGui.Visible = true
 end)
 
-createGameButtonPressed.Event:Connect(function()
+bindableEvents.CreateGameButtonPressed.Event:Connect(function()
   friendGamesGui.Visible = false
 end)
 
