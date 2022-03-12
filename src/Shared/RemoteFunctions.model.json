@@ -6,7 +6,7 @@
       "ClassName": "RemoteFunction"
     },
     {
-      "Name": "JoinToGame",
+      "Name": "JoinGame",
       "ClassName": "RemoteFunction"
     },
     {

@@ -69,8 +69,8 @@ local function resolveTeamForPlayer(game)
    return team
 end
 
-local function JoinToGame(player, gameId)
-   print("Server: JoinToGame", player, gameId)
+local function JoinGame(player, gameId)
+   print("Server: JoinGame", player, gameId)
    local game = games[gameId]
    local team = resolveTeamForPlayer(game)
 
@@ -134,7 +134,7 @@ local function CreateGame(player, options)
    games[gameId] = game
 
    -- add player to game
-   JoinToGame(player, gameId)
+   JoinGame(player, gameId)
 
    print("Server: Game created", gameId)
 
@@ -150,7 +150,7 @@ end;
 function GamesService.Exec()
    print('GamesService.Exec')
    remoteFunctions.CreateGame.OnServerInvoke = CreateGame
-   remoteFunctions.JoinToGame.OnServerInvoke = JoinToGame
+   remoteFunctions.JoinGame.OnServerInvoke = JoinGame
    remoteFunctions.LeaveGame.OnServerInvoke = LeaveGame
    remoteFunctions.ListOfPublicGames.OnServerInvoke = ListOfPublicGames
    remoteFunctions.GetGame.OnServerInvoke = GetGame

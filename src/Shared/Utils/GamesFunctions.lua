@@ -25,7 +25,7 @@ function GF.createGameRow(options)
 	gameJoinButton.Text = "Join"
 	gameJoinButton.Activated:Connect(function()
 		print("Going join to game")
-		local response = remoteFunctions.JoinToGame:InvokeServer(options.Game.Id)
+		local response = remoteFunctions.JoinGame:InvokeServer(options.Game.Id)
     print("Game joined", response)
 	end)
 
