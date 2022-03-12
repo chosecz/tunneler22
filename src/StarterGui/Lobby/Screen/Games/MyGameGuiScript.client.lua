@@ -30,7 +30,6 @@ function RenderMyGameGui()
 
   local gameId = LocalPlayer:getAttribute("gameId")
   local game = remoteFunctions.GetGame:InvokeServer(gameId)
-  print("*** game", game)
 
   -- clear if exists
   local list = myGameGui:GetChildren()
