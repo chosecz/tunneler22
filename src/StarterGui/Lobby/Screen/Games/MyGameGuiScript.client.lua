@@ -42,7 +42,6 @@ function CreateMyGameGui()
       -- publicGamesButtonPressed:Fire()
     end
   })
-  leaveButton.Unselect()
 
   local readyButton = F.createButton({
     Parent = myGameGui,
