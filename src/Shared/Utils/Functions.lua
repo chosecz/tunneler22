@@ -20,25 +20,25 @@ end
 
 function F.createButton(options)
   local button = Instance.new("TextButton")
-	button = Wrapper.new(button, customButtonFunctions(button))
-	button.Parent = options.Parent or nil
-	button.Text = options.Text or "Default"
-	button.Font = options.Font or "Arcade"
-	button.Size = options.Size or UDim2.new(0.2, 0, 0.05, 0)
-	button.Position = options.Position or UDim2.new(0.4, 0, 0.025, 0)
-	button.TextScaled = options.TextScaled or true
-	button.BackgroundColor3 = options.BackgroundColor3 or C.COLOR.BLUE_MUNSELL
-	button.BackgroundTransparency = options.BackgroundTransparency or 0
-	button.BorderColor3 = options.BorderColor3 or C.COLOR.MING
-	button.BorderSizePixel = options.BorderSizePixel or 10
-	button.TextColor3 = options.TextColor3 or Color3.fromRGB(255, 255, 255)
+	local wrapper = Wrapper.new(button, customButtonFunctions(button))
+	wrapper.Parent = options.Parent or nil
+	wrapper.Text = options.Text or "Default"
+	wrapper.Font = options.Font or "Arcade"
+	wrapper.Size = options.Size or UDim2.new(0.2, 0, 0.05, 0)
+	wrapper.Position = options.Position or UDim2.new(0.4, 0, 0.025, 0)
+	wrapper.TextScaled = options.TextScaled or true
+	wrapper.BackgroundColor3 = options.BackgroundColor3 or C.COLOR.BLUE_MUNSELL
+	wrapper.BackgroundTransparency = options.BackgroundTransparency or 0
+	wrapper.BorderColor3 = options.BorderColor3 or C.COLOR.MING
+	wrapper.BorderSizePixel = options.BorderSizePixel or 10
+	wrapper.TextColor3 = options.TextColor3 or Color3.fromRGB(255, 255, 255)
 	if (options.Activated) then
-		button.Activated(options.Activated)
+		wrapper.Activated(options.Activated)
 	end
 	if (options.Selected == true) then
-		button.Select()
+		wrapper.Select()
 	end
-	return button
+	return wrapper
 end
 
 function F.createTextLabel(options)
@@ -57,6 +57,7 @@ function F.createTextLabel(options)
 		label.BackgroundColor3 = options.BackgroundColor3
 	end
 	label.BackgroundTransparency = options.BackgroundTransparency or 1
+	return label
 end
 
 return F

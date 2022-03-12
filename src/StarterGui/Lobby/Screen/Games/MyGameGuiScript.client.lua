@@ -49,13 +49,11 @@ function CreateMyGameGui()
     Text = "Ready",
     Size = UDim2.new(0.8, 0, 0.05, 0),
     Position = UDim2.new(0.1, 0, 0.9, 0),
+    Activated = function()
+      print("ready")
+    end
   })
-  readyButton.Unselect()
-  readyButton.Activated:Connect(function()
-    print("ready")
-    readyButton.Select()
-  end)
-
+  
   -- for 1 vs 1
   if (game.GameMode == C.GAME_MODE.ONE) then
     local red1name = F.createTextLabel({
