@@ -52,8 +52,9 @@ end
 
 -- change visibility handler
 publicGamesGui:GetPropertyChangedSignal("Visible"):Connect(function()
-  -- generate list of games
-  generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
+  if (publicGamesGui.Visible) then
+    generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
+  end
 end)
 
 -- REMOVE EVENTS
