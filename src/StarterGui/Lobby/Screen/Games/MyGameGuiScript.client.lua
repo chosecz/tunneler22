@@ -53,7 +53,7 @@ function CreateMyGameGui()
       print("ready")
     end
   })
-  
+
   -- for 1 vs 1
   if (game.GameMode == C.GAME_MODE.ONE) then
     local red1name = F.createTextLabel({
