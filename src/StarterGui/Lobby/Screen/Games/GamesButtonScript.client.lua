@@ -22,14 +22,8 @@ local function hide()
 	gamesButton.Visible = false
 end
 
-function listenToBindableEvents(list, f)
-	for i, event in pairs(list) do
-		bindableEvents[event].Event:Connect(f)
-	end
-end
-
 -- Show Games button
-listenToBindableEvents({ "HideGamesGui", "ShowGamesButton" }, show)
+F.listenToBindableEvents({ "HideGamesGui", "ShowGamesButton" }, show)
 
 -- Hide Games button
-listenToBindableEvents({ "ShowGamesGui", "HideGamesButton" }, hide)
+F.listenToBindableEvents({ "ShowGamesGui", "HideGamesButton" }, hide)
