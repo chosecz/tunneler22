@@ -29,9 +29,8 @@ function RenderMyGameGui()
   myGameGui.Visible = true
 
   local gameId = LocalPlayer:getAttribute("gameId")
-
   local game = remoteFunctions.GetGame:InvokeServer(gameId)
-  print("game from server", game)
+  print("*** game", game)
 
   -- clear if exists
   local list = myGameGui:GetChildren()
@@ -45,7 +44,6 @@ function RenderMyGameGui()
     Size = UDim2.new(0.8, 0, 0.05, 0),
     Position = UDim2.new(0.1, 0, 0.8, 0),
     Activated = function()
-      print("leaveButton")
       remoteFunctions.LeaveGame:InvokeServer(gameId)
       bindableEvents.ShowGamesButton:Fire()
       myGameGui.Visible = false
@@ -60,20 +58,19 @@ function RenderMyGameGui()
   })
   readyButton.Activated(function()
     local ready = LocalPlayer:GetAttribute("ready")
-    if (ready) then
-      readyButton.Unselect()
-      readyButton.Text = "Ready?"
-    else
-      readyButton.Select()
-      readyButton.Text = "Yes, I am ready!"
-    end
-
     -- not ready will invert value of ready
     ready = not ready
-
-    -- update player attrs
-    LocalPlayer:SetAttribute("ready", ready)
+    -- send remote event
+    remoteEvents.PlayerReadyChanged:FireServer({ Game = game, Ready = ready })
   end)
+
+  if LocalPlayer:GetAttribute("ready") then
+    readyButton.Select()
+    readyButton.Text = "Yes, I am ready!"
+  else
+    readyButton.Unselect()
+    readyButton.Text = "Ready?"
+  end
 
   -- for 1 vs 1
   if (game.GameMode == C.GAME_MODE.ONE) then
@@ -87,12 +84,11 @@ function RenderMyGameGui()
     })
     local red1Ready = F.createTextLabel({
       Parent = myGameGui,
-      -- Text = "✅",
       Text = "?",
       Size = UDim2.new(0.2, 0, 0.1, 0),
-      Position = UDim2.new(0.05, 0, 0.2, 0),
+      Position = UDim2.new(0.05, 0, 0.05, 0),
     })
-    local blue1name = F.createTextLabel({
+     local blue1name = F.createTextLabel({
       Parent = myGameGui,
       Text = "Waiting for player",
       Size = UDim2.new(0.7, 0, 0.1, 0),
@@ -102,54 +98,46 @@ function RenderMyGameGui()
     })
     local blue1Ready = F.createTextLabel({
       Parent = myGameGui,
-      -- Text = "✅",
       Text = "?",
       Size = UDim2.new(0.2, 0, 0.1, 0),
-      Position = UDim2.new(0.05, 0, 0.05, 0),
+      Position = UDim2.new(0.05, 0, 0.2, 0),
     })
 
     if (#game.Teams[C.GAME_TEAM.RED] > 0) then
-      red1name.Text = game.Teams[C.GAME_TEAM.RED][1].DisplayName
+      local player = game.Teams[C.GAME_TEAM.RED][1]
+      red1name.Text = player.DisplayName
+      if (player:GetAttribute("ready")) then
+        red1Ready.Text = "✅"
+      else
+        red1Ready.Text = "?"
+      end
     end
+
     if (#game.Teams[C.GAME_TEAM.BLUE] > 0) then
-      blue1name.Text = game.Teams[C.GAME_TEAM.BLUE][1].DisplayName
+      local player = game.Teams[C.GAME_TEAM.BLUE][1]
+      blue1name.Text = player.DisplayName
+      if (player:GetAttribute("ready")) then
+        blue1Ready.Text = "✅"
+      else
+        blue1Ready.Text = "?"
+      end
     end
   end
 
   -- for 2 vs 2
   if (game.GameMode == C.GAME_MODE.TWO) then
-    local red2name = F.createTextLabel({
-      Parent = myGameGui,
-      Text = "Waiting for player",
-      Size = UDim2.new(0.7, 0, 0.1, 0),
-      Position = UDim2.new(0.25, 0, 0.2, 0),
-      BackgroundColor3 = Color3.fromRGB(255, 0, 0),
-      BackgroundTransparency = 0,
-    })
-    local red2Ready = F.createTextLabel({
-      Parent = myGameGui,
-      -- Text = "✅",
-      Text = "?",
-      Size = UDim2.new(0.2, 0, 0.1, 0),
-      Position = UDim2.new(0.05, 0, 0.2, 0),
-    })
+    print("not implemented yes")
   end
 
 end
 
--- REMOTE EVENTS
-remoteEvents.PlayerJoinedGame.OnClientEvent:Connect(function(options)
-  print("some player joined game", options)
+local function checkAndRender(options)
   if (F.isMyGame(options.Game)) then
     RenderMyGameGui()
   end
-end)
+end
 
-remoteEvents.PlayerLeftGame.OnClientEvent:Connect(function(options)
-  print("some player left game", options)
-  if (F.isMyGame(options.Game)) then
-    RenderMyGameGui()
-  end
-end)
+-- REMOTE EVENTS
+F.listenToRemoteEvents({ "PlayerJoinedGame", "PlayerLeftGame", "PlayerReadyChanged" }, checkAndRender)
 
 print("MyGameGui: Done")

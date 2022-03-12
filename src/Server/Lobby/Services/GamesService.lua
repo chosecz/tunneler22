@@ -154,6 +154,16 @@ function GamesService.Exec()
    remoteFunctions.LeaveGame.OnServerInvoke = LeaveGame
    remoteFunctions.ListOfPublicGames.OnServerInvoke = ListOfPublicGames
    remoteFunctions.GetGame.OnServerInvoke = GetGame
+
+   remoteEvents.PlayerReadyChanged.OnServerEvent:Connect(function(player, options)
+      print("on server", player)
+      
+      -- update player attrs
+      player:SetAttribute("ready", options.Ready)
+
+      remoteEvents.PlayerReadyChanged:FireAllClients(options)
+      print("firing on clients", options)
+   end)
 end
 
 return GamesService

@@ -2,6 +2,7 @@ local F = {}
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local Wrapper = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Wrapper'))
 local bindableEvents = game:GetService('ReplicatedStorage'):WaitForChild('BindableEvents')
+local remoteEvents = game:GetService('ReplicatedStorage'):WaitForChild('RemoteEvents')
 local LocalPlayer = game:GetService('Players').LocalPlayer
 
 local function customButtonFunctions(button)
@@ -23,6 +24,12 @@ end
 function F.listenToBindableEvents(list, f)
 	for i, event in pairs(list) do
 		bindableEvents[event].Event:Connect(f)
+	end
+end
+
+function F.listenToRemoteEvents(list, f)
+	for i, event in pairs(list) do
+		remoteEvents[event].OnClientEvent:Connect(f)
 	end
 end
 

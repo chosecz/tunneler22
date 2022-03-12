@@ -17,6 +17,9 @@ gamesGuiFrame.Position = UDim2.new(0.1, 0, 0, 0)
 gamesGuiFrame.Size = UDim2.new(0.8, 0, 0.9, 0)
 gamesGuiFrame.Visible = false
 gamesGuiFrame.Parent = screenGui
+gamesGuiFrame:GetPropertyChangedSignal("Visible"):Connect(function()
+  bindableEvents.GamesGuiVisibilityChanged:Fire(gamesGuiFrame.Visible)
+end)
 
 local function show()
   gamesGuiFrame.Visible = true

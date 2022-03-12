@@ -22,6 +22,10 @@
       "ClassName": "BindableEvent"
     },
     {
+      "Name": "GamesGuiVisibilityChanged",
+      "ClassName": "BindableEvent"
+    },
+    {
       "Name": "GameCreated",
       "ClassName": "BindableEvent"
     },
