@@ -117,6 +117,7 @@ local function JoinGame(player, gameId)
 
   -- add player to list
   table.insert(game.Teams[team], player)
+  table.insert(game.Players[team], player.UserId)
 
   -- update status of game
   game = updateGameStatus(game)
@@ -137,12 +138,14 @@ local function LeaveGame(player, gameId)
 
   local team = player:GetAttribute("team")
   local playersInTeam = game.Teams[team];
+  local playersInPlayers = game.Players[team];
 
   for i, p in pairs(playersInTeam) do
     if (p.UserId == player.UserId) then
       -- if leaving player is owner, set new owner
       if (p.UserId == game.Owner.UserId) then game.Owner = nil end
       table.remove(playersInTeam, i)
+      table.remove(playersInPlayers, i)
     end
   end
 
@@ -168,7 +171,8 @@ local function CreateGame(player, options)
     Owner = player,
     Full = false,
     ReadyToStart = false,
-    Teams = {[C.GAME_TEAM.RED] = {}, [C.GAME_TEAM.BLUE] = {}}
+    Teams = {[C.GAME_TEAM.RED] = {}, [C.GAME_TEAM.BLUE] = {}},
+    Players = {[C.GAME_TEAM.RED] = {}, [C.GAME_TEAM.BLUE] = {}}
   }
 
   -- add to game list
@@ -210,8 +214,11 @@ local function TeleportPlayersToArena(player, game)
   local NewPlaceId = AS:CreatePlaceAsync("Arena", arenaPlaceId)
   print("NewPlaceId", NewPlaceId)
 
+  local teleportOptions = Instance.new("TeleportOptions")
+  teleportOptions:SetTeleportData(game) -- set game data to teleport options
+
   -- teleport players
-  local teleportResult = TM.teleportWithRetry(NewPlaceId, allPlayers)
+  local teleportResult = TM.teleportWithRetry(NewPlaceId, allPlayers, teleportOptions)
 
   print("teleport done")
 

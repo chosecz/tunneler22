@@ -1,7 +1,7 @@
 local ServerStorageService = {}
 
 function ServerStorageService.Exec()
-   print('ServerStorageService.Exec')
+   print('Arena ServerStorageService.Exec')
 end
 
 return ServerStorageService

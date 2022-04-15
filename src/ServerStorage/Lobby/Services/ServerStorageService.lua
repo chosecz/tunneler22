@@ -1,7 +1,7 @@
 local ServerStorageService = {}
 
 function ServerStorageService.Exec()
-   print('ServerStorageService.Exec')
+   print('Lobby ServerStorageService.Exec')
 end
 
 return ServerStorageService
