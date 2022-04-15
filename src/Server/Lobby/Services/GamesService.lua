@@ -219,6 +219,14 @@ end
 
 local function GetGame(player, gameId) return games[gameId] end
 
+local Players = game:GetService("Players")
+Players.PlayerRemoving:Connect(function(player)
+  if (player:GetAttribute("gameId")) then
+    LeaveGame(player, player:GetAttribute("gameId"))
+  end
+  print(player.Name .. " left the game!")
+end)
+
 function GamesService.Exec()
   print('GamesService.Exec')
   remoteFunctions.CreateGame.OnServerInvoke = CreateGame
