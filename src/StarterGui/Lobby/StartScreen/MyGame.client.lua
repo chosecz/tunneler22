@@ -115,6 +115,10 @@ function RenderMyGameGui()
       BackgroundTransparency = 1,
     })
 
+    local function isPlayerGameOwner(player)
+      return player.UserId == game.Owner.UserId
+    end
+
     local function setGameOwnerLabelPosition(position)
       gameOwner.Position = UDim2.new(0.55, 0, position, 0)
     end
@@ -127,7 +131,7 @@ function RenderMyGameGui()
       else
         red1Ready.Text = "?"
       end
-      if (game.Owner.UserId == player.UserId) then
+      if (isPlayerGameOwner(player)) then
         setGameOwnerLabelPosition(0.025)
       end
     end
@@ -140,7 +144,7 @@ function RenderMyGameGui()
       else
         blue1Ready.Text = "?"
       end
-      if (game.Owner.UserId == player.UserId) then
+      if (isPlayerGameOwner(player)) then
         setGameOwnerLabelPosition(0.175)
       end
     end
