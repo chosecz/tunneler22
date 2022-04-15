@@ -205,12 +205,15 @@ local function TeleportPlayersToArena(player, game)
   local bluePlayers = game.Teams[C.GAME_TEAM.BLUE]
   local allPlayers = {table.unpack(redPlayers), table.unpack(bluePlayers)}
   print("allPlayers", allPlayers)
-
+  
   -- create arena
   local NewPlaceId = AS:CreatePlaceAsync("Arena", arenaPlaceId)
-  
+  print("NewPlaceId", NewPlaceId)
+
   -- teleport players
-  local teleportResult = TeleportModule.teleportWithRetry(NewPlaceId, allPlayers)
+  local teleportResult = TM.teleportWithRetry(NewPlaceId, allPlayers)
+
+  print("teleport done")
 
 end
 
