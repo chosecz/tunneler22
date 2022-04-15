@@ -24,6 +24,10 @@
     {
       "Name": "TeleportPlayersToArena",
       "ClassName": "RemoteFunction"
+    },
+    {
+      "Name": "KickPlayer",
+      "ClassName": "RemoteFunction"
     }
   ]
 }

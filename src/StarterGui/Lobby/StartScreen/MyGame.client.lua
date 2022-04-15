@@ -57,8 +57,6 @@ function RenderMyGameGui(game)
     Position = UDim2.new(0.1, 0, 0.8, 0),
     Activated = function()
       remoteFunctions.LeaveGame:InvokeServer(gameId)
-      bindableEvents.ShowGamesButton:Fire()
-      myGameGui.Visible = false
     end
   })
 
@@ -131,11 +129,25 @@ function RenderMyGameGui(game)
     local kick = F.createButton({
       Parent = myGameGui,
       Text = "X",
+      TextColor3 = Color3.fromRGB(149, 0, 0),
+      BackgroundTransparency = 1,
       Size = UDim2.new(0.05, 0, 0.075, 0),
       Position = UDim2.new(0.85, 0, 0.1 + Index * STEP, 0),
       BorderSizePixel = 0,
       LineHeight = 1.1,
+      Activated = function()
+        if Player then
+          remoteFunctions.KickPlayer:InvokeServer(gameId, Player.UserId)
+        end
+      end
     })
+    if not Player then
+      kick.Visible = false
+    elseif isPlayerGameOwner(LocalPlayer) then
+      kick.Visible = true
+    else
+      kick.Visible = false
+    end
     if (Player) then
       name.Text = Player.DisplayName
       if (Player:GetAttribute("ready")) then
@@ -145,6 +157,7 @@ function RenderMyGameGui(game)
       end
       if (isPlayerGameOwner(Player)) then
         createGameOwnerIcon(Index)
+        kick.Visible = false
       end
     end
   end
@@ -192,7 +205,16 @@ local function checkAndRenderMyGameScreen(options)
   end
 end
 
+local function PlayerLeftGame(options)
+  print("PlayerLeftGame", options)
+  if (options.Player.UserId == LocalPlayer.UserId) then
+    bindableEvents.ShowGamesButton:Fire()
+    myGameGui.Visible = false
+  end
+end
+
 -- REMOTE EVENTS
 F.listenToRemoteEvents({ "PlayerJoinedGame", "PlayerLeftGame", "PlayerReadyChanged", "GameStarting" }, checkAndRenderMyGameScreen)
+F.listenToRemoteEvents({ "PlayerLeftGame" }, PlayerLeftGame)
 
 print("MyGameGui: Done")

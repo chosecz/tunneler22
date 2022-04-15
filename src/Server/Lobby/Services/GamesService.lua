@@ -219,6 +219,27 @@ end
 
 local function GetGame(player, gameId) return games[gameId] end
 
+local function KickPlayer(player, gameId, playerId)
+  print("Server: KickPlayer", player, gameId, playerId)
+  local game = games[gameId]
+  local playerToKick = nil
+  for i, p in pairs(game.Teams[C.GAME_TEAM.RED]) do
+    if (p.UserId == playerId) then
+      playerToKick = p
+      break
+    end
+  end
+  for i, p in pairs(game.Teams[C.GAME_TEAM.BLUE]) do
+    if (p.UserId == playerId) then
+      playerToKick = p
+      break
+    end
+  end
+  if (playerToKick) then
+    LeaveGame(playerToKick, gameId)
+  end
+end
+
 local Players = game:GetService("Players")
 Players.PlayerRemoving:Connect(function(player)
   if (player:GetAttribute("gameId")) then
@@ -235,6 +256,7 @@ function GamesService.Exec()
   remoteFunctions.ListOfPublicGames.OnServerInvoke = ListOfPublicGames
   remoteFunctions.GetGame.OnServerInvoke = GetGame
   remoteFunctions.TeleportPlayersToArena.OnServerInvoke = TeleportPlayersToArena
+  remoteFunctions.KickPlayer.OnServerInvoke = KickPlayer
 
   remoteEvents.PlayerReadyChanged.OnServerEvent:Connect(PlayerReadyChanged)
 end
