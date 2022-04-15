@@ -73,6 +73,7 @@ function RenderMyGameGui()
 
   -- for 1 vs 1
   if (game.GameMode == C.GAME_MODE.ONE) then
+    -- red player
     local red1name = F.createTextLabel({
       Parent = myGameGui,
       Text = "Waiting for player",
@@ -80,27 +81,43 @@ function RenderMyGameGui()
       Position = UDim2.new(0.25, 0, 0.05, 0),
       BackgroundColor3 = Color3.fromRGB(255, 0, 0),
       BackgroundTransparency = 0,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
     })
     local red1Ready = F.createTextLabel({
       Parent = myGameGui,
-      Text = "?",
+      Text = "",
       Size = UDim2.new(0.2, 0, 0.1, 0),
       Position = UDim2.new(0.05, 0, 0.05, 0),
     })
-     local blue1name = F.createTextLabel({
+    
+    -- blue player
+    local blue1name = F.createTextLabel({
       Parent = myGameGui,
       Text = "Waiting for player",
       Size = UDim2.new(0.7, 0, 0.1, 0),
       Position = UDim2.new(0.25, 0, 0.2, 0),
       BackgroundColor3 = Color3.fromRGB(0, 0, 255),
       BackgroundTransparency = 0,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
     })
     local blue1Ready = F.createTextLabel({
       Parent = myGameGui,
-      Text = "?",
+      Text = "",
       Size = UDim2.new(0.2, 0, 0.1, 0),
       Position = UDim2.new(0.05, 0, 0.2, 0),
     })
+
+    -- game Owner label
+    local gameOwner = F.createTextLabel({
+      Parent = myGameGui,
+      Text = "👑",
+      Size = UDim2.new(0.1, 0, 0.05, 0),
+      BackgroundTransparency = 1,
+    })
+
+    local function setGameOwnerLabelPosition(position)
+      gameOwner.Position = UDim2.new(0.55, 0, position, 0)
+    end
 
     if (#game.Teams[C.GAME_TEAM.RED] > 0) then
       local player = game.Teams[C.GAME_TEAM.RED][1]
@@ -109,6 +126,9 @@ function RenderMyGameGui()
         red1Ready.Text = "✅"
       else
         red1Ready.Text = "?"
+      end
+      if (game.Owner.UserId == player.UserId) then
+        setGameOwnerLabelPosition(0.025)
       end
     end
 
@@ -119,6 +139,9 @@ function RenderMyGameGui()
         blue1Ready.Text = "✅"
       else
         blue1Ready.Text = "?"
+      end
+      if (game.Owner.UserId == player.UserId) then
+        setGameOwnerLabelPosition(0.175)
       end
     end
   end

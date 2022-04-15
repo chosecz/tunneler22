@@ -78,6 +78,9 @@ function F.createTextLabel(options)
 	if options.BackgroundColor3 then
 		label.BackgroundColor3 = options.BackgroundColor3
 	end
+	if options.TextColor3 then
+		label.TextColor3 = options.TextColor3
+	end
 	label.BackgroundTransparency = options.BackgroundTransparency or 1
 	return label
 end
