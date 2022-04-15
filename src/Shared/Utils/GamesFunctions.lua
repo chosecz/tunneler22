@@ -23,6 +23,11 @@ function GF.createGameRow(options)
 	gameJoinButton.Position = UDim2.new(0.75, 0, 0, 0)
 	gameJoinButton.Size = UDim2.new(0.25, 0, 1, 0)
 	gameJoinButton.Text = "Join"
+	if (options.Game.Full) then
+		gameJoinButton.TextColor3 = C.COLOR.RUBY_RED
+		gameJoinButton.Text = "Full"
+		gameJoinButton.Active = false
+	end
 	gameJoinButton.Activated:Connect(function()
 		print("Going join to game")
 		local response = remoteFunctions.JoinGame:InvokeServer(options.Game.Id)
