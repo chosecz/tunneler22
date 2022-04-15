@@ -1,6 +1,6 @@
 {
   "name": "TunnelerArena",
-  "servePlaceIds": [6828489273],
+  "servePlaceIds": [0, 6827927589, 9375479344],
   "tree": {
     "$className": "DataModel",
     "HttpService": {

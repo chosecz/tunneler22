@@ -52,7 +52,7 @@ function F.createButton(options)
 	wrapper.BackgroundColor3 = options.BackgroundColor3 or C.COLOR.BLUE_MUNSELL
 	wrapper.BackgroundTransparency = options.BackgroundTransparency or 0
 	wrapper.BorderColor3 = options.BorderColor3 or C.COLOR.MING
-	wrapper.BorderSizePixel = options.BorderSizePixel or 10
+	wrapper.BorderSizePixel = options.BorderSizePixel or 5
 	wrapper.LineHeight = options.LineHeight or 1
 	wrapper.TextColor3 = options.TextColor3 or Color3.fromRGB(255, 255, 255)
 	if (options.Activated) then
@@ -76,6 +76,7 @@ function F.createTextLabel(options)
 	label.Size = options.Size or UDim2.new(0.2, 0, 0.1, 0)
 	label.Position = options.Position or UDim2.new(0.4, 0, 0.4, 0)
 	label.TextScaled = options.TextScaled or true
+	label.BorderSizePixel = options.BorderSizePixel or 0
 	if options.BackgroundColor3 then
 		label.BackgroundColor3 = options.BackgroundColor3
 	end

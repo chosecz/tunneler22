@@ -16,6 +16,10 @@
     {
       "Name": "PlayerReadyChanged",
       "ClassName": "RemoteEvent"
+    },
+    {
+      "Name": "GameStarting",
+      "ClassName": "RemoteEvent"
     }
   ]
 }

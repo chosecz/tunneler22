@@ -20,6 +20,10 @@
     {
       "Name": "GetGame",
       "ClassName": "RemoteFunction"
+    },
+    {
+      "Name": "TeleportPlayersToArena",
+      "ClassName": "RemoteFunction"
     }
   ]
 }

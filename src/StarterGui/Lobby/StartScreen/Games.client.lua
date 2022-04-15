@@ -21,6 +21,10 @@ gamesGuiFrame:GetPropertyChangedSignal("Visible"):Connect(function()
   bindableEvents.GamesGuiVisibilityChanged:Fire(gamesGuiFrame.Visible)
 end)
 
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0.01, 0)
+UICorner.Parent = gamesGuiFrame
+
 local function show()
   gamesGuiFrame.Visible = true
 end

@@ -1,9 +1,10 @@
-local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild(
-                      'Constants'))
-local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild(
-                            'RemoteFunctions')
-local remoteEvents = game:GetService('ReplicatedStorage'):WaitForChild(
-                         'RemoteEvents')
+local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
+local remoteFunctions = game.ReplicatedStorage:WaitForChild('RemoteFunctions')
+local remoteEvents = game.ReplicatedStorage:WaitForChild('RemoteEvents')
+local TM = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('TeleportModule'))
+local AS = game:GetService("AssetService")
+local arenaPlaceId = 9375479344
+
 local GamesService = {}
 
 -- holds list of all games
@@ -30,6 +31,7 @@ local function updateGameStatus(game)
   local bluePlayers = game.Teams[C.GAME_TEAM.BLUE]
   local numberOfPlayers = #redPlayers + #bluePlayers
   local allPlayers = {table.unpack(redPlayers), table.unpack(bluePlayers)}
+  local allPlayersReady = false
 
   -- for GAME_MODE.ONE
   local maxPlayers = 2
@@ -52,11 +54,31 @@ local function updateGameStatus(game)
     print("Setting new owner", allPlayers)
     -- set new owner of game
     for i, p in pairs(allPlayers) do
-      if (allPlayers[i]) then
+      if (p) then
         game.Owner = p
         break
       end
     end
+  end
+
+  if (game.Full) then
+    for i, p in pairs(allPlayers) do
+      if (p:GetAttribute("ready")) then
+        allPlayersReady = true
+      else
+        allPlayersReady = false
+        break
+      end
+    end
+  end
+
+  if (allPlayersReady) then
+    -- remoteEvents.GameStarting:FireAllClients({ Game = game, ReadyToStart = true })
+    print("All players ready")
+    game.ReadyToStart = true
+  else
+    print("Not all players ready")
+    game.ReadyToStart = false
   end
 
   print("Server: updateGameStatus", game)
@@ -145,6 +167,7 @@ local function CreateGame(player, options)
     GameMode = options.GameMode,
     Owner = player,
     Full = false,
+    ReadyToStart = false,
     Teams = {[C.GAME_TEAM.RED] = {}, [C.GAME_TEAM.BLUE] = {}}
   }
 
@@ -167,8 +190,28 @@ local function PlayerReadyChanged(player, options)
   -- update player attrs
   player:SetAttribute("ready", options.Ready)
 
+  -- update status of game
+  local game = options.Game
+  game = updateGameStatus(game)
+
   remoteEvents.PlayerReadyChanged:FireAllClients(options)
   print("firing on clients", options)
+end
+
+local function TeleportPlayersToArena(player, game)
+  print("Server: TeleportPlayersToArena", player, game)
+
+  local redPlayers = game.Teams[C.GAME_TEAM.RED]
+  local bluePlayers = game.Teams[C.GAME_TEAM.BLUE]
+  local allPlayers = {table.unpack(redPlayers), table.unpack(bluePlayers)}
+  print("allPlayers", allPlayers)
+
+  -- create arena
+  local NewPlaceId = AS:CreatePlaceAsync("Arena", arenaPlaceId)
+  
+  -- teleport players
+  local teleportResult = TeleportModule.teleportWithRetry(NewPlaceId, allPlayers)
+
 end
 
 local function GetGame(player, gameId) return games[gameId] end
@@ -180,6 +223,7 @@ function GamesService.Exec()
   remoteFunctions.LeaveGame.OnServerInvoke = LeaveGame
   remoteFunctions.ListOfPublicGames.OnServerInvoke = ListOfPublicGames
   remoteFunctions.GetGame.OnServerInvoke = GetGame
+  remoteFunctions.TeleportPlayersToArena.OnServerInvoke = TeleportPlayersToArena
 
   remoteEvents.PlayerReadyChanged.OnServerEvent:Connect(PlayerReadyChanged)
 end

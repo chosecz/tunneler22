@@ -23,19 +23,32 @@ myGameGui:GetPropertyChangedSignal("Visible"):Connect(function()
   -- gamesGuiVisibilityChanged:Fire(myGameGui.Visible)
 end)
 
-function RenderMyGameGui()
+function RenderMyGameGui(game)
   print("creating my game gui")
 
-  myGameGui.Visible = true
-
-  local gameId = LocalPlayer:getAttribute("gameId")
-  local game = remoteFunctions.GetGame:InvokeServer(gameId)
+  local gameId = game.Id
 
   -- clear if exists
   local list = myGameGui:GetChildren()
 	for i, row in pairs(list) do
 		row:Destroy()
 	end
+
+  local UICorner = Instance.new("UICorner")
+  UICorner.CornerRadius = UDim.new(0.01, 0)
+  UICorner.Parent = myGameGui
+
+  local countDownLabel = F.createTextLabel({
+    Parent = myGameGui,
+    Text = "Game will start when all players are ready",
+    Size = UDim2.new(0.8, 0, 0.075, 0),
+    Position = UDim2.new(0.1, 0, 0.05, 0),
+    BackgroundTransparency = 1,
+    TextColor3 = Color3.fromRGB(255, 255, 255),
+  })
+  
+  -- show my game gui
+  myGameGui.Visible = true
 
   local leaveButton = F.createButton({
     Parent = myGameGui,
@@ -71,107 +84,115 @@ function RenderMyGameGui()
     readyButton.Text = "Ready?"
   end
 
-  -- for 1 vs 1
-  if (game.GameMode == C.GAME_MODE.ONE) then
-    -- red player
-    local red1name = F.createTextLabel({
-      Parent = myGameGui,
-      Text = "Waiting for player",
-      Size = UDim2.new(0.5, 0, 0.075, 0),
-      Position = UDim2.new(0.3, 0, 0.05, 0),
-      BackgroundColor3 = Color3.fromRGB(255, 0, 0),
-      BackgroundTransparency = 0,
-      TextColor3 = Color3.fromRGB(255, 255, 255),
-    })
-    local red1Ready = F.createTextLabel({
-      Parent = myGameGui,
-      Text = "?",
-      Size = UDim2.new(0.05, 0, 0.075, 0),
-      Position = UDim2.new(0.15, 0, 0.05, 0),
-    })
-    local red1Kick = F.createButton({
-      Parent = myGameGui,
-      Text = "X",
-      Size = UDim2.new(0.05, 0, 0.075, 0),
-      Position = UDim2.new(0.9, 0, 0.05, 0),
-      BorderSizePixel = 0,
-      LineHeight = 1.1,
-    })
-    
-    -- blue player
-    local blue1name = F.createTextLabel({
-      Parent = myGameGui,
-      Text = "Waiting for player",
-      Size = UDim2.new(0.5, 0, 0.075, 0),
-      Position = UDim2.new(0.3, 0, 0.2, 0),
-      BackgroundColor3 = Color3.fromRGB(0, 0, 255),
-      BackgroundTransparency = 0,
-      TextColor3 = Color3.fromRGB(255, 255, 255),
-    })
-    local blue1Ready = F.createTextLabel({
-      Parent = myGameGui,
-      Text = "?",
-      Size = UDim2.new(0.05, 0, 0.075, 0),
-      Position = UDim2.new(0.15, 0, 0.2, 0),
-    })
+  local STEP = 0.1
 
+  local function updateCountDown(countDown)
+    countDownLabel.Text = "Game will start in " .. countDown .. " seconds"
+    if countDown == 0 then
+      countDownLabel.Text = "Game is starting..."
+    end
+    if countDown < 0 then
+      countDownLabel.Text = "Game will start when all players are ready"
+    end
+  end
+
+  local function createGameOwnerIcon(Index)
     -- game Owner label
     local gameOwner = F.createTextLabel({
       Parent = myGameGui,
       Text = "👑",
       Size = UDim2.new(0.1, 0, 0.05, 0),
+      Position = UDim2.new(0.45, 0, 0.075 + Index * STEP, 0),
       BackgroundTransparency = 1,
     })
+  end
 
-    local function isPlayerGameOwner(player)
-      return player.UserId == game.Owner.UserId
-    end
+  local function isPlayerGameOwner(Player)
+    return Player.UserId == game.Owner.UserId
+  end
 
-    local function setGameOwnerLabelPosition(y)
-      gameOwner.Position = UDim2.new(0.5, 0, y, 0)
-    end
-
-    if (#game.Teams[C.GAME_TEAM.RED] > 0) then
-      local player = game.Teams[C.GAME_TEAM.RED][1]
-      red1name.Text = player.DisplayName
-      if (player:GetAttribute("ready")) then
-        red1Ready.Text = "✅"
+  local function createPlayerRow(Index, Color, Player)
+    
+    local name = F.createTextLabel({
+      Parent = myGameGui,
+      Text = "Waiting for player",
+      Size = UDim2.new(0.6, 0, 0.075, 0),
+      Position = UDim2.new(0.2, 0, 0.1 + Index * STEP, 0),
+      BackgroundColor3 = Color,
+      BackgroundTransparency = 0,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+    })
+    local ready = F.createTextLabel({
+      Parent = myGameGui,
+      Text = "?",
+      Size = UDim2.new(0.05, 0, 0.075, 0),
+      Position = UDim2.new(0.1, 0, 0.1 + Index * STEP, 0),
+    })
+    local kick = F.createButton({
+      Parent = myGameGui,
+      Text = "X",
+      Size = UDim2.new(0.05, 0, 0.075, 0),
+      Position = UDim2.new(0.85, 0, 0.1 + Index * STEP, 0),
+      BorderSizePixel = 0,
+      LineHeight = 1.1,
+    })
+    if (Player) then
+      name.Text = Player.DisplayName
+      if (Player:GetAttribute("ready")) then
+        ready.Text = "✅"
       else
-        red1Ready.Text = "?"
+        ready.Text = "?"
       end
-      if (isPlayerGameOwner(player)) then
-        setGameOwnerLabelPosition(0.025)
+      if (isPlayerGameOwner(Player)) then
+        createGameOwnerIcon(Index)
       end
     end
+  end
 
-    if (#game.Teams[C.GAME_TEAM.BLUE] > 0) then
-      local player = game.Teams[C.GAME_TEAM.BLUE][1]
-      blue1name.Text = player.DisplayName
-      if (player:GetAttribute("ready")) then
-        blue1Ready.Text = "✅"
-      else
-        blue1Ready.Text = "?"
-      end
-      if (isPlayerGameOwner(player)) then
-        setGameOwnerLabelPosition(0.175)
-      end
-    end
+  
+
+  -- for 1 vs 1
+  if (game.GameMode == C.GAME_MODE.ONE) then
+    
+    createPlayerRow(1, Color3.fromRGB(255, 0, 0), game.Teams[C.GAME_TEAM.RED][1])
+    createPlayerRow(4, Color3.fromRGB(0, 0, 255), game.Teams[C.GAME_TEAM.BLUE][1])
+    
   end
 
   -- for 2 vs 2
   if (game.GameMode == C.GAME_MODE.TWO) then
-    print("not implemented yes")
-  end
+    
+    createPlayerRow(1, Color3.fromRGB(255, 0, 0), game.Teams[C.GAME_TEAM.RED][1])
+    createPlayerRow(2, Color3.fromRGB(255, 0, 0), game.Teams[C.GAME_TEAM.RED][2])
+    
+    createPlayerRow(4, Color3.fromRGB(0, 0, 255), game.Teams[C.GAME_TEAM.BLUE][1])
+    createPlayerRow(5, Color3.fromRGB(0, 0, 255), game.Teams[C.GAME_TEAM.BLUE][2])
 
+  end
+  
+  if (game.ReadyToStart) then
+    for i = 5, 0, -1 do
+      updateCountDown(i)
+      if (i == 0 and isPlayerGameOwner(LocalPlayer)) then
+        -- teleport players to arena
+        print("Owner is ready to teleport players")
+        remoteFunctions.TeleportPlayersToArena:InvokeServer(game)
+      end
+      wait(1)
+    end
+  else
+    updateCountDown(-1)
+  end
 end
 
-local function checkAndRender(options)
+local function checkAndRenderMyGameScreen(options)
+  print("checkAndRenderMyGameScreen", options)
   if (F.isMyGame(options.Game)) then
-    RenderMyGameGui()
+    RenderMyGameGui(options.Game)
   end
 end
 
 -- REMOTE EVENTS
-F.listenToRemoteEvents({ "PlayerJoinedGame", "PlayerLeftGame", "PlayerReadyChanged" }, checkAndRender)
+F.listenToRemoteEvents({ "PlayerJoinedGame", "PlayerLeftGame", "PlayerReadyChanged", "GameStarting" }, checkAndRenderMyGameScreen)
 
 print("MyGameGui: Done")
