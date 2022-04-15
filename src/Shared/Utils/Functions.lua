@@ -53,6 +53,7 @@ function F.createButton(options)
 	wrapper.BackgroundTransparency = options.BackgroundTransparency or 0
 	wrapper.BorderColor3 = options.BorderColor3 or C.COLOR.MING
 	wrapper.BorderSizePixel = options.BorderSizePixel or 10
+	wrapper.LineHeight = options.LineHeight or 1
 	wrapper.TextColor3 = options.TextColor3 or Color3.fromRGB(255, 255, 255)
 	if (options.Activated) then
 		wrapper.Activated(options.Activated)

@@ -15,8 +15,8 @@ local myGameGui = Instance.new("Frame")
 myGameGui.Name = "MyGameGui"
 myGameGui.BackgroundColor3 = C.COLOR.TURQUOISE
 myGameGui.BackgroundTransparency = 0.5
-myGameGui.Position = UDim2.new(0.8, 0, 0.3, 0)
-myGameGui.Size = UDim2.new(0.2, 0, 0.6, 0)
+myGameGui.Position = UDim2.new(0.1, 0, 0, 0)
+myGameGui.Size = UDim2.new(0.8, 0, 0.9, 0)
 myGameGui.Visible = false
 myGameGui.Parent = screenGui
 myGameGui:GetPropertyChangedSignal("Visible"):Connect(function()
@@ -77,34 +77,42 @@ function RenderMyGameGui()
     local red1name = F.createTextLabel({
       Parent = myGameGui,
       Text = "Waiting for player",
-      Size = UDim2.new(0.7, 0, 0.1, 0),
-      Position = UDim2.new(0.25, 0, 0.05, 0),
+      Size = UDim2.new(0.5, 0, 0.075, 0),
+      Position = UDim2.new(0.3, 0, 0.05, 0),
       BackgroundColor3 = Color3.fromRGB(255, 0, 0),
       BackgroundTransparency = 0,
       TextColor3 = Color3.fromRGB(255, 255, 255),
     })
     local red1Ready = F.createTextLabel({
       Parent = myGameGui,
-      Text = "",
-      Size = UDim2.new(0.2, 0, 0.1, 0),
-      Position = UDim2.new(0.05, 0, 0.05, 0),
+      Text = "?",
+      Size = UDim2.new(0.05, 0, 0.075, 0),
+      Position = UDim2.new(0.15, 0, 0.05, 0),
+    })
+    local red1Kick = F.createButton({
+      Parent = myGameGui,
+      Text = "X",
+      Size = UDim2.new(0.05, 0, 0.075, 0),
+      Position = UDim2.new(0.9, 0, 0.05, 0),
+      BorderSizePixel = 0,
+      LineHeight = 1.1,
     })
     
     -- blue player
     local blue1name = F.createTextLabel({
       Parent = myGameGui,
       Text = "Waiting for player",
-      Size = UDim2.new(0.7, 0, 0.1, 0),
-      Position = UDim2.new(0.25, 0, 0.2, 0),
+      Size = UDim2.new(0.5, 0, 0.075, 0),
+      Position = UDim2.new(0.3, 0, 0.2, 0),
       BackgroundColor3 = Color3.fromRGB(0, 0, 255),
       BackgroundTransparency = 0,
       TextColor3 = Color3.fromRGB(255, 255, 255),
     })
     local blue1Ready = F.createTextLabel({
       Parent = myGameGui,
-      Text = "",
-      Size = UDim2.new(0.2, 0, 0.1, 0),
-      Position = UDim2.new(0.05, 0, 0.2, 0),
+      Text = "?",
+      Size = UDim2.new(0.05, 0, 0.075, 0),
+      Position = UDim2.new(0.15, 0, 0.2, 0),
     })
 
     -- game Owner label
@@ -119,8 +127,8 @@ function RenderMyGameGui()
       return player.UserId == game.Owner.UserId
     end
 
-    local function setGameOwnerLabelPosition(position)
-      gameOwner.Position = UDim2.new(0.55, 0, position, 0)
+    local function setGameOwnerLabelPosition(y)
+      gameOwner.Position = UDim2.new(0.5, 0, y, 0)
     end
 
     if (#game.Teams[C.GAME_TEAM.RED] > 0) then
