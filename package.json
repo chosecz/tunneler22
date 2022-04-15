@@ -1,20 +1,20 @@
 {
-   "name": "tunneler22",
-   "version": "0.0.1",
-   "description": "Source codes for Tunneler 22",
-   "author": "Josef Sima <hello@chose.cz>",
-   "license": "GNU GPLv3",
-   "scripts": {
-      "lobby": "rojo serve TunnelerLobby.project.json",
-      "arena": "rojo serve TunnelerArena.project.json",
-      "build": "npm run build-lobby; npm run build-arena",
-      "build-lobby": "rojo build TunnelerLobby.project.json -o TunnelerLobby.rbxlx",
-      "build-arena": "rojo build TunnelerArena.project.json -o TunnelerArena.rbxlx"
-   },
-   "devDependencies": {
-      "cpx": "1.5.0",
-      "luamin": "1.0.4",
-      "mkdirp": "1.0.4",
-      "rimraf": "3.0.2"
-   }
+  "name": "tunneler22",
+  "version": "0.0.1",
+  "description": "Source codes for Tunneler 22",
+  "author": "Josef Sima <hello@chose.cz>",
+  "license": "GNU GPLv3",
+  "scripts": {
+    "lobby": "rojo serve TunnelerLobby.project.json",
+    "arena": "rojo serve TunnelerArena.project.json",
+    "build": "npm run build-lobby; npm run build-arena",
+    "build-lobby": "rojo build TunnelerLobby.project.json -o TunnelerLobby.rbxlx",
+    "build-arena": "rojo build TunnelerArena.project.json -o TunnelerArena.rbxlx"
+  },
+  "devDependencies": {
+    "cpx": "1.5.0",
+    "luamin": "1.0.4",
+    "mkdirp": "1.0.4",
+    "rimraf": "3.0.2"
+  }
 }
