@@ -15,8 +15,25 @@ local function generateGameId(userId)
 end
 
 local function ListOfPublicGames()
-  -- TODO: filter only public games
-  return games
+  -- filter only public games
+  local publicGames = {}
+  for i, game in pairs(games) do
+    if (game.GameType == C.GAME_TYPE.PUBLIC) then
+      table.insert(publicGames, game)
+    end
+  end
+  return publicGames
+end
+
+local function ListOfFriendGames()
+  -- filter only games where owner is friend
+  local friendGames = {}
+  for i, game in pairs(games) do
+    if (game.GameType == C.GAME_TYPE.FRIENDS) then
+      table.insert(friendGames, game)
+    end
+  end
+  return friendGames
 end
 
 local function combine(a1, a2)
@@ -261,6 +278,7 @@ function GamesService.Exec()
   remoteFunctions.JoinGame.OnServerInvoke = JoinGame
   remoteFunctions.LeaveGame.OnServerInvoke = LeaveGame
   remoteFunctions.ListOfPublicGames.OnServerInvoke = ListOfPublicGames
+  remoteFunctions.ListOfFriendGames.OnServerInvoke = ListOfFriendGames
   remoteFunctions.GetGame.OnServerInvoke = GetGame
   remoteFunctions.TeleportPlayersToArena.OnServerInvoke = TeleportPlayersToArena
   remoteFunctions.KickPlayer.OnServerInvoke = KickPlayer

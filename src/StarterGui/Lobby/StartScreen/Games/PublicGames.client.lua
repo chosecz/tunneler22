@@ -22,8 +22,9 @@ scrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 scrollingFrame.Size = UDim2.new(1, 0, 1, 0)
 scrollingFrame.BackgroundTransparency = 1
 
-local function generatePublicGamesList(listOfPublicGames)
-  print("generatePublicGamesList", listOfPublicGames)
+local function renderPublicGamesList(listOfPublicGames)
+  print("renderPublicGamesList", listOfPublicGames)
+
   -- clear childrens from scrolling frame
   local list = scrollingFrame:GetChildren()
 	for i, row in pairs(list) do
@@ -31,7 +32,7 @@ local function generatePublicGamesList(listOfPublicGames)
 	end
 
   local gamesCounter = 0
-  for gameId, game in pairs(listOfPublicGames) do
+  for i, game in pairs(listOfPublicGames) do
     GF.createGameRow({
       Game = game,
       Parent = scrollingFrame,
@@ -43,44 +44,42 @@ local function generatePublicGamesList(listOfPublicGames)
   if (gamesCounter == 0) then
     F.createTextLabel({
       Parent = scrollingFrame,
-      Text = "No games, go and create one!",
+      Text = "No public games, go and create one!",
       Size = UDim2.new(0.5, 0, 0.05, 0),
       Position = UDim2.new(0.25, 0, 0, 0),
     })
   end
 end
 
+local function togglePublicGamesGui(visible)
+  publicGamesGui.Visible = visible
+end
+local function show()
+	publicGamesGui.Visible = true
+end
+local function hide()
+	publicGamesGui.Visible = false
+end
+local function getListOfGames()
+  return remoteFunctions.ListOfPublicGames:InvokeServer()
+end
+local function getAndRender()
+  renderPublicGamesList(getListOfGames())
+end
+
 -- change visibility handler
 publicGamesGui:GetPropertyChangedSignal("Visible"):Connect(function()
   if (publicGamesGui.Visible) then
-    generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
+    renderPublicGamesList(getListOfGames())
   end
 end)
 
 -- REMOVE EVENTS
-remoteEvents.GameCreated.OnClientEvent:Connect(function()
-  generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
-end)
-remoteEvents.PlayerJoinedGame.OnClientEvent:Connect(function()
-  generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
-end)
-remoteEvents.PlayerLeftGame.OnClientEvent:Connect(function()
-  generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
-end)
-
+F.listenToRemoteEvents({ "GameCreated", "PlayerJoinedGame", "PlayerLeftGame" }, getAndRender)
 
 -- BINDABLE EVENTS
-bindableEvents.ShowPublicGamesGui.Event:Connect(function()
-  publicGamesGui.Visible = true
-end)
-
-bindableEvents.ShowFriendGamesGui.Event:Connect(function()
-  publicGamesGui.Visible = false
-end)
-
-bindableEvents.ShowCreateGameGui.Event:Connect(function()
-  publicGamesGui.Visible = false
-end)
+F.listenToBindableEvents({ "ShowPublicGamesGui" }, show)
+F.listenToBindableEvents({ "ShowFriendGamesGui", "ShowCreateGameGui" }, hide)
 
 -- fill on create
-generatePublicGamesList(remoteFunctions.ListOfPublicGames:InvokeServer())
+renderPublicGamesList(getListOfGames())

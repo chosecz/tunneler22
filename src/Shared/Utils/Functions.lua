@@ -84,6 +84,7 @@ function F.createTextLabel(options)
 		label.TextColor3 = options.TextColor3
 	end
 	label.BackgroundTransparency = options.BackgroundTransparency or 1
+	label.TextXAlignment = options.TextXAlignment or Enum.TextXAlignment.Center
 	return label
 end
 

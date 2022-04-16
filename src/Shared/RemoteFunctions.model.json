@@ -18,6 +18,10 @@
       "ClassName": "RemoteFunction"
     },
     {
+      "Name": "ListOfFriendGames",
+      "ClassName": "RemoteFunction"
+    },
+    {
       "Name": "GetGame",
       "ClassName": "RemoteFunction"
     },
