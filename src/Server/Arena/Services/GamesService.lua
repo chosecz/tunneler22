@@ -133,17 +133,7 @@ local function createSpawnLocations()
   print("creating spawn locations")
   
   local spawnLocationsCount = 0
-  local spawnLocationsCountPerTeam = 1
-
-  while (not Game) do
-    print("Waiting for game data...")
-    wait(1)
-  end
-
-  -- create spawn locations for each team
-  if (Game.GameMode == C.GAME_MODE.TWO) then
-    spawnLocationsCountPerTeam = 2
-  end
+  local spawnLocationsCountPerTeam = 2
 
   -- create spawn locations
   local spawnLocationRed = generateRandomSpawnLocation(C.GAME_TEAM.RED)
@@ -175,20 +165,20 @@ local function createSpawnLocations()
     spawnLocations[i + spawnLocationsCountPerTeam] = spawnLocation
   end
 
-  local Base = Rep.Meshes.Base
+  local Base = Rep.Meshes.PlayerBase
 
   --Red Base
   local CopyBaseRed = Base:Clone()
   CopyBaseRed.Parent = game.Workspace
-  --CopyBaseRed.BrickColor = BrickColor.new("Bright red")
-  CopyBaseRed:SetPrimaryPartCFrame(CFrame.new(spawnLocationRed))
+  CopyBaseRed.Anchored = true
+  CopyBaseRed.Position = spawnLocationRed + Vector3.new(0, 10, 0)
   
   -- Blue Base
   local CopyBaseBlue = Base:Clone()
   CopyBaseBlue.Parent = game.Workspace
-  --CopyBaseRed.BrickColor = BrickColor.new("Bright blue")
-  CopyBaseBlue:SetPrimaryPartCFrame(CFrame.new(spawnLocationBlue))
-
+  CopyBaseBlue.Anchored = true
+  CopyBaseBlue.Position = spawnLocationBlue + Vector3.new(0, 10, 0)
+  
   print("done creating spawn locations")
 end
 
@@ -196,11 +186,12 @@ local function generateMap()
   print("generating map")
 
   -- create map
+  --[[
   local part = Instance.new("Part")
   part.Parent = workspace.Parts
   part.Anchored = true
   part.Size = Vector3.new(10, 8, 10)
-  part.Position = Vector3.new(0, 1, 0)
+  part.Position = Vector3.new(0, 4, 0)
   part.CanCollide = false
 
   for x = MinX/10, MaxX/10 do
@@ -212,6 +203,7 @@ local function generateMap()
       newPart.Position = Vector3.new(x * 10, 1, z * 10)  
     end
   end
+  ]]
 end
 
 local function init()
