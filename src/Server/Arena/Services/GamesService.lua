@@ -170,15 +170,15 @@ local function createSpawnLocations()
   --Red Base
   local CopyBaseRed = Base:Clone()
   CopyBaseRed.Parent = game.Workspace
-  CopyBaseRed.Anchored = true
-  CopyBaseRed.Position = spawnLocationRed + Vector3.new(0, 10, 0)
+  --CopyBaseRed.Anchored = true
+  CopyBaseRed:moveTo(spawnLocationRed)
   
   -- Blue Base
   local CopyBaseBlue = Base:Clone()
   CopyBaseBlue.Parent = game.Workspace
-  CopyBaseBlue.Anchored = true
-  CopyBaseBlue.Position = spawnLocationBlue + Vector3.new(0, 10, 0)
-  
+  --CopyBaseBlue.Anchored = true
+  CopyBaseBlue:moveTo(spawnLocationBlue)
+
   print("done creating spawn locations")
 end
 
