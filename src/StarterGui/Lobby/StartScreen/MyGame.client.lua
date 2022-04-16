@@ -106,7 +106,7 @@ function RenderMyGameGui(game)
   end
 
   local function isPlayerGameOwner(Player)
-    return Player.UserId == game.Owner.UserId
+    return Player.UserId == game.Owner
   end
 
   local function createPlayerRow(Index, Color, Player)

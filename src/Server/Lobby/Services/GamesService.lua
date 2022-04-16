@@ -72,7 +72,7 @@ local function updateGameStatus(game)
     -- set new owner of game
     for i, p in pairs(allPlayers) do
       if (p) then
-        game.Owner = p
+        game.Owner = p.UserId
         break
       end
     end
@@ -160,7 +160,7 @@ local function LeaveGame(player, gameId)
   for i, p in pairs(playersInTeam) do
     if (p.UserId == player.UserId) then
       -- if leaving player is owner, set new owner
-      if (p.UserId == game.Owner.UserId) then game.Owner = nil end
+      if (p.UserId == game.Owner) then game.Owner = nil end
       table.remove(playersInTeam, i)
       table.remove(playersInPlayers, i)
     end
@@ -185,7 +185,7 @@ local function CreateGame(player, options)
     Id = gameId,
     GameType = options.GameType,
     GameMode = options.GameMode,
-    Owner = player,
+    Owner = player.UserId,
     Full = false,
     ReadyToStart = false,
     Teams = {[C.GAME_TEAM.RED] = {}, [C.GAME_TEAM.BLUE] = {}},
