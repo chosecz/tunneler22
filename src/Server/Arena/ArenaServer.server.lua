@@ -20,6 +20,7 @@ local fakeGame = {
   Id = "GID_-1",
   GameType = C.GAME_TYPE.PUBLIC,
   GameMode = C.GAME_MODE.ONE,
+  GameStatus = C.GAME_STATUS.WAITING,
   Teams = {[C.GAME_TEAM.RED] = {
       [1] = {
         UserId = "-1",

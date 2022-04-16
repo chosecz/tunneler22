@@ -175,6 +175,7 @@ local function CreateGame(player, options)
     Id = gameId,
     GameType = options.GameType,
     GameMode = options.GameMode,
+    GameStatus = C.GAME_STATUS.WAITING,
     Owner = player.UserId,
     Full = false,
     ReadyToStart = false,

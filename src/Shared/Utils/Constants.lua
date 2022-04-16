@@ -21,4 +21,9 @@ return {
     RED = 'RED',
     BLUE = 'BLUE',
   },
+  GAME_STATUS = {
+    WAITING = 'WAITING',
+    RUNNING = 'RUNNING',
+    FINISHED = 'FINISHED',
+  },
 }
