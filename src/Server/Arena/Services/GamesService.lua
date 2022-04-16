@@ -73,18 +73,6 @@ local function checkIfAllPlayersAreConnected()
   return true
 end
 
-local function init()
-  print("init")
-  if (checkIfAllPlayersAreConnected()) then
-    print("all connected")
-    -- run the game
-    remoteEvents.AllPlayersConnected:FireAllClients({ Game = Game })
-  else
-    print("timeout, some players did not connect to game")
-    -- show error message and return to lobby
-  end
-end
-
 local function onPlayerAdded(player)
   print("Player added: " .. player.Name)
   local joinData = player:GetJoinData()
@@ -178,10 +166,44 @@ local function createSpawnLocations()
   return spawnLocations
 end
 
+local function generateMap()
+  print("generating map")
+
+  -- create map
+  local part = Instance.new("Part")
+  part.Parent = workspace.Parts
+  part.Anchored = true
+  part.Size = Vector3.new(10, 8, 10)
+  part.Position = Vector3.new(0, 1, 0)
+
+  for x = MinX/10, MaxX/10 do
+    for z = MinZ/10, MaxZ/10 do
+      print("create part at " .. x, z)
+      local newPart = part:Clone()
+      newPart.Anchored = true
+      newPart.Parent = workspace.Parts
+      newPart.Position = Vector3.new(x * 10, 1, z * 10)  
+    end
+  end
+end
+
+local function init()
+  print("init")
+  if (checkIfAllPlayersAreConnected()) then
+    print("all connected")
+    -- run the game
+    remoteEvents.AllPlayersConnected:FireAllClients({ Game = Game })
+  else
+    print("timeout, some players did not connect to game")
+    -- show error message and return to lobby
+  end
+end
+
 function GamesService.Exec()
   print('GamesService.Exec')
   createTeams()
   createSpawnLocations()
+  generateMap()
   init()
 end
 
