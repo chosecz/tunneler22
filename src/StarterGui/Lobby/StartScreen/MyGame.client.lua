@@ -99,8 +99,8 @@ function RenderMyGameGui(game)
     local gameOwner = F.createTextLabel({
       Parent = myGameGui,
       Text = "👑",
-      Size = UDim2.new(0.1, 0, 0.05, 0),
-      Position = UDim2.new(0.45, 0, 0.075 + Index * STEP, 0),
+      Size = UDim2.new(0.05, 0, 0.075, 0),
+      Position = UDim2.new(0.85, 0, 0.1 + Index * STEP, 0),
       BackgroundTransparency = 1,
     })
   end
@@ -109,7 +109,12 @@ function RenderMyGameGui(game)
     return Player.UserId == game.Owner
   end
 
-  local function createPlayerRow(Index, Color, Player)
+  local function createPlayerRow(Index, Color, PlayerTable)
+
+    local Player = nil
+    if (PlayerTable) then
+      Player = PlayerTable.Player
+    end
     
     local name = F.createTextLabel({
       Parent = myGameGui,

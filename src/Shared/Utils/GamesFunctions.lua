@@ -1,7 +1,7 @@
 local GF = {}
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
-local remoteFunctions = game:GetService('ReplicatedStorage'):WaitForChild('RemoteFunctions')
+local remoteFunctions = game.ReplicatedStorage:WaitForChild('RemoteFunctions')
 local Players = game:GetService('Players')
 
 function GF.createGameRow(options)
@@ -39,7 +39,8 @@ function GF.createGameRow(options)
     Position = UDim2.new(0.75, 0, 0, 0),
     BorderSizePixel = 0,
     Activated = function()
-      remoteFunctions.JoinGame:InvokeServer(options.Game.Id)
+      local response = remoteFunctions.JoinGame:InvokeServer(options.Game.Id)
+      print("Game joined", response)
     end
   })
   if (options.Game.Full) then

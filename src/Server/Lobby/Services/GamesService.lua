@@ -36,13 +36,6 @@ local function ListOfFriendGames()
   return friendGames
 end
 
-local function combine(a1, a2)
-  local new = table.create(#a1 + #a2)
-  table.move(a1, 1, #a1, 1, new)
-  table.move(a2, 1, #a2, 1, new)
-  return new
-end
-
 local function updateGameStatus(game)
   local redPlayers = game.Teams[C.GAME_TEAM.RED]
   local bluePlayers = game.Teams[C.GAME_TEAM.BLUE]
@@ -80,7 +73,7 @@ local function updateGameStatus(game)
 
   if (game.Full) then
     for i, p in pairs(allPlayers) do
-      if (p:GetAttribute("ready")) then
+      if (p.Player:GetAttribute("ready")) then
         allPlayersReady = true
       else
         allPlayersReady = false
@@ -133,8 +126,7 @@ local function JoinGame(player, gameId)
   local team = resolveTeamForPlayer(game)
 
   -- add player to list
-  table.insert(game.Teams[team], player)
-  table.insert(game.Players[team], player.UserId)
+  table.insert(game.Teams[team], { UserId = player.UserId, Name = player.DisplayName, Player = player })
 
   -- update status of game
   game = updateGameStatus(game)
@@ -155,14 +147,12 @@ local function LeaveGame(player, gameId)
 
   local team = player:GetAttribute("team")
   local playersInTeam = game.Teams[team];
-  local playersInPlayers = game.Players[team];
 
   for i, p in pairs(playersInTeam) do
     if (p.UserId == player.UserId) then
       -- if leaving player is owner, set new owner
       if (p.UserId == game.Owner) then game.Owner = nil end
       table.remove(playersInTeam, i)
-      table.remove(playersInPlayers, i)
     end
   end
 
@@ -188,8 +178,7 @@ local function CreateGame(player, options)
     Owner = player.UserId,
     Full = false,
     ReadyToStart = false,
-    Teams = {[C.GAME_TEAM.RED] = {}, [C.GAME_TEAM.BLUE] = {}},
-    Players = {[C.GAME_TEAM.RED] = {}, [C.GAME_TEAM.BLUE] = {}}
+    Teams = {[C.GAME_TEAM.RED] = {}, [C.GAME_TEAM.BLUE] = {}}
   }
 
   -- add to game list
@@ -226,16 +215,25 @@ local function TeleportPlayersToArena(player, game)
   local bluePlayers = game.Teams[C.GAME_TEAM.BLUE]
   local allPlayers = {table.unpack(redPlayers), table.unpack(bluePlayers)}
   print("allPlayers", allPlayers)
+
+  -- create list of players for teleport
+  local listOfPlayers = {}
+  for i, p in pairs(allPlayers) do
+    if (p) then
+      table.insert(listOfPlayers, p.Player)
+    end
+  end
   
   -- create arena
   local NewPlaceId = AS:CreatePlaceAsync("Arena", arenaPlaceId)
   print("NewPlaceId", NewPlaceId)
 
+  -- set game data to teleport options
   local teleportOptions = Instance.new("TeleportOptions")
-  teleportOptions:SetTeleportData(game) -- set game data to teleport options
+  teleportOptions:SetTeleportData(game)
 
   -- teleport players
-  local teleportResult = TM.teleportWithRetry(NewPlaceId, allPlayers, teleportOptions)
+  local teleportResult = TM.teleportWithRetry(NewPlaceId, listOfPlayers, teleportOptions)
 
   print("teleport done")
 
@@ -249,13 +247,13 @@ local function KickPlayer(player, gameId, playerId)
   local playerToKick = nil
   for i, p in pairs(game.Teams[C.GAME_TEAM.RED]) do
     if (p.UserId == playerId) then
-      playerToKick = p
+      playerToKick = p.Player
       break
     end
   end
   for i, p in pairs(game.Teams[C.GAME_TEAM.BLUE]) do
     if (p.UserId == playerId) then
-      playerToKick = p
+      playerToKick = p.Player
       break
     end
   end
