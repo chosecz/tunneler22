@@ -1,13 +1,25 @@
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local remoteFunctions = game.ReplicatedStorage:WaitForChild('RemoteFunctions')
 local remoteEvents = game.ReplicatedStorage:WaitForChild('RemoteEvents')
-local teams = game:GetService("Teams")
-local players = game:GetService("Players")
+local serviceTeams = game:GetService("Teams")
+local servicePlayers = game:GetService("Players")
 
 local GamesService = {}
 
+local MAX_WAIT_TIME = 30
+local MAX_X = 1024
+local MAX_Z = 1024
+local SAVE_BORDER = 50
+
+local MaxX = (MAX_X / 2) - SAVE_BORDER
+local MinX = -MaxX
+local MaxZ = (MAX_Z / 2) - SAVE_BORDER
+local MinZ = -MaxZ
+
 -- holt information about game
 local Game = nil
+
+local Teams = nil
 
 -- just fake game data for development
 local fakeGame = {
@@ -17,12 +29,12 @@ local fakeGame = {
   GameStatus = C.GAME_STATUS.WAITING,
   Teams = {[C.GAME_TEAM.RED] = {
       [1] = {
-        UserId = "-1",
+        UserId = -1,
         Name = "Player 1",
       }
     }, [C.GAME_TEAM.BLUE] = {
       [1] = {
-        UserId = "-2",
+        UserId = -2,
         Name = "Player 2",
       }
     }
@@ -30,28 +42,28 @@ local fakeGame = {
 }
 
 local function waitForAllPlayerInGameToBeConnected()
-  print("waitForAllPlayerInGameToBeConnected")
-  local players = game:GetService("Players")
-  local allPlayersConnected = true
   if (not Game) then return false end
-  for i, player in pairs(Game.Teams[C.GAME_TEAM.RED]) do
-    if (not players:FindFirstChild(player.UserId)) then
-      allPlayersConnected = false
-    end
+  local allPlayersConnected = false
+  local playersInGame = servicePlayers:GetPlayers()
+  local playersInGameCount = #playersInGame
+  
+  -- for GAME_MODE.ONE
+  local maxPlayers = 2
+  
+  -- for GAME_MODE.TWO
+  if (Game.GameMode == C.GAME_MODE.TWO) then maxPlayers = 4 end
+
+  -- check max number of player
+  if (playersInGameCount == maxPlayers) then
+    allPlayersConnected = true
   end
-  for i, player in pairs(Game.Teams[C.GAME_TEAM.BLUE]) do
-    if (not players:FindFirstChild(player.UserId)) then
-      allPlayersConnected = false
-    end
-  end
+
   return allPlayersConnected
 end
 
 local function checkIfAllPlayersAreConnected()
-  print("checkIfAllPlayersAreConnected")
-  local MAX_WAIT_TIME = 30
   while (not waitForAllPlayerInGameToBeConnected()) do
-    print("in while cycle")
+    print("Waiting for all players to be connected")
     wait(1)
     MAX_WAIT_TIME = MAX_WAIT_TIME - 1
     if (MAX_WAIT_TIME == 0) then
@@ -77,6 +89,7 @@ local function onPlayerAdded(player)
   local joinData = player:GetJoinData()
   local teleportData = joinData.TeleportData
 
+  -- handling fake data
   if (not teleportData and not Game) then
     Game = fakeGame
   elseif (not Game) then
@@ -84,14 +97,15 @@ local function onPlayerAdded(player)
   end
   
   if (Game) then
-    print("game.Id", Game.Id)
-    print("game.GameType", Game.GameType)
-    print("game.GameMode", Game.GameMode)
-
-    for i, team in pairs(Game.Teams) do
-      print("i team", i, team)
-      for j, player in pairs(team) do
-        print("j player", j, player.UserId, player.Name)
+    for teamColor, playersInTeam in pairs(Game.Teams) do
+      for j, p in pairs(playersInTeam) do
+        if (p.UserId == player.UserId) then
+          if (teamColor == C.GAME_TEAM.RED) then
+            player.Team = Teams[C.GAME_TEAM.RED]
+          elseif (teamColor == C.GAME_TEAM.BLUE) then
+            player.Team = Teams[C.GAME_TEAM.BLUE]
+          end
+        end
       end
     end
   end
@@ -100,23 +114,76 @@ end
 local function createTeams()
   print("creating teams")
 
-  local redTeam = Instance.new("Team", teams)
+  local redTeam = Instance.new("Team", serviceTeams)
   redTeam.TeamColor = BrickColor.new("Bright red")
   redTeam.AutoAssignable = false
   redTeam.Name = "Red Team"
 
-  local blueTeam = Instance.new("Team", teams)
+  local blueTeam = Instance.new("Team", serviceTeams)
   blueTeam.TeamColor = BrickColor.new("Bright blue")
   blueTeam.AutoAssignable = false
-  blueTeam.Name = "Blue Team"
+  redTeam.Name = "Blue Team"
+
+  -- create teams
+  Teams = {
+    [C.GAME_TEAM.RED] = redTeam,
+    [C.GAME_TEAM.BLUE] = blueTeam
+  }
+end
+
+local function generateRandomSpawnLocation(teamColor)
+  if (teamColor == C.GAME_TEAM.RED) then
+    return Vector3.new(math.random(MinX, 0), 0, math.random(MinZ, MaxZ))
+  else
+    return Vector3.new(math.random(0, MaxX), 0, math.random(MinZ, MaxZ))
+  end
+end
+
+local function createSpawnLocations()
+  print("creating spawn locations")
+  local spawnLocations = {}
+  local spawnLocationsCount = 0
+  local spawnLocationsCountPerTeam = 2
+
+  -- create spawn locations
+  local spawnLocationRed = generateRandomSpawnLocation(C.GAME_TEAM.RED)
+  for i = 1, spawnLocationsCountPerTeam do
+    local spawnLocation = Instance.new("SpawnLocation")
+    spawnLocation.Neutral = false
+    spawnLocation.Anchored = true
+    spawnLocation.Parent = workspace
+    spawnLocation.Position = spawnLocationRed + Vector3.new(i * 5, 0, 0)
+    spawnLocation.Size = Vector3.new(1, 1, 1)
+    spawnLocation.Name = "Spawn Location RED " .. i
+    spawnLocation.TeamColor = BrickColor.new("Bright red")
+    spawnLocations[i] = spawnLocation
+    spawnLocationsCount = spawnLocationsCount + 1
+  end
+
+  local spawnLocationBlue = generateRandomSpawnLocation(C.GAME_TEAM.BLUE)
+  for i = 1, spawnLocationsCountPerTeam do
+    local spawnLocation = Instance.new("SpawnLocation")
+    spawnLocation.Neutral = false
+    spawnLocation.Anchored = true
+    spawnLocation.Parent = workspace
+    spawnLocation.Position = spawnLocationBlue + Vector3.new(i * 5, 0, 0)
+    spawnLocation.Size = Vector3.new(1, 1, 1)
+    spawnLocation.Name = "Spawn Location BLUE " .. i
+    spawnLocation.TeamColor = BrickColor.new("Bright blue")
+    spawnLocations[i + spawnLocationsCountPerTeam] = spawnLocation
+  end
+
+  print("done creating spawn locations")
+  return spawnLocations
 end
 
 function GamesService.Exec()
   print('GamesService.Exec')
   createTeams()
+  createSpawnLocations()
   init()
 end
 
-players.PlayerAdded:Connect(onPlayerAdded)
+servicePlayers.PlayerAdded:Connect(onPlayerAdded)
 
 return GamesService
