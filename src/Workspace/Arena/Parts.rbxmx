@@ -2,14 +2,14 @@
 	<Meta name="ExplicitAutoJoints">true</Meta>
 	<External>null</External>
 	<External>nil</External>
-	<Item class="Folder" referent="RBX0d105a10a8b64d6a9135a33bad8f7281">
+	<Item class="Folder" referent="RBX9eba14f86f4341fe8d227622bb2d90e0">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">Parts</string>
 			<int64 name="SourceAssetId">-1</int64>
 			<BinaryString name="Tags"></BinaryString>
 		</Properties>
-		<Item class="Part" referent="RBX2de391f2af5648ffad5d7b73cce5fe6e">
+		<Item class="Part" referent="RBXe13476fed6ee47a798c064cfa006b3f2">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -98,7 +98,7 @@
 				<token name="shape">1</token>
 				<Vector3 name="size">
 					<X>1024</X>
-					<Y>0.0500000007</Y>
+					<Y>1</Y>
 					<Z>1024</Z>
 				</Vector3>
 			</Properties>
