@@ -19,8 +19,8 @@ local MinZ = -MaxZ
 
 -- holt information about game
 local Game = nil
-
 local Teams = nil
+local spawnLocations = {}
 
 -- just fake game data for development
 local fakeGame = {
@@ -131,7 +131,7 @@ end
 
 local function createSpawnLocations()
   print("creating spawn locations")
-  local spawnLocations = {}
+  
   local spawnLocationsCount = 0
   local spawnLocationsCountPerTeam = 1
 
@@ -176,7 +176,6 @@ local function createSpawnLocations()
   end
 
   print("done creating spawn locations")
-  return spawnLocations
 end
 
 local function generateMap()
