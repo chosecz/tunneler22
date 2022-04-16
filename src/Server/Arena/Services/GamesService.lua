@@ -178,7 +178,7 @@ local function generateMap()
 
   for x = MinX/10, MaxX/10 do
     for z = MinZ/10, MaxZ/10 do
-      print("create part at " .. x, z)
+      -- print("create part at " .. x, z)
       local newPart = part:Clone()
       newPart.Anchored = true
       newPart.Parent = workspace.Parts
