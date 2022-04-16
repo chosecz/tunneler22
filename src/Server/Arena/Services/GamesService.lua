@@ -121,7 +121,7 @@ local function createTeams()
   }
 end
 
-local function generateRandomSpawnLocation(teamColor)
+local function generateRandomPositionInMap(teamColor)
   if (teamColor == C.GAME_TEAM.RED) then
     return Vector3.new(math.random(MinX, 0), 0, math.random(MinZ, MaxZ))
   else
@@ -129,14 +129,14 @@ local function generateRandomSpawnLocation(teamColor)
   end
 end
 
-local function createSpawnLocations()
+local function createSpawns()
   print("creating spawn locations")
   
   local spawnLocationsCount = 0
   local spawnLocationsCountPerTeam = 2
 
   -- create spawn locations
-  local spawnLocationRed = generateRandomSpawnLocation(C.GAME_TEAM.RED)
+  local spawnLocationRed = generateRandomPositionInMap(C.GAME_TEAM.RED)
   for i = 1, spawnLocationsCountPerTeam do
     local spawnLocation = Instance.new("SpawnLocation")
     spawnLocation.Neutral = false
@@ -151,7 +151,7 @@ local function createSpawnLocations()
     spawnLocationsCount = spawnLocationsCount + 1
   end
 
-  local spawnLocationBlue = generateRandomSpawnLocation(C.GAME_TEAM.BLUE)
+  local spawnLocationBlue = generateRandomPositionInMap(C.GAME_TEAM.BLUE)
   for i = 1, spawnLocationsCountPerTeam do
     local spawnLocation = Instance.new("SpawnLocation")
     spawnLocation.Neutral = false
@@ -170,13 +170,11 @@ local function createSpawnLocations()
   --Red Base
   local CopyBaseRed = Base:Clone()
   CopyBaseRed.Parent = game.Workspace
-  --CopyBaseRed.Anchored = true
   CopyBaseRed:moveTo(spawnLocationRed)
   
   -- Blue Base
   local CopyBaseBlue = Base:Clone()
   CopyBaseBlue.Parent = game.Workspace
-  --CopyBaseBlue.Anchored = true
   CopyBaseBlue:moveTo(spawnLocationBlue)
 
   print("done creating spawn locations")
@@ -186,24 +184,31 @@ local function generateMap()
   print("generating map")
 
   -- create map
-  --[[
   local part = Instance.new("Part")
-  part.Parent = workspace.Parts
-  part.Anchored = true
   part.Size = Vector3.new(10, 8, 10)
-  part.Position = Vector3.new(0, 4, 0)
+  part.Position = Vector3.new(0, 0, 0)
   part.CanCollide = false
-
+  
   for x = MinX/10, MaxX/10 do
     for z = MinZ/10, MaxZ/10 do
       -- print("create part at " .. x, z)
       local newPart = part:Clone()
       newPart.Anchored = true
       newPart.Parent = workspace.Parts
-      newPart.Position = Vector3.new(x * 10, 1, z * 10)  
+      newPart.Position = Vector3.new(x * 10, 4, z * 10)  
+      newPart.Touched:Connect(function(hit)
+        print("Part touched")
+        if (hit.Parent:FindFirstChild("Humanoid")) then
+          -- local player = hit.Parent
+          -- print("Player " .. player.Name .. " touched the map")
+          newPart:Destroy()
+        else
+          newPart:Destroy()
+        end
+      end)
     end
   end
-  ]]
+  print("done generating map")
 end
 
 local function init()
@@ -221,7 +226,7 @@ end
 function GamesService.Exec()
   print('GamesService.Exec')
   createTeams()
-  createSpawnLocations()
+  createSpawns()
   generateMap()
   init()
 end
