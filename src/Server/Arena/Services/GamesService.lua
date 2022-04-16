@@ -187,6 +187,7 @@ local function generateMap()
   part.Anchored = true
   part.Size = Vector3.new(10, 8, 10)
   part.Position = Vector3.new(0, 1, 0)
+  part.CanCollide = false
 
   for x = MinX/10, MaxX/10 do
     for z = MinZ/10, MaxZ/10 do
