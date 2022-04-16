@@ -4,7 +4,7 @@ local remoteEvents = game.ReplicatedStorage:WaitForChild('RemoteEvents')
 local serviceTeams = game:GetService("Teams")
 local servicePlayers = game:GetService("Players")
 local basePlate = game:GetService("Workspace"):WaitForChild("Parts"):WaitForChild("Baseplate")
-
+local Rep = game:GetService("ReplicatedStorage")
 local GamesService = {}
 
 local MAX_WAIT_TIME = 30
@@ -123,9 +123,9 @@ end
 
 local function generateRandomSpawnLocation(teamColor)
   if (teamColor == C.GAME_TEAM.RED) then
-    return Vector3.new(math.random(MinX, 0), 0, math.random(MinZ, MaxZ))
+    return Vector3.new(math.random(MinX, 0), 1, math.random(MinZ, MaxZ))
   else
-    return Vector3.new(math.random(0, MaxX), 0, math.random(MinZ, MaxZ))
+    return Vector3.new(math.random(0, MaxX), 1, math.random(MinZ, MaxZ))
   end
 end
 
@@ -174,6 +174,20 @@ local function createSpawnLocations()
     spawnLocation:SetAttribute("Team", C.GAME_TEAM.BLUE)
     spawnLocations[i + spawnLocationsCountPerTeam] = spawnLocation
   end
+
+  local Base = Rep.Meshes.Base
+
+  --Red Base
+  local CopyBaseRed = Base:Clone()
+  CopyBaseRed.Parent = game.Workspace
+  --CopyBaseRed.BrickColor = BrickColor.new("Bright red")
+  CopyBaseRed:SetPrimaryPartCFrame(CFrame.new(spawnLocationRed))
+  
+  -- Blue Base
+  local CopyBaseBlue = Base:Clone()
+  CopyBaseBlue.Parent = game.Workspace
+  --CopyBaseRed.BrickColor = BrickColor.new("Bright blue")
+  CopyBaseBlue:SetPrimaryPartCFrame(CFrame.new(spawnLocationBlue))
 
   print("done creating spawn locations")
 end
