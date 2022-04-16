@@ -78,6 +78,3 @@ F.listenToRemoteEvents({ "GameCreated", "PlayerJoinedGame", "PlayerLeftGame" }, 
 -- BINDABLE EVENTS
 F.listenToBindableEvents({ "ShowPublicGamesGui" }, show)
 F.listenToBindableEvents({ "ShowFriendGamesGui", "ShowCreateGameGui" }, hide)
-
--- fill on create
-renderPublicGamesList(getListOfGames())
