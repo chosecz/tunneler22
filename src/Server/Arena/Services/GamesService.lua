@@ -78,6 +78,7 @@ local function init()
   if (checkIfAllPlayersAreConnected()) then
     print("all connected")
     -- run the game
+    remoteEvents.AllPlayersConnected:FireAllClients({ Game = Game })
   else
     print("timeout, some players did not connect to game")
     -- show error message and return to lobby

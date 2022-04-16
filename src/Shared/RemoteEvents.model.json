@@ -20,6 +20,10 @@
     {
       "Name": "GameStarting",
       "ClassName": "RemoteEvent"
+    },
+    {
+      "Name": "AllPlayersConnected",
+      "ClassName": "RemoteEvent"
     }
   ]
 }
