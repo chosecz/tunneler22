@@ -3,12 +3,13 @@ local remoteFunctions = game.ReplicatedStorage:WaitForChild('RemoteFunctions')
 local remoteEvents = game.ReplicatedStorage:WaitForChild('RemoteEvents')
 local serviceTeams = game:GetService("Teams")
 local servicePlayers = game:GetService("Players")
+local basePlate = game:GetService("Workspace"):WaitForChild("Parts"):WaitForChild("Baseplate")
 
 local GamesService = {}
 
 local MAX_WAIT_TIME = 30
-local MAX_X = 1024
-local MAX_Z = 1024
+local MAX_X = basePlate.Size.X
+local MAX_Z = basePlate.Size.Z
 local SAVE_BORDER = 50
 
 local MaxX = (MAX_X / 2) - SAVE_BORDER
