@@ -53,12 +53,22 @@ local function getListOfGames()
   return remoteFunctions.ListOfFriendGames:InvokeServer()
 end
 local function show()
-  renderFriendsGameList(getListOfGames())
   friendGamesGui.Visible = true
 end
 local function hide()
   friendGamesGui.Visible = false
 end
+local function getAndRender()
+  if (friendGamesGui.Visible) then
+    renderFriendsGameList(getListOfGames())
+  end
+end
+
+-- change visibility handler
+friendGamesGui:GetPropertyChangedSignal("Visible"):Connect(getAndRender)
+
+-- REMOTE EVENTS
+F.listenToRemoteEvents({ "GameCreated", "PlayerJoinedGame", "PlayerLeftGame" }, getAndRender)
 
 -- BINDABLE EVENTS
 F.listenToBindableEvents({ "ShowFriendGamesGui" }, show)

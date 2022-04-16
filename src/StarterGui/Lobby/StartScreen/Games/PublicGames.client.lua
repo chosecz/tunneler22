@@ -64,17 +64,15 @@ local function getListOfGames()
   return remoteFunctions.ListOfPublicGames:InvokeServer()
 end
 local function getAndRender()
-  renderPublicGamesList(getListOfGames())
-end
-
--- change visibility handler
-publicGamesGui:GetPropertyChangedSignal("Visible"):Connect(function()
   if (publicGamesGui.Visible) then
     renderPublicGamesList(getListOfGames())
   end
-end)
+end
 
--- REMOVE EVENTS
+-- change visibility handler
+publicGamesGui:GetPropertyChangedSignal("Visible"):Connect(getAndRender)
+
+-- REMOTE EVENTS
 F.listenToRemoteEvents({ "GameCreated", "PlayerJoinedGame", "PlayerLeftGame" }, getAndRender)
 
 -- BINDABLE EVENTS
