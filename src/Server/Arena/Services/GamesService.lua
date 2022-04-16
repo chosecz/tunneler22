@@ -156,6 +156,7 @@ local function createSpawnLocations()
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location RED " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright red")
+    spawnLocation:SetAttribute("Team", C.GAME_TEAM.RED)
     spawnLocations[i] = spawnLocation
     spawnLocationsCount = spawnLocationsCount + 1
   end
@@ -170,6 +171,7 @@ local function createSpawnLocations()
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location BLUE " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright blue")
+    spawnLocation:SetAttribute("Team", C.GAME_TEAM.BLUE)
     spawnLocations[i + spawnLocationsCountPerTeam] = spawnLocation
   end
 
