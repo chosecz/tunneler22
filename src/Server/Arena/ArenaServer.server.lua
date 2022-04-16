@@ -16,17 +16,16 @@ local Players = game:GetService("Players")
  
 local function onPlayerAdded(player)
     local joinData = player:GetJoinData()
-    local teleportData = joinData.TeleportData
-    print("teleportData 1", teleportData)
-    if (teleportData) then
-      print("teleportData.Id", teleportData.Id)
-      print("teleportData.GameType", teleportData.GameType)
-      print("teleportData.GameMode", teleportData.GameMode)
+    local game = joinData.TeleportData
+    if (game) then
+      print("game.Id", game.Id)
+      print("game.GameType", game.GameType)
+      print("game.GameMode", game.GameMode)
 
-      for i, team in pairs(teleportData.Players) do
+      for i, team in pairs(game.Teams) do
         print("i team", i, team)
         for j, player in pairs(team) do
-          print("j player", j, player)
+          print("j player", j, player.UserId, player.Name)
         end
       end
     end
