@@ -133,7 +133,17 @@ local function createSpawnLocations()
   print("creating spawn locations")
   local spawnLocations = {}
   local spawnLocationsCount = 0
-  local spawnLocationsCountPerTeam = 2
+  local spawnLocationsCountPerTeam = 1
+
+  while (not Game) do
+    print("Waiting for game data...")
+    wait(1)
+  end
+
+  -- create spawn locations for each team
+  if (Game.GameMode == C.GAME_MODE.TWO) then
+    spawnLocationsCountPerTeam = 2
+  end
 
   -- create spawn locations
   local spawnLocationRed = generateRandomSpawnLocation(C.GAME_TEAM.RED)
