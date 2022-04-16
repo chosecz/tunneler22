@@ -123,9 +123,9 @@ end
 
 local function generateRandomSpawnLocation(teamColor)
   if (teamColor == C.GAME_TEAM.RED) then
-    return Vector3.new(math.random(MinX, 0), 1, math.random(MinZ, MaxZ))
+    return Vector3.new(math.random(MinX, 0), 0, math.random(MinZ, MaxZ))
   else
-    return Vector3.new(math.random(0, MaxX), 1, math.random(MinZ, MaxZ))
+    return Vector3.new(math.random(0, MaxX), 0, math.random(MinZ, MaxZ))
   end
 end
 
