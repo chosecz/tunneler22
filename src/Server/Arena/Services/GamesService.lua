@@ -166,25 +166,16 @@ local function createSpawns()
   end
 
   local Base = Rep.Meshes.PlayerBase
-  local Tank = Rep.Meshes.Tank
 
   --Red Base
   local CopyBaseRed = Base:Clone()
   CopyBaseRed.Parent = game.Workspace
   CopyBaseRed:moveTo(spawnLocationRed)
 
-  local TankRed = Tank:Clone()
-  TankRed.Parent = game.Workspace
-  TankRed:moveTo(spawnLocationRed)
-  
   -- Blue Base
   local CopyBaseBlue = Base:Clone()
   CopyBaseBlue.Parent = game.Workspace
   CopyBaseBlue:moveTo(spawnLocationBlue)
-
-  local TankBlue = Tank:Clone()
-  TankBlue.Parent = game.Workspace
-  TankBlue:moveTo(spawnLocationBlue)
 
   print("done creating spawn locations")
 end
