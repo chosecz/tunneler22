@@ -3,7 +3,6 @@ repeat task.wait() until game.Players.LocalPlayer.Character
 local player = game.Players.LocalPlayer
 local camera = workspace.CurrentCamera
 
-player.CharacterAdded:Wait()
 player.Character:WaitForChild("HumanoidRootPart")
 
 camera.CameraSubject = player.Character.HumanoidRootPart
