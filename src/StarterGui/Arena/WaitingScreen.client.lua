@@ -33,7 +33,7 @@ local function createWaitingScreen()
   waitingScreenText.TextStrokeTransparency = 0
   waitingScreenText.Parent = waitingScreenFrame
 
-  remoteEvents.AllPlayersConnected.OnClientEvent:Connect(function(options)
+  remoteEvents.StartGame.OnClientEvent:Connect(function(options)
     waitingScreen.Enabled = false
   end)
 end

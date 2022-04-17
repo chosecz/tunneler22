@@ -44,7 +44,7 @@ local fakeGame = {
 
 local function waitForAllPlayerInGameToBeConnected()
   if (not Game) then return false end
-  local allPlayersConnected = false
+  local StartGame = false
   local playersInGame = servicePlayers:GetPlayers()
   local playersInGameCount = #playersInGame
   
@@ -56,10 +56,10 @@ local function waitForAllPlayerInGameToBeConnected()
 
   -- check max number of player
   if (playersInGameCount == maxPlayers) then
-    allPlayersConnected = true
+    StartGame = true
   end
 
-  return allPlayersConnected
+  return StartGame
 end
 
 local function checkIfAllPlayersAreConnected()
@@ -216,7 +216,7 @@ local function init()
   if (checkIfAllPlayersAreConnected()) then
     print("all connected")
     -- run the game
-    remoteEvents.AllPlayersConnected:FireAllClients({ Game = Game })
+    remoteEvents.StartGame:FireAllClients({ Game = Game })
   else
     print("timeout, some players did not connect to game")
     -- show error message and return to lobby

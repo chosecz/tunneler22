@@ -18,11 +18,7 @@
       "ClassName": "RemoteEvent"
     },
     {
-      "Name": "GameStarting",
-      "ClassName": "RemoteEvent"
-    },
-    {
-      "Name": "AllPlayersConnected",
+      "Name": "StartGame",
       "ClassName": "RemoteEvent"
     }
   ]
