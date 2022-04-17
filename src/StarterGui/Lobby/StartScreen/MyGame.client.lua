@@ -219,7 +219,7 @@ local function PlayerLeftGame(options)
 end
 
 -- REMOTE EVENTS
-F.listenToRemoteEvents({ "PlayerJoinedGame", "PlayerLeftGame", "PlayerReadyChanged", "GameStarting" }, checkAndRenderMyGameScreen)
+F.listenToRemoteEvents({ "PlayerJoinedGame", "PlayerLeftGame", "PlayerReadyChanged" }, checkAndRenderMyGameScreen)
 F.listenToRemoteEvents({ "PlayerLeftGame" }, PlayerLeftGame)
 
 print("MyGameGui: Done")

@@ -83,7 +83,6 @@ local function updateGameStatus(game)
   end
 
   if (allPlayersReady) then
-    -- remoteEvents.GameStarting:FireAllClients({ Game = game, ReadyToStart = true })
     print("All players ready")
     game.ReadyToStart = true
   else

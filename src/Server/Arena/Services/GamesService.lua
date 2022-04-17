@@ -44,7 +44,7 @@ local fakeGame = {
 
 local function waitForAllPlayerInGameToBeConnected()
   if (not Game) then return false end
-  local allPlayersConnected = false
+  local StartGame = false
   local playersInGame = servicePlayers:GetPlayers()
   local playersInGameCount = #playersInGame
   
@@ -56,10 +56,10 @@ local function waitForAllPlayerInGameToBeConnected()
 
   -- check max number of player
   if (playersInGameCount == maxPlayers) then
-    allPlayersConnected = true
+    StartGame = true
   end
 
-  return allPlayersConnected
+  return StartGame
 end
 
 local function checkIfAllPlayersAreConnected()
@@ -166,25 +166,16 @@ local function createSpawns()
   end
 
   local Base = Rep.Meshes.PlayerBase
-  local Tank = Rep.Meshes.Tank
 
   --Red Base
   local CopyBaseRed = Base:Clone()
   CopyBaseRed.Parent = game.Workspace
   CopyBaseRed:moveTo(spawnLocationRed)
 
-  local TankRed = Tank:Clone()
-  TankRed.Parent = game.Workspace
-  TankRed:moveTo(spawnLocationRed)
-  
   -- Blue Base
   local CopyBaseBlue = Base:Clone()
   CopyBaseBlue.Parent = game.Workspace
   CopyBaseBlue:moveTo(spawnLocationBlue)
-
-  local TankBlue = Tank:Clone()
-  TankBlue.Parent = game.Workspace
-  TankBlue:moveTo(spawnLocationBlue)
 
   print("done creating spawn locations")
 end
@@ -225,7 +216,7 @@ local function init()
   if (checkIfAllPlayersAreConnected()) then
     print("all connected")
     -- run the game
-    remoteEvents.AllPlayersConnected:FireAllClients({ Game = Game })
+    remoteEvents.StartGame:FireAllClients({ Game = Game })
   else
     print("timeout, some players did not connect to game")
     -- show error message and return to lobby
