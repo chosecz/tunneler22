@@ -1,4 +1,4 @@
---repeat task.wait() until game.Players.LocalPlayer.Character
+repeat task.wait() until game.Players.LocalPlayer.Character
 
 local player = game.Players.LocalPlayer
 local camera = workspace.CurrentCamera
