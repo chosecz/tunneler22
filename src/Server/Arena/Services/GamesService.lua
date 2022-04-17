@@ -185,6 +185,8 @@ local function generateMap()
 
   -- create map
   local part = Instance.new("Part")
+  part.Material = "Slate"
+  part.BrickColor = BrickColor.new("Brown")
   part.Size = Vector3.new(10, 8, 10)
   part.Position = Vector3.new(0, 0, 0)
   part.CanCollide = false
