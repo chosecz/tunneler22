@@ -3,6 +3,7 @@ local remoteFunctions = game.ReplicatedStorage:WaitForChild('RemoteFunctions')
 local remoteEvents = game.ReplicatedStorage:WaitForChild('RemoteEvents')
 local serviceTeams = game:GetService("Teams")
 local servicePlayers = game:GetService("Players")
+local StarterPlayer = game:GetService("StarterPlayer")
 local basePlate = game:GetService("Workspace"):WaitForChild("Parts"):WaitForChild("Baseplate")
 local Rep = game:GetService("ReplicatedStorage")
 local GamesService = {}
@@ -97,6 +98,15 @@ local function onPlayerAdded(player)
           end
         end
       end
+    end
+  end
+  
+  local Tank = StarterPlayer.StarterCharacter.Tank
+  local tankParts = Tank:GetChildren()
+
+  for i, child in ipairs(tankParts) do
+    if child.Name == "ColorPart" then
+      child.BrickColor = player.TeamColor
     end
   end
 end
