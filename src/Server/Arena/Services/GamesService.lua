@@ -122,7 +122,7 @@ local function createTeams()
   local blueTeam = Instance.new("Team", serviceTeams)
   blueTeam.TeamColor = BrickColor.new("Bright blue")
   blueTeam.AutoAssignable = false
-  redTeam.Name = "Blue Team"
+  blueTeam.Name = "Blue Team"
 
   -- create teams
   Teams = {
