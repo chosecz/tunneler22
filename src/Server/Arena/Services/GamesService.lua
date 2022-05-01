@@ -101,8 +101,8 @@ local function onPlayerAdded(player)
     end
   end
   
-  local Tank = StarterPlayer.StarterCharacter.Tank
-  local tankParts = Tank:GetChildren()
+  local tank = StarterPlayer.StarterCharacter.Tank
+  local tankParts = tank:GetChildren()
 
   for i, child in ipairs(tankParts) do
     if child.Name == "ColorPart" then
