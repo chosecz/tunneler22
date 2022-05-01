@@ -181,11 +181,15 @@ local function createSpawns()
   local CopyBaseRed = Base:Clone()
   CopyBaseRed.Parent = game.Workspace
   CopyBaseRed:moveTo(spawnLocationRed)
+  CopyBaseRed.Name = "BaseRed"
+  CopyBaseRed.MainPart.Name = "MainPartRed"
 
   -- Blue Base
   local CopyBaseBlue = Base:Clone()
   CopyBaseBlue.Parent = game.Workspace
   CopyBaseBlue:moveTo(spawnLocationBlue)
+  CopyBaseBlue.Name = "BaseBlue"
+  CopyBaseBlue.MainPart.Name = "MainPartBlue"
 
   print("done creating spawn locations")
 end
