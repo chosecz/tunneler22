@@ -1,9 +1,8 @@
 repeat task.wait() until game.Players.LocalPlayer.Character
+print("CamScript started")
 
 local player = game.Players.LocalPlayer
 local camera = workspace.CurrentCamera
-
-player.Character:WaitForChild("HumanoidRootPart")
 
 camera.CameraSubject = player.Character.HumanoidRootPart
 camera.FieldOfView = 40
@@ -18,4 +17,3 @@ game:GetService('RunService').Stepped:Connect(function()
 	end
 end)
 
-print("CamScript")
