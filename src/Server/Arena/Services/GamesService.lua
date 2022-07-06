@@ -142,7 +142,6 @@ end
 local function createSpawns()
   print("creating spawn locations")
   
-  local spawnLocationsCount = 0
   local spawnLocationsCountPerTeam = 2
 
   -- create spawn locations
@@ -152,13 +151,12 @@ local function createSpawns()
     spawnLocation.Neutral = false
     spawnLocation.Anchored = true
     spawnLocation.Parent = workspace
-    spawnLocation.Position = spawnLocationRed + Vector3.new(i * 5, 0, 0)
+    spawnLocation.Position = spawnLocationRed + Vector3.new(i * 5, -0.5, 0)
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location RED " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright red")
     spawnLocation:SetAttribute("Team", C.GAME_TEAM.RED)
     spawnLocations[i + spawnLocationsCountPerTeam] = spawnLocation
-    spawnLocationsCount = spawnLocationsCount + 1
   end
 
   local spawnLocationBlue = generateRandomPositionInMap(C.GAME_TEAM.BLUE)
@@ -167,7 +165,7 @@ local function createSpawns()
     spawnLocation.Neutral = false
     spawnLocation.Anchored = true
     spawnLocation.Parent = workspace
-    spawnLocation.Position = spawnLocationBlue + Vector3.new(i * 5, 0, 0)
+    spawnLocation.Position = spawnLocationBlue + Vector3.new(i * 5, -0.5, 0)
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location BLUE " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright blue")
