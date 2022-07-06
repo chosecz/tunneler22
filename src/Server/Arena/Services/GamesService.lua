@@ -157,7 +157,7 @@ local function createSpawns()
     spawnLocation.Name = "Spawn Location RED " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright red")
     spawnLocation:SetAttribute("Team", C.GAME_TEAM.RED)
-    spawnLocations[i] = spawnLocation
+    spawnLocations[i + spawnLocationsCountPerTeam] = spawnLocation
     spawnLocationsCount = spawnLocationsCount + 1
   end
 
