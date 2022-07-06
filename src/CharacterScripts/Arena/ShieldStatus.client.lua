@@ -1,9 +1,9 @@
 repeat task.wait() until game.Players.LocalPlayer.Character
 
 local players = game:GetService("Players")
-local player = players.LocalPlayer
-local char = player.Character
-local shieldBar = player.PlayerGui:WaitForChild('EnergyShieldStatus').ShieldFrame.Frame
+local localPlayer = players.LocalPlayer
+local char = localPlayer.Character
+local shieldBar = localPlayer.PlayerGui:WaitForChild('EnergyShieldStatus').ShieldFrame.Frame
 
 print('ShieldStatus started')
 
