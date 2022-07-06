@@ -2,6 +2,13 @@
 
 This is game inspired by old DOS game Tunneler from Geoffrey Silverton (https://tunneler.org). I loved this game and I have decided to recreate this game in Roblox as open source.
 
+## Install
+```npm run install```
+## Run Rojo server
+```npm run arena```
+
+```npm run lobby```
+
 ## Contributing
 
 If you like this game you can contribute in many ways to this project. Just write me or create PR.
