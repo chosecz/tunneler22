@@ -62,6 +62,10 @@ local function getGameStatus()
   return Game.Status
 end
 
+local function getWins()
+  return Game.Wins
+end
+
 local function waitForAllPlayerInGameToBeConnected()
   if (not Game) then return false end
   local StartGame = false
@@ -95,8 +99,44 @@ local function checkIfAllPlayersAreConnected()
   return true
 end
 
+local function onPlayerDied(character)
+  print("onPlayerDied")
+  local player = game.Players:GetPlayerFromCharacter(character)
+  local team = player.Team.Name
+
+  print("Player died", player)
+  print("Player team", team)
+
+  if (Game.GameMode == C.GAME_MODE.ONE) then 
+    -- increase team wins
+    Game.Wins[team] = Game.Wins[team] + 1
+    if (Game.Wins[team] == 2) then
+      print("Team won", team)
+      Game.Status = C.GAME_STATUS.FINISHED
+      remoteEvents.EndGame:FireAllClients({Game = Game })
+    else
+      remoteEvents.NextRound:FireAllClients({Game = Game })
+    end
+  end
+  
+  if (Game.GameMode == C.GAME_MODE.TWO) then
+    -- neco
+  end
+end
+
+local function onCharactedAdded(character)
+  print("onCharactedAdded", character)
+  character:WaitForChild("Humanoid").Died:Connect(function()
+    onPlayerDied(character)
+  end)
+end
+
 local function onPlayerAdded(player)
   print("Player added: " .. player.Name)
+  
+  -- characted added
+  player.CharacterAdded:Connect(onCharactedAdded)
+
   local joinData = player:GetJoinData()
   local teleportData = joinData.TeleportData
 
@@ -129,6 +169,8 @@ local function onPlayerAdded(player)
       child.BrickColor = player.TeamColor
     end
   end
+
+  
 end
 
 local function createTeams()
@@ -137,12 +179,12 @@ local function createTeams()
   local redTeam = Instance.new("Team", serviceTeams)
   redTeam.TeamColor = BrickColor.new("Bright red")
   redTeam.AutoAssignable = false
-  redTeam.Name = "Red Team"
+  redTeam.Name = C.TEAM.RED
 
   local blueTeam = Instance.new("Team", serviceTeams)
   blueTeam.TeamColor = BrickColor.new("Bright blue")
   blueTeam.AutoAssignable = false
-  blueTeam.Name = "Blue Team"
+  blueTeam.Name = C.TEAM.BLUE
 
   -- create teams
   Teams = {
@@ -263,6 +305,7 @@ function GamesService.Exec()
   -- register remote functions first!
   remoteFunctions.GetGame.OnServerInvoke = getGame
   remoteFunctions.GetGameStatus.OnServerInvoke = getGameStatus
+  remoteFunctions.GetWins.OnServerInvoke = getWins
 
   createTeams()
   createSpawns()

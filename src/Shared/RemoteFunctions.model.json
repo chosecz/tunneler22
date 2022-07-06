@@ -36,6 +36,10 @@
     {
       "Name": "GetGameStatus",
       "ClassName": "RemoteFunction"
+    },
+    {
+      "Name": "GetWins",
+      "ClassName": "RemoteFunction"
     }
   ]
 }

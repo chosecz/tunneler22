@@ -20,6 +20,14 @@
     {
       "Name": "StartGame",
       "ClassName": "RemoteEvent"
+    },
+    {
+      "Name": "NextRound",
+      "ClassName": "RemoteEvent"
+    },
+    {
+      "Name": "EndGame",
+      "ClassName": "RemoteEvent"
     }
   ]
 }
