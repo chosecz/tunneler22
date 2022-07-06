@@ -32,12 +32,12 @@ local fakeGame = {
   Teams = {[C.GAME_TEAM.RED] = {
       [1] = {
         UserId = -1,
-        Name = "Player 1",
+        Name = "Fake Player 1",
       }
     }, [C.GAME_TEAM.BLUE] = {
       [1] = {
         UserId = -2,
-        Name = "Player 2",
+        Name = "Fake Player 2",
       }
     }
   }
