@@ -32,6 +32,10 @@
     {
       "Name": "KickPlayer",
       "ClassName": "RemoteFunction"
+    },
+    {
+      "Name": "GetGame",
+      "ClassName": "RemoteFunction"
     }
   ]
 }

@@ -43,6 +43,10 @@ local fakeGame = {
   }
 }
 
+local function getGame()
+  return Game
+end
+
 local function waitForAllPlayerInGameToBeConnected()
   if (not Game) then return false end
   local StartGame = false
@@ -58,6 +62,7 @@ local function waitForAllPlayerInGameToBeConnected()
   -- check max number of player
   if (playersInGameCount == maxPlayers) then
     StartGame = true
+    Game.GameStatus = C.GAME_STATUS.RUNNING
   end
 
   return StartGame
@@ -243,6 +248,8 @@ function GamesService.Exec()
   createSpawns()
   generateMap()
   init()
+
+  remoteFunctions.GetGame.OnServerInvoke = getGame
 end
 
 servicePlayers.PlayerAdded:Connect(onPlayerAdded)

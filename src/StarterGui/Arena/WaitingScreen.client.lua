@@ -1,5 +1,8 @@
 repeat task.wait() until game.Players.LocalPlayer.Character
+
+local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local remoteEvents = game.ReplicatedStorage:WaitForChild('RemoteEvents')
+local remoteFunctions = game.ReplicatedStorage:WaitForChild('RemoteFunctions')
 
 local servicePlayers = game:GetService("Players")
 
@@ -8,10 +11,12 @@ local playerGui = player:WaitForChild("PlayerGui")
 
 local function createWaitingScreen()
   print("creating waiting screen")
+
   local waitingScreen = Instance.new("ScreenGui")
-  waitingScreen.Name = "WaitingScreen"
+  waitingScreen.Name = "WaitingScreenGui"
   waitingScreen.Parent = playerGui
   waitingScreen.IgnoreGuiInset = true
+  waitingScreen.Enabled = false
 
   local waitingScreenFrame = Instance.new("Frame")
   waitingScreenFrame.Name = "WaitingScreenFrame"
@@ -19,6 +24,7 @@ local function createWaitingScreen()
   waitingScreenFrame.Position = UDim2.new(0, 0, 0, 0)
   waitingScreenFrame.BackgroundTransparency = 0
   waitingScreenFrame.BackgroundColor3 = Color3.new(0, 0, 255)
+  waitingScreenFrame.BackgroundTransparency = 0.75
   waitingScreenFrame.Parent = waitingScreen
 
   local waitingScreenText = Instance.new("TextLabel")
@@ -32,6 +38,11 @@ local function createWaitingScreen()
   waitingScreenText.TextColor3 = Color3.new(1, 1, 1)
   waitingScreenText.TextStrokeTransparency = 0
   waitingScreenText.Parent = waitingScreenFrame
+
+  local game = remoteFunctions.GetGame:InvokeServer()
+  if (game.Status == C.GAME_STATUS.WAITING) then
+    waitingScreen.Enabled = true
+  end
 
   remoteEvents.StartGame.OnClientEvent:Connect(function(options)
     waitingScreen.Enabled = false

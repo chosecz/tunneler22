@@ -1,5 +1,6 @@
 local refuelStationBlue = workspace.BaseBlue.MainPartBlue
 local refuelStationRed = workspace.BaseRed.MainPartRed
+--[[
 local inRefuelStation = game.Players.LocalPlayer.PlayerVars.InRefuelStation
 
 local function onTouch(part)
@@ -21,3 +22,4 @@ refuelStationBlue.TouchEnded:Connect(onLeave)
 
 refuelStationRed.Touched:Connect(onTouch)
 refuelStationRed.TouchEnded:Connect(onLeave)
+]]

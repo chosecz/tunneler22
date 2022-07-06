@@ -1,4 +1,5 @@
 local localPlayer = game.Players.LocalPlayer
+--[[
 local fuelCapacity = localPlayer.PlayerGui:WaitForChild("EnergyShieldStatus").EnergyFrame.Frame
 local fullWidth = fuelCapacity.Size.X.Offset
 local fuel = localPlayer.PlayerVars.Fuel
@@ -26,3 +27,5 @@ local function consumeFuel()
 end
 
 consumeFuel()
+
+]]

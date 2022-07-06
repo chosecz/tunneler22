@@ -1,4 +1,5 @@
 repeat task.wait() until game.Players.LocalPlayer.Character
+--[[
 repeat task.wait() until game.Players.LocalPlayer.PlayerGui.WaitingScreen.Enabled == false
 -- Instances:
 
@@ -66,3 +67,5 @@ ShieldLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
 ShieldLabel.TextScaled = true
 ShieldLabel.TextSize = 14.000
 ShieldLabel.TextWrapped = true
+
+]]

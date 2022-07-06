@@ -1,3 +1,4 @@
+--[[
 game.Players.PlayerAdded:Connect(function(player)
 	player.CharacterAdded:Connect(function(character)
 
@@ -17,3 +18,4 @@ game.Players.PlayerAdded:Connect(function(player)
 		fuel.Parent = playerVars
 	end)
 end)
+]]
