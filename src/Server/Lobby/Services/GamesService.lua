@@ -37,8 +37,8 @@ local function ListOfFriendGames()
 end
 
 local function updateGameStatus(game)
-  local redPlayers = game.Teams[C.GAME_TEAM.RED]
-  local bluePlayers = game.Teams[C.GAME_TEAM.BLUE]
+  local redPlayers = game.Teams[C.TEAM.RED]
+  local bluePlayers = game.Teams[C.TEAM.BLUE]
   local numberOfPlayers = #redPlayers + #bluePlayers
   local allPlayers = {table.unpack(redPlayers), table.unpack(bluePlayers)}
   local allPlayersReady = false
@@ -96,24 +96,24 @@ end
 
 local function resolveTeamForPlayer(game)
   local gameMode = game.GameMode
-  local redPlayers = game.Teams[C.GAME_TEAM.RED]
+  local redPlayers = game.Teams[C.TEAM.RED]
   local team = nil
   -- 1vs1
   if (gameMode == C.GAME_MODE.ONE) then
     -- 1vs1
     if (#redPlayers < 1) then
-      team = C.GAME_TEAM.RED
+      team = C.TEAM.RED
     else
-      team = C.GAME_TEAM.BLUE
+      team = C.TEAM.BLUE
     end
   end
 
   -- 2vs2
   if (gameMode == C.GAME_MODE.TWO) then
     if (#redPlayers < 2) then
-      team = C.GAME_TEAM.RED
+      team = C.TEAM.RED
     else
-      team = C.GAME_TEAM.BLUE
+      team = C.TEAM.BLUE
     end
   end
   return team
@@ -178,7 +178,7 @@ local function CreateGame(player, options)
     Owner = player.UserId,
     Full = false,
     ReadyToStart = false,
-    Teams = {[C.GAME_TEAM.RED] = {}, [C.GAME_TEAM.BLUE] = {}}
+    Teams = {[C.TEAM.RED] = {}, [C.TEAM.BLUE] = {}}
   }
 
   -- add to game list
@@ -211,8 +211,8 @@ end
 local function TeleportPlayersToArena(player, game)
   print("Server: TeleportPlayersToArena", player, game)
 
-  local redPlayers = game.Teams[C.GAME_TEAM.RED]
-  local bluePlayers = game.Teams[C.GAME_TEAM.BLUE]
+  local redPlayers = game.Teams[C.TEAM.RED]
+  local bluePlayers = game.Teams[C.TEAM.BLUE]
   local allPlayers = {table.unpack(redPlayers), table.unpack(bluePlayers)}
   print("allPlayers", allPlayers)
 
@@ -245,13 +245,13 @@ local function KickPlayer(player, gameId, playerId)
   print("Server: KickPlayer", player, gameId, playerId)
   local game = games[gameId]
   local playerToKick = nil
-  for i, p in pairs(game.Teams[C.GAME_TEAM.RED]) do
+  for i, p in pairs(game.Teams[C.TEAM.RED]) do
     if (p.UserId == playerId) then
       playerToKick = p.Player
       break
     end
   end
-  for i, p in pairs(game.Teams[C.GAME_TEAM.BLUE]) do
+  for i, p in pairs(game.Teams[C.TEAM.BLUE]) do
     if (p.UserId == playerId) then
       playerToKick = p.Player
       break

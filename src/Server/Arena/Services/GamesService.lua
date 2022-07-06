@@ -28,13 +28,18 @@ local fakeGame = {
   Id = "GID_-1",
   GameType = C.GAME_TYPE.PUBLIC,
   GameMode = C.GAME_MODE.ONE,
-  GameStatus = C.GAME_STATUS.WAITING,
-  Teams = {[C.GAME_TEAM.RED] = {
+  Status = C.GAME_STATUS.WAITING,
+  Wins = {
+    [C.TEAM.RED] = 0,
+    [C.TEAM.BLUE] = 0
+  },
+  Round = 1,
+  Teams = {[C.TEAM.RED] = {
       [1] = {
         UserId = -1,
         Name = "Fake Player 1",
       }
-    }, [C.GAME_TEAM.BLUE] = {
+    }, [C.TEAM.BLUE] = {
       [1] = {
         UserId = -2,
         Name = "Fake Player 2",
@@ -44,7 +49,17 @@ local fakeGame = {
 }
 
 local function getGame()
+  if (not Game) then
+    return nil
+  end
   return Game
+end
+
+local function getGameStatus()
+  if (not Game) then
+    return nil
+  end
+  return Game.Status
 end
 
 local function waitForAllPlayerInGameToBeConnected()
@@ -62,7 +77,7 @@ local function waitForAllPlayerInGameToBeConnected()
   -- check max number of player
   if (playersInGameCount == maxPlayers) then
     StartGame = true
-    Game.GameStatus = C.GAME_STATUS.RUNNING
+    Game.Status = C.GAME_STATUS.RUNNING
   end
 
   return StartGame
@@ -96,10 +111,10 @@ local function onPlayerAdded(player)
     for teamColor, playersInTeam in pairs(Game.Teams) do
       for j, p in pairs(playersInTeam) do
         if (p.UserId == player.UserId) then
-          if (teamColor == C.GAME_TEAM.RED) then
-            player.Team = Teams[C.GAME_TEAM.RED]
-          elseif (teamColor == C.GAME_TEAM.BLUE) then
-            player.Team = Teams[C.GAME_TEAM.BLUE]
+          if (teamColor == C.TEAM.RED) then
+            player.Team = Teams[C.TEAM.RED]
+          elseif (teamColor == C.TEAM.BLUE) then
+            player.Team = Teams[C.TEAM.BLUE]
           end
         end
       end
@@ -131,13 +146,13 @@ local function createTeams()
 
   -- create teams
   Teams = {
-    [C.GAME_TEAM.RED] = redTeam,
-    [C.GAME_TEAM.BLUE] = blueTeam
+    [C.TEAM.RED] = redTeam,
+    [C.TEAM.BLUE] = blueTeam
   }
 end
 
 local function generateRandomPositionInMap(teamColor)
-  if (teamColor == C.GAME_TEAM.RED) then
+  if (teamColor == C.TEAM.RED) then
     return Vector3.new(math.random(MinX, 0), 0, math.random(MinZ, MaxZ))
   else
     return Vector3.new(math.random(0, MaxX), 0, math.random(MinZ, MaxZ))
@@ -150,7 +165,7 @@ local function createSpawns()
   local spawnLocationsCountPerTeam = 2
 
   -- create spawn locations
-  local spawnLocationRed = generateRandomPositionInMap(C.GAME_TEAM.RED)
+  local spawnLocationRed = generateRandomPositionInMap(C.TEAM.RED)
   for i = 1, spawnLocationsCountPerTeam do
     local spawnLocation = Instance.new("SpawnLocation")
     spawnLocation.Neutral = false
@@ -160,11 +175,11 @@ local function createSpawns()
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location RED " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright red")
-    spawnLocation:SetAttribute("Team", C.GAME_TEAM.RED)
+    spawnLocation:SetAttribute("Team", C.TEAM.RED)
     spawnLocations[i + spawnLocationsCountPerTeam] = spawnLocation
   end
 
-  local spawnLocationBlue = generateRandomPositionInMap(C.GAME_TEAM.BLUE)
+  local spawnLocationBlue = generateRandomPositionInMap(C.TEAM.BLUE)
   for i = 1, spawnLocationsCountPerTeam do
     local spawnLocation = Instance.new("SpawnLocation")
     spawnLocation.Neutral = false
@@ -174,7 +189,7 @@ local function createSpawns()
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location BLUE " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright blue")
-    spawnLocation:SetAttribute("Team", C.GAME_TEAM.BLUE)
+    spawnLocation:SetAttribute("Team", C.TEAM.BLUE)
     spawnLocations[i + spawnLocationsCountPerTeam] = spawnLocation
   end
 
@@ -244,12 +259,15 @@ end
 
 function GamesService.Exec()
   print('GamesService.Exec')
+  
+  -- register remote functions first!
+  remoteFunctions.GetGame.OnServerInvoke = getGame
+  remoteFunctions.GetGameStatus.OnServerInvoke = getGameStatus
+
   createTeams()
   createSpawns()
   generateMap()
   init()
-
-  remoteFunctions.GetGame.OnServerInvoke = getGame
 end
 
 servicePlayers.PlayerAdded:Connect(onPlayerAdded)

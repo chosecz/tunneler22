@@ -12,11 +12,17 @@ local playerGui = player:WaitForChild("PlayerGui")
 local function createWaitingScreen()
   print("creating waiting screen")
 
+  local gameStatus = remoteFunctions.GetGameStatus:InvokeServer()
+
   local waitingScreen = Instance.new("ScreenGui")
   waitingScreen.Name = "WaitingScreenGui"
   waitingScreen.Parent = playerGui
   waitingScreen.IgnoreGuiInset = true
-  waitingScreen.Enabled = false
+  if (gameStatus == C.GAME_STATUS.WAITING) then
+    waitingScreen.Enabled = true
+  else
+    waitingScreen.Enabled = false
+  end
 
   local waitingScreenFrame = Instance.new("Frame")
   waitingScreenFrame.Name = "WaitingScreenFrame"
@@ -38,11 +44,6 @@ local function createWaitingScreen()
   waitingScreenText.TextColor3 = Color3.new(1, 1, 1)
   waitingScreenText.TextStrokeTransparency = 0
   waitingScreenText.Parent = waitingScreenFrame
-
-  local game = remoteFunctions.GetGame:InvokeServer()
-  if (game.Status == C.GAME_STATUS.WAITING) then
-    waitingScreen.Enabled = true
-  end
 
   remoteEvents.StartGame.OnClientEvent:Connect(function(options)
     waitingScreen.Enabled = false

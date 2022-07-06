@@ -17,7 +17,7 @@ return {
     ONE = 'ONE',
     TWO = 'TWO',
   },
-  GAME_TEAM = {
+  TEAM = {
     RED = 'RED',
     BLUE = 'BLUE',
   },

@@ -172,19 +172,19 @@ function RenderMyGameGui(game)
   -- for 1 vs 1
   if (game.GameMode == C.GAME_MODE.ONE) then
     
-    createPlayerRow(1, Color3.fromRGB(255, 0, 0), game.Teams[C.GAME_TEAM.RED][1])
-    createPlayerRow(4, Color3.fromRGB(0, 0, 255), game.Teams[C.GAME_TEAM.BLUE][1])
+    createPlayerRow(1, Color3.fromRGB(255, 0, 0), game.Teams[C.TEAM.RED][1])
+    createPlayerRow(4, Color3.fromRGB(0, 0, 255), game.Teams[C.TEAM.BLUE][1])
     
   end
 
   -- for 2 vs 2
   if (game.GameMode == C.GAME_MODE.TWO) then
     
-    createPlayerRow(1, Color3.fromRGB(255, 0, 0), game.Teams[C.GAME_TEAM.RED][1])
-    createPlayerRow(2, Color3.fromRGB(255, 0, 0), game.Teams[C.GAME_TEAM.RED][2])
+    createPlayerRow(1, Color3.fromRGB(255, 0, 0), game.Teams[C.TEAM.RED][1])
+    createPlayerRow(2, Color3.fromRGB(255, 0, 0), game.Teams[C.TEAM.RED][2])
     
-    createPlayerRow(4, Color3.fromRGB(0, 0, 255), game.Teams[C.GAME_TEAM.BLUE][1])
-    createPlayerRow(5, Color3.fromRGB(0, 0, 255), game.Teams[C.GAME_TEAM.BLUE][2])
+    createPlayerRow(4, Color3.fromRGB(0, 0, 255), game.Teams[C.TEAM.BLUE][1])
+    createPlayerRow(5, Color3.fromRGB(0, 0, 255), game.Teams[C.TEAM.BLUE][2])
 
   end
   
