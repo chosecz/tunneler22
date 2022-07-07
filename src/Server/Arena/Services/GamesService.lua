@@ -60,6 +60,10 @@ local function setDefaltPlayerAttributes(player)
   player:SetAttribute("Energy", 100)
 end
 
+local function resetPlayer(player)
+  setDefaltPlayerAttributes(player)
+end
+
 local function updateEnergy(player)
   print("updateEnergy", player)
   local energy = player:GetAttribute("Energy")
@@ -156,7 +160,10 @@ local function onPlayerDied(character)
       Game.Status = C.GAME_STATUS.FINISHED
       remoteEvents.EndGame:FireAllClients({Game = Game })
     else
+      Game.Status = C.GAME_STATUS.NEXT_ROUND
       remoteEvents.NextRound:FireAllClients({Game = Game })
+      wait(5)
+      Game.Status = C.GAME_STATUS.RUNNING
     end
   end
   
@@ -251,7 +258,7 @@ local function createSpawns()
     spawnLocation.Transparency = 1
     spawnLocation.Anchored = true
     spawnLocation.Parent = workspace
-    spawnLocation.Position = spawnLocationRed + Vector3.new(i * 5, 0.5, 0)
+    spawnLocation.Position = spawnLocationRed + Vector3.new(i * 5, 2, 0)
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location RED " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright red")
@@ -267,7 +274,7 @@ local function createSpawns()
     spawnLocation.Transparency = 1
     spawnLocation.Anchored = true
     spawnLocation.Parent = workspace
-    spawnLocation.Position = spawnLocationBlue + Vector3.new(i * 5, 0.5, 0)
+    spawnLocation.Position = spawnLocationBlue + Vector3.new(i * 5, 2, 0)
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location BLUE " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright blue")
@@ -354,6 +361,7 @@ local function registerListeners()
   remoteFunctions.ColorTank.OnServerInvoke = colorTank
   remoteFunctions.InRefuelStation.OnServerInvoke = inRefuelStation
   remoteFunctions.UpdateEnergy.OnServerInvoke = updateEnergy
+  remoteFunctions.ResetPlayer.OnServerInvoke = resetPlayer
 
   servicePlayers.PlayerAdded:Connect(onPlayerAdded)
 end

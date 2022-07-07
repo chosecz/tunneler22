@@ -23,6 +23,7 @@ return {
   },
   GAME_STATUS = {
     WAITING = 'WAITING',
+    NEXT_ROUND = 'NEXT_ROUND',
     RUNNING = 'RUNNING',
     FINISHED = 'FINISHED',
   },

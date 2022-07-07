@@ -10,6 +10,9 @@ local ControlModule = require(localPlayer:WaitForChild("PlayerScripts"):WaitForC
 
 local function nextRound(options)
   print('nextRound', options.Game)
+  -- disable controls
+  ControlModule:Disable()
+  wait(5)
 
   if (not localPlayer:GetAttribute("playerIsDead")) then
     local spawnLocations = remoteFunctions.GetSpawnLocations:InvokeServer()
@@ -17,16 +20,17 @@ local function nextRound(options)
     local spawnLocations = spawnLocations[team]
     local hrp = localPlayer.Character:WaitForChild("HumanoidRootPart")
     hrp.CFrame = spawnLocations[1].CFrame
+
+    -- reset player
+    remoteFunctions.ResetPlayer:InvokeServer()
   end
 
-  -- disable controls
-  ControlModule:Disable()
-  wait(5)
   ControlModule:Enable()
 end
 
 local function endGame(options)
   print('endGame', options.Game)
+  ControlModule:Disable()
 end
 
 remoteEvents.NextRound.OnClientEvent:Connect(nextRound)
