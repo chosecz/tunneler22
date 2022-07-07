@@ -24,6 +24,9 @@ local Game = nil
 local Teams = nil
 local spawnLocations = {[C.TEAM.RED] = {}, [C.TEAM.BLUE] = {}}
 
+local fireSound = Instance.new("Sound", game.Workspace)
+fireSound.SoundId = "rbxassetid://10146043055"
+
 -- just fake game data for development
 local fakeGame = {
   Id = "GID_-1",
@@ -54,6 +57,7 @@ local function killPlayer(player)
 end
 
 local function setDefaltPlayerAttributes(player)
+  player:SetAttribute("PlayerShooting", false)
   player:SetAttribute("playerIsDead", false)
   player:SetAttribute("InRefuelStation", true)
   player:SetAttribute("Shields", 100)
@@ -353,14 +357,39 @@ local function inRefuelStation(player, inRefuelStation)
   player:SetAttribute("InRefuelStation", inRefuelStation)
 end
 
-local function PlayerWantsFire(player)
-  print("PlayerWantsFire", player)
+local function fireBullet(player)
+  player:SetAttribute("PlayerShooting", true)
+  local shootingPart = player.Character:FindFirstChild("Tank"):FindFirstChild("ColorPart")
+  local direction = player.Character.HumanoidRootPart.CFrame.lookVector
+	local position = shootingPart.Position + (direction * 3)
 
   local ball = Instance.new("Part")
   ball.Shape = Enum.PartType.Ball
   ball.Size = Vector3.new(1, 1, 1)
-  ball.Position = player.Character.HumanoidRootPart.Position
   ball.Parent = workspace
+  ball.CFrame = CFrame.new(position + direction)
+  ball.Velocity = direction * 100
+  ball.Touched:Connect(function(hit)
+    if (hit.Parent:FindFirstChild("Humanoid")) then
+      print("player hit")
+      -- hit.Parent:FindFirstChild("Humanoid").Health = hit.Parent:FindFirstChild("Humanoid").Health - 10
+    end
+    wait(0.1)
+    ball:Destroy()
+  end)
+
+  fireSound:Play()
+  wait(0.5)
+  player:SetAttribute("PlayerShooting", false)
+end
+
+local function PlayerWantsFire(player)
+  print("PlayerWantsFire", player)
+
+  local playerShooting = player:GetAttribute("PlayerShooting")
+  if (not playerShooting) then
+    fireBullet(player)
+  end
 end
 
 local function registerListeners()
