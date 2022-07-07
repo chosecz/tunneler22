@@ -6,8 +6,6 @@ local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Fun
 
 print("StatusGui started")
 
-local playerGui = game.Players.LocalPlayer.PlayerGui
-
 -- Instances:
 local ScreenGui = Instance.new("ScreenGui")
 local EnergyBackgroundFrame = Instance.new("Frame")
@@ -20,7 +18,7 @@ local ShieldLabel = Instance.new("TextLabel")
 
 --Properties:
 ScreenGui.Name = "EnergyShieldStatus"
-ScreenGui.Parent = playerGui
+ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 ShieldBackgroundFrame.Name = "ShieldBackgroundFrame"
@@ -66,3 +64,5 @@ local ShieldLabel = F.createTextLabel({
   Position = UDim2.new(0.25, 0, 0.25, 0),
   TextColor3 = Color3.fromRGB(0, 0, 0),
 })
+
+print("StatusGui created")
