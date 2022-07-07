@@ -217,11 +217,12 @@ local function createSpawns()
   local spawnLocationRed = generateRandomPositionInMap(C.TEAM.RED)
   for i = 1, spawnLocationsCountPerTeam do
     local spawnLocation = Instance.new("SpawnLocation")
+    spawnLocation.CanCollide = false
     spawnLocation.Neutral = false
     spawnLocation.Transparency = 1
     spawnLocation.Anchored = true
     spawnLocation.Parent = workspace
-    spawnLocation.Position = spawnLocationRed + Vector3.new(i * 5, 0, 0)
+    spawnLocation.Position = spawnLocationRed + Vector3.new(i * 5, 1, 0)
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location RED " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright red")
@@ -232,11 +233,12 @@ local function createSpawns()
   local spawnLocationBlue = generateRandomPositionInMap(C.TEAM.BLUE)
   for i = 1, spawnLocationsCountPerTeam do
     local spawnLocation = Instance.new("SpawnLocation")
+    spawnLocation.CanCollide = false
     spawnLocation.Neutral = false
     spawnLocation.Transparency = 1
     spawnLocation.Anchored = true
     spawnLocation.Parent = workspace
-    spawnLocation.Position = spawnLocationBlue + Vector3.new(i * 5, 0, 0)
+    spawnLocation.Position = spawnLocationBlue + Vector3.new(i * 5, 1, 0)
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location BLUE " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright blue")
@@ -322,9 +324,11 @@ function GamesService.Exec()
   createTeams()
   createSpawns()
   generateMap()
+
+  servicePlayers.PlayerAdded:Connect(onPlayerAdded)
+  
   init()
 end
 
-servicePlayers.PlayerAdded:Connect(onPlayerAdded)
 
 return GamesService
