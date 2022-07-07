@@ -111,10 +111,14 @@ local function onPlayerDied(character)
   -- attr
   player:SetAttribute("playerIsDead", true)
 
+  local opositeTeam = C.TEAM.BLUE
+  if (team == C.TEAM.BLUE) then
+    opositeTeam = C.TEAM.RED
+  end
+
   if (Game.GameMode == C.GAME_MODE.ONE) then 
-    -- increase team wins
-    Game.Wins[team] = Game.Wins[team] + 1
-    if (Game.Wins[team] == 2) then
+    Game.Wins[opositeTeam] = Game.Wins[opositeTeam] + 1
+    if (Game.Wins[opositeTeam] == 2) then
       Game.Status = C.GAME_STATUS.FINISHED
       remoteEvents.EndGame:FireAllClients({Game = Game })
     else
@@ -300,6 +304,15 @@ local function generateMap()
   print("done generating map")
 end
 
+local function registerListeners()
+  remoteFunctions.GetGame.OnServerInvoke = getGame
+  remoteFunctions.GetGameStatus.OnServerInvoke = getGameStatus
+  remoteFunctions.GetWins.OnServerInvoke = getWins
+  remoteFunctions.GetSpawnLocations.OnServerInvoke = getSpawnLocations
+
+  servicePlayers.PlayerAdded:Connect(onPlayerAdded)
+end
+
 local function init()
   print("init")
   if (checkIfAllPlayersAreConnected()) then
@@ -314,19 +327,10 @@ end
 
 function GamesService.Exec()
   print('GamesService.Exec')
-  
-  -- register remote functions first!
-  remoteFunctions.GetGame.OnServerInvoke = getGame
-  remoteFunctions.GetGameStatus.OnServerInvoke = getGameStatus
-  remoteFunctions.GetWins.OnServerInvoke = getWins
-  remoteFunctions.GetSpawnLocations.OnServerInvoke = getSpawnLocations
-
   createTeams()
   createSpawns()
   generateMap()
-
-  servicePlayers.PlayerAdded:Connect(onPlayerAdded)
-  
+  registerListeners()
   init()
 end
 
