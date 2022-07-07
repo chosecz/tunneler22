@@ -15,6 +15,7 @@ local function createWaitingScreen()
   local gameStatus = remoteFunctions.GetGameStatus:InvokeServer()
 
   local waitingScreen = Instance.new("ScreenGui")
+  waitingScreen.DisplayOrder = 100
   waitingScreen.Name = "WaitingScreenGui"
   waitingScreen.Parent = playerGui
   waitingScreen.IgnoreGuiInset = true
@@ -30,7 +31,7 @@ local function createWaitingScreen()
   waitingScreenFrame.Position = UDim2.new(0, 0, 0, 0)
   waitingScreenFrame.BackgroundTransparency = 0
   waitingScreenFrame.BackgroundColor3 = Color3.new(0, 0, 255)
-  waitingScreenFrame.BackgroundTransparency = 0.75
+  waitingScreenFrame.BackgroundTransparency = 0
   waitingScreenFrame.Parent = waitingScreen
 
   local waitingScreenText = Instance.new("TextLabel")
