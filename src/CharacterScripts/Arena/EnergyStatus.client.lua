@@ -7,6 +7,8 @@ local localPlayer = game.Players.LocalPlayer
 
 local function updateStatus()
 	local gameStatus = remoteFunctions.GetGameStatus:InvokeServer()
+	local InRefuelStation = localPlayer:GetAttribute("InRefuelStation")
+
 	if (gameStatus == C.GAME_STATUS.RUNNING) then
 		-- get energy from server
 		local energy = remoteFunctions.UpdateEnergy:InvokeServer()
@@ -16,9 +18,12 @@ local function updateStatus()
 		if energyStatusFrame then
 			energyStatusFrame.Size = UDim2.new(energy / 100, 0, 1, 0)
 		end
-		wait(0.5)
-	else
-		wait(1)
+		-- energy refueling faster in station
+		if (InRefuelStation) then
+			wait(0.5)
+		else
+			wait(1)
+		end
 	end
 	updateStatus()
 end
