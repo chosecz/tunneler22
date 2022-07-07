@@ -1,71 +1,68 @@
 repeat task.wait() until game.Players.LocalPlayer.Character
---[[
-repeat task.wait() until game.Players.LocalPlayer.PlayerGui.WaitingScreen.Enabled == false
--- Instances:
+repeat task.wait() until game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
+local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
+local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
+
+print("StatusGui started")
+
+local playerGui = game.Players.LocalPlayer.PlayerGui
+
+-- Instances:
 local ScreenGui = Instance.new("ScreenGui")
-local EnergyFrame = Instance.new("Frame")
-local Frame = Instance.new("Frame")
+local EnergyBackgroundFrame = Instance.new("Frame")
+local EnergyStatusFrame = Instance.new("Frame")
 local EnergyLabel = Instance.new("TextLabel")
-local ShieldFrame = Instance.new("Frame")
-local Frame_2 = Instance.new("Frame")
+local ShieldBackgroundFrame = Instance.new("Frame")
+local ShieldStatusFrame = Instance.new("Frame")
 local ShieldLabel = Instance.new("TextLabel")
+
 
 --Properties:
 ScreenGui.Name = "EnergyShieldStatus"
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Parent = playerGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-EnergyFrame.Name = "EnergyFrame"
-EnergyFrame.Parent = ScreenGui
-EnergyFrame.BackgroundColor3 = Color3.fromRGB(49, 49, 49)
-EnergyFrame.BorderSizePixel = 0
-EnergyFrame.Position = UDim2.new(0.0543900542, 0, 0.849624038, 0)
-EnergyFrame.Size = UDim2.new(0, 380, 0, 80)
+ShieldBackgroundFrame.Name = "ShieldBackgroundFrame"
+ShieldBackgroundFrame.Parent = ScreenGui
+ShieldBackgroundFrame.BackgroundColor3 = Color3.fromRGB(49, 49, 49)
+ShieldBackgroundFrame.BorderSizePixel = 0
+ShieldBackgroundFrame.Position = UDim2.new(0.05, 0, 0.7, 0)
+ShieldBackgroundFrame.Size = UDim2.new(0.3, 0, 0.1, 0)
 
-Frame.Parent = EnergyFrame
-Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
-Frame.BorderSizePixel = 0
-Frame.Position = UDim2.new(0.0526315793, 0, 0.25, 0)
-Frame.Size = UDim2.new(0, 340, 0, 40)
+ShieldStatusFrame.Name = "ShieldStatusFrame"
+ShieldStatusFrame.Parent = ShieldBackgroundFrame
+ShieldStatusFrame.BackgroundColor3 = Color3.fromRGB(0, 213, 255)
+ShieldStatusFrame.BorderSizePixel = 0
+ShieldStatusFrame.Position = UDim2.new(0, 0, 0, 0)
+ShieldStatusFrame.Size = UDim2.new(1, 0, 1, 0)
 
-EnergyLabel.Name = "EnergyLabel"
-EnergyLabel.Parent = Frame
-EnergyLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-EnergyLabel.BackgroundTransparency = 1.000
-EnergyLabel.BorderSizePixel = 0
-EnergyLabel.Size = UDim2.new(0, 340, 0, 40)
-EnergyLabel.Font = Enum.Font.Arcade
-EnergyLabel.Text = "Energy"
-EnergyLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
-EnergyLabel.TextScaled = true
-EnergyLabel.TextSize = 14.000
-EnergyLabel.TextWrapped = true
+EnergyBackgroundFrame.Name = "EnergyBackgroundFrame"
+EnergyBackgroundFrame.Parent = ScreenGui
+EnergyBackgroundFrame.BackgroundColor3 = Color3.fromRGB(49, 49, 49)
+EnergyBackgroundFrame.BorderSizePixel = 0
+EnergyBackgroundFrame.Position = UDim2.new(0.05, 0, 0.825, 0)
+EnergyBackgroundFrame.Size = UDim2.new(0.3, 0, 0.1, 0)
 
-ShieldFrame.Name = "ShieldFrame"
-ShieldFrame.Parent = ScreenGui
-ShieldFrame.BackgroundColor3 = Color3.fromRGB(49, 49, 49)
-ShieldFrame.BorderSizePixel = 0
-ShieldFrame.Position = UDim2.new(0.0543900542, 0, 0.711779475, 0)
-ShieldFrame.Size = UDim2.new(0, 380, 0, 80)
+EnergyStatusFrame.Name = "EnergyStatusFrame"
+EnergyStatusFrame.Parent = EnergyBackgroundFrame
+EnergyStatusFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+EnergyStatusFrame.BorderSizePixel = 0
+EnergyStatusFrame.Position = UDim2.new(0, 0, 0, 0)
+EnergyStatusFrame.Size = UDim2.new(1, 0, 1, 0)
 
-Frame_2.Parent = ShieldFrame
-Frame_2.BackgroundColor3 = Color3.fromRGB(0, 213, 255)
-Frame_2.BorderSizePixel = 0
-Frame_2.Position = UDim2.new(0.0526315793, 0, 0.25, 0)
-Frame_2.Size = UDim2.new(0, 340, 0, 40)
+local EnergyLabel = F.createTextLabel({
+  Parent = EnergyBackgroundFrame,
+  Text = "Energy",
+  Size = UDim2.new(0.5, 0, 0.5, 0),
+  Position = UDim2.new(0.25, 0, 0.25, 0),
+  TextColor3 = Color3.fromRGB(0, 0, 0),
+})
 
-ShieldLabel.Name = "ShieldLabel"
-ShieldLabel.Parent = Frame_2
-ShieldLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ShieldLabel.BackgroundTransparency = 1.000
-ShieldLabel.BorderSizePixel = 0
-ShieldLabel.Size = UDim2.new(0, 340, 0, 40)
-ShieldLabel.Font = Enum.Font.Arcade
-ShieldLabel.Text = "Shield"
-ShieldLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
-ShieldLabel.TextScaled = true
-ShieldLabel.TextSize = 14.000
-ShieldLabel.TextWrapped = true
-
-]]
+local ShieldLabel = F.createTextLabel({
+  Parent = ShieldBackgroundFrame,
+  Text = "Shield",
+  Size = UDim2.new(0.5, 0, 0.5, 0),
+  Position = UDim2.new(0.25, 0, 0.25, 0),
+  TextColor3 = Color3.fromRGB(0, 0, 0),
+})
