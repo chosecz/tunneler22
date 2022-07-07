@@ -7,14 +7,14 @@ local localPlayer = game.Players.LocalPlayer
 
 local function onTouch(part)
 	local plr = game.Players:GetPlayerFromCharacter(part.Parent)
-	if (plr and plr.UserId ==  localPlayer.UserId) then
+	if (plr and plr.UserId == localPlayer.UserId) then
 		remoteFunctions.InRefuelStation:InvokeServer(true)
 	end
 end
 
 local function onLeave(part)
 	local plr = game.Players:GetPlayerFromCharacter(part.Parent)
-	if (plr and plr.UserId ==  localPlayer.UserId) then
+	if (plr and plr.UserId == localPlayer.UserId) then
 		remoteFunctions.InRefuelStation:InvokeServer(false)
 	end
 end
