@@ -4,5 +4,5 @@ local remoteFunctions = game.ReplicatedStorage:WaitForChild('RemoteFunctions')
 local character = script.Parent
 local player = game.Players:GetPlayerFromCharacter(character)
 
-print("**** calling remote function")
+-- call remote function
 remoteFunctions.ColorTank:InvokeServer(player)
