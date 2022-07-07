@@ -48,6 +48,14 @@
     {
       "Name": "ColorTank",
       "ClassName": "RemoteFunction"
+    },
+    {
+      "Name": "InRefuelStation",
+      "ClassName": "RemoteFunction"
+    },
+    {
+      "Name": "UpdateEnergy",
+      "ClassName": "RemoteFunction"
     }
   ]
 }

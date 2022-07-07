@@ -48,6 +48,39 @@ local fakeGame = {
   }
 }
 
+local function killPlayer(player)
+  player.Character:FindFirstChild("Humanoid").Health = 0
+end
+
+local function setDefaltPlayerAttributes(player)
+  player:SetAttribute("playerIsDead", false)
+  player:SetAttribute("InRefuelStation", true)
+  player:SetAttribute("Shields", 100)
+  player:SetAttribute("Energy", 100)
+end
+
+local function updateEnergy(player)
+  print("updateEnergy", player)
+  local energy = player:GetAttribute("Energy")
+  local inRefuelStation = player:GetAttribute("InRefuelStation")
+  if (inRefuelStation and energy < 100) then
+    energy = energy + 1
+  elseif (not inRefuelStation and energy > 0) then
+    energy = energy - 1
+  end
+  
+  -- update player attrs
+  player:SetAttribute("Energy", energy);
+
+  -- kill player, if energy is 0
+  if (energy == 0) then
+    killPlayer(player)
+  end
+
+  -- return value
+  return energy
+end
+
 local function getGame()
   if (not Game) then
     return nil
@@ -110,7 +143,7 @@ local function onPlayerDied(character)
 
   -- attr
   player:SetAttribute("playerIsDead", true)
-
+  
   local opositeTeam = C.TEAM.BLUE
   if (team == C.TEAM.BLUE) then
     opositeTeam = C.TEAM.RED
@@ -135,12 +168,14 @@ local function onCharactedAdded(character)
   print("onCharactedAdded", character)
   
   local player = game.Players:GetPlayerFromCharacter(character)
-  player:SetAttribute("playerIsDead", false)
+  setDefaltPlayerAttributes(player)
 
   character:WaitForChild("Humanoid").Died:Connect(function()
     onPlayerDied(character)
   end)
 end
+
+
 
 local function onPlayerAdded(player)
   print("Player added: " .. player.Name)
@@ -215,7 +250,7 @@ local function createSpawns()
     spawnLocation.Transparency = 1
     spawnLocation.Anchored = true
     spawnLocation.Parent = workspace
-    spawnLocation.Position = spawnLocationRed + Vector3.new(i * 5, 1, 0)
+    spawnLocation.Position = spawnLocationRed + Vector3.new(i * 5, 0.5, 0)
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location RED " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright red")
@@ -231,7 +266,7 @@ local function createSpawns()
     spawnLocation.Transparency = 1
     spawnLocation.Anchored = true
     spawnLocation.Parent = workspace
-    spawnLocation.Position = spawnLocationBlue + Vector3.new(i * 5, 1, 0)
+    spawnLocation.Position = spawnLocationBlue + Vector3.new(i * 5, 0.5, 0)
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location BLUE " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright blue")
@@ -306,12 +341,18 @@ local function colorTank(player)
   end
 end
 
+local function inRefuelStation(player, inRefuelStation)
+  player:SetAttribute("InRefuelStation", inRefuelStation)
+end
+
 local function registerListeners()
   remoteFunctions.GetGame.OnServerInvoke = getGame
   remoteFunctions.GetGameStatus.OnServerInvoke = getGameStatus
   remoteFunctions.GetWins.OnServerInvoke = getWins
   remoteFunctions.GetSpawnLocations.OnServerInvoke = getSpawnLocations
   remoteFunctions.ColorTank.OnServerInvoke = colorTank
+  remoteFunctions.InRefuelStation.OnServerInvoke = inRefuelStation
+  remoteFunctions.UpdateEnergy.OnServerInvoke = updateEnergy
 
   servicePlayers.PlayerAdded:Connect(onPlayerAdded)
 end
