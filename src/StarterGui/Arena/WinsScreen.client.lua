@@ -63,5 +63,6 @@ renderWins()
 
 remoteEvents.NextRound.OnClientEvent:Connect(renderWins)
 remoteEvents.EndGame.OnClientEvent:Connect(renderWins)
+remoteEvents.NextGame.OnClientEvent:Connect(renderWins)
 
 print('Arena Wins Screen created')
