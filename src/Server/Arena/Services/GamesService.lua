@@ -279,14 +279,14 @@ local function generateMap()
       newPart.Parent = workspace.Parts
       newPart.Position = Vector3.new(x * 10, 4, z * 10)  
       newPart.Touched:Connect(function(hit)
-        print("Part touched")
+        newPart:Destroy()
+        --[[
         if (hit.Parent:FindFirstChild("Humanoid")) then
-          -- local player = hit.Parent
-          -- print("Player " .. player.Name .. " touched the map")
           newPart:Destroy()
         else
           newPart:Destroy()
         end
+        ]]
       end)
     end
   end
