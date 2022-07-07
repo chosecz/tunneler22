@@ -32,6 +32,10 @@
     {
       "Name": "PlayerWantsFire",
       "ClassName": "RemoteEvent"
+    },
+    {
+      "Name": "NextGame",
+      "ClassName": "RemoteEvent"
     }
   ]
 }

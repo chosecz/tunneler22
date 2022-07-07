@@ -1,6 +1,7 @@
 repeat task.wait() until game.Players.LocalPlayer.Character
 
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
+local F = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Functions'))
 local remoteEvents = game.ReplicatedStorage:WaitForChild('RemoteEvents')
 local remoteFunctions = game.ReplicatedStorage:WaitForChild('RemoteFunctions')
 
@@ -37,7 +38,6 @@ local function createNextRoundScreen()
   frame.Position = UDim2.new(0, 0, 0, 0)
   frame.BackgroundTransparency = 0
   frame.BackgroundColor3 = Color3.new(0, 0, 255)
-  frame.BackgroundTransparency = 0.8
   frame.Parent = screen
 
   local text = Instance.new("TextLabel")
@@ -50,6 +50,25 @@ local function createNextRoundScreen()
   text.TextColor3 = Color3.new(1, 1, 1)
   text.TextStrokeTransparency = 0
   text.Parent = frame
+
+  local rematchButton = F.createButton({
+    Parent = frame,
+    Text = "Rematch",
+    Size = UDim2.new(0.25, 0, 0.05, 0),
+    Position = UDim2.new(0.25, 0, 0.75, 0),
+    Activated = function()
+      remoteFunctions.StartNewGame:InvokeServer()
+    end
+  })
+  local lobbyButton = F.createButton({
+    Parent = frame,
+    Text = "Lobby",
+    Size = UDim2.new(0.25, 0, 0.05, 0),
+    Position = UDim2.new(0.5, 0, 0.75, 0),
+    Activated = function()
+      remoteFunctions.StartNewGame:InvokeServer()
+    end
+  })
 end
 
 local function show()

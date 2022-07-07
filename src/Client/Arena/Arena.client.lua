@@ -33,8 +33,27 @@ local function endGame(options)
   ControlModule:Disable()
 end
 
+local function nextGame()
+  print('nextGame')
+
+  ControlModule:Disable()
+  
+  local spawnLocations = remoteFunctions.GetSpawnLocations:InvokeServer()
+  local team = localPlayer.Team.Name;
+  local spawnLocations = spawnLocations[team]
+  local hrp = localPlayer.Character:WaitForChild("HumanoidRootPart")
+  hrp.CFrame = spawnLocations[1].CFrame
+
+  -- reset player
+  remoteFunctions.ResetPlayer:InvokeServer()
+
+  -- enable controls again
+  ControlModule:Enable()
+end
+
 remoteEvents.NextRound.OnClientEvent:Connect(nextRound)
 remoteEvents.EndGame.OnClientEvent:Connect(endGame)
+remoteEvents.NextGame.OnClientEvent:Connect(nextGame)
 
 print('Arena Player started')
 

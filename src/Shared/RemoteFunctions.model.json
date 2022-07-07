@@ -60,6 +60,10 @@
     {
       "Name": "ResetPlayer",
       "ClassName": "RemoteFunction"
+    },
+    {
+      "Name": "StartNewGame",
+      "ClassName": "RemoteFunction"
     }
   ]
 }

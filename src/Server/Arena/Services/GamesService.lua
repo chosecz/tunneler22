@@ -165,8 +165,6 @@ local function onPlayerDied(character)
     if (Game.Wins[opositeTeam] == 2) then
       Game.Status = C.GAME_STATUS.FINISHED
       remoteEvents.EndGame:FireAllClients({Game = Game })
-      wait(5)
-      startNewGame()
     else
       Game.Status = C.GAME_STATUS.NEXT_ROUND
       remoteEvents.NextRound:FireAllClients({Game = Game })
@@ -408,20 +406,6 @@ local function PlayerWantsFire(player)
   end
 end
 
-local function registerListeners()
-  remoteFunctions.GetGame.OnServerInvoke = getGame
-  remoteFunctions.GetGameStatus.OnServerInvoke = getGameStatus
-  remoteFunctions.GetWins.OnServerInvoke = getWins
-  remoteFunctions.GetSpawnLocations.OnServerInvoke = getSpawnLocations
-  remoteFunctions.ColorTank.OnServerInvoke = colorTank
-  remoteFunctions.InRefuelStation.OnServerInvoke = inRefuelStation
-  remoteFunctions.UpdateEnergy.OnServerInvoke = updateEnergy
-  remoteFunctions.ResetPlayer.OnServerInvoke = resetPlayer
-
-  remoteEvents.PlayerWantsFire.OnServerEvent:Connect(PlayerWantsFire)
-  servicePlayers.PlayerAdded:Connect(onPlayerAdded)
-end
-
 function startNewGame()
   print("startNewGame")
   local children = workspace:GetChildren()
@@ -441,7 +425,23 @@ function startNewGame()
     [C.TEAM.BLUE] = 0
   }
   Game.Status = C.GAME_STATUS.RUNNING
-  remoteEvents.NextRound:FireAllClients({Game = Game })
+  remoteEvents.NextGame:FireAllClients({Game = Game })
+end
+
+local function registerListeners()
+  remoteFunctions.GetGame.OnServerInvoke = getGame
+  remoteFunctions.GetGameStatus.OnServerInvoke = getGameStatus
+  remoteFunctions.GetWins.OnServerInvoke = getWins
+  remoteFunctions.GetSpawnLocations.OnServerInvoke = getSpawnLocations
+  remoteFunctions.ColorTank.OnServerInvoke = colorTank
+  remoteFunctions.InRefuelStation.OnServerInvoke = inRefuelStation
+  remoteFunctions.UpdateEnergy.OnServerInvoke = updateEnergy
+  remoteFunctions.ResetPlayer.OnServerInvoke = resetPlayer
+  remoteFunctions.StartNewGame.OnServerInvoke = startNewGame
+  
+
+  remoteEvents.PlayerWantsFire.OnServerEvent:Connect(PlayerWantsFire)
+  servicePlayers.PlayerAdded:Connect(onPlayerAdded)
 end
 
 local function init()

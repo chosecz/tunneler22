@@ -24,6 +24,7 @@ return {
   GAME_STATUS = {
     WAITING = 'WAITING',
     NEXT_ROUND = 'NEXT_ROUND',
+    NEXT_GAME = 'NEXT_GAME',
     RUNNING = 'RUNNING',
     FINISHED = 'FINISHED',
   },
