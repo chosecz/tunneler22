@@ -28,6 +28,10 @@
     {
       "Name": "EndGame",
       "ClassName": "RemoteEvent"
+    },
+    {
+      "Name": "PlayerWantsFire",
+      "ClassName": "RemoteEvent"
     }
   ]
 }

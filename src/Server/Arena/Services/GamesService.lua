@@ -65,7 +65,7 @@ local function resetPlayer(player)
 end
 
 local function updateEnergy(player)
-  print("updateEnergy", player)
+  -- print("updateEnergy", player)
   local energy = player:GetAttribute("Energy")
   local inRefuelStation = player:GetAttribute("InRefuelStation")
   if (inRefuelStation and energy < 100) then
@@ -353,6 +353,16 @@ local function inRefuelStation(player, inRefuelStation)
   player:SetAttribute("InRefuelStation", inRefuelStation)
 end
 
+local function PlayerWantsFire(player)
+  print("PlayerWantsFire", player)
+
+  local ball = Instance.new("Part")
+  ball.Shape = Enum.PartType.Ball
+  ball.Size = Vector3.new(1, 1, 1)
+  ball.Position = player.Character.HumanoidRootPart.Position
+  ball.Parent = workspace
+end
+
 local function registerListeners()
   remoteFunctions.GetGame.OnServerInvoke = getGame
   remoteFunctions.GetGameStatus.OnServerInvoke = getGameStatus
@@ -363,6 +373,7 @@ local function registerListeners()
   remoteFunctions.UpdateEnergy.OnServerInvoke = updateEnergy
   remoteFunctions.ResetPlayer.OnServerInvoke = resetPlayer
 
+  remoteEvents.PlayerWantsFire.OnServerEvent:Connect(PlayerWantsFire)
   servicePlayers.PlayerAdded:Connect(onPlayerAdded)
 end
 
