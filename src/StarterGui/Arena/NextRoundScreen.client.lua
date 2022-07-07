@@ -48,9 +48,12 @@ local function createNextRoundScreen()
 end
 
 local function showNextRoundScreen()
-  nextRoundScreen.Enabled = true
-  wait(5)
-  nextRoundScreen.Enabled = false
+  local gameStatus = remoteFunctions.GetGameStatus:InvokeServer()
+  if (gameStatus == C.GAME_STATUS.NEXT_ROUND) then
+    nextRoundScreen.Enabled = true
+    wait(5)
+    nextRoundScreen.Enabled = false
+  end
 end
 
 createNextRoundScreen()

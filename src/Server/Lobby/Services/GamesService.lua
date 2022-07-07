@@ -174,7 +174,11 @@ local function CreateGame(player, options)
     Id = gameId,
     GameType = options.GameType,
     GameMode = options.GameMode,
-    GameStatus = C.GAME_STATUS.WAITING,
+    Status = C.GAME_STATUS.WAITING,
+    Wins = {
+      [C.TEAM.RED] = 0,
+      [C.TEAM.BLUE] = 0
+    },
     Owner = player.UserId,
     Full = false,
     ReadyToStart = false,

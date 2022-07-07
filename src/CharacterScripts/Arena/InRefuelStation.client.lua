@@ -2,8 +2,8 @@ repeat task.wait() until game.Players.LocalPlayer.Character
 
 local C = require(game.ReplicatedStorage:WaitForChild('Utils'):WaitForChild('Constants'))
 local remoteFunctions = game.ReplicatedStorage:WaitForChild('RemoteFunctions')
-local refuelStationBlue = workspace.BaseBlue.MainPartBlue
-local refuelStationRed = workspace.BaseRed.MainPartRed
+local refuelStationBlue = workspace.Spawns.BaseBlue.MainPartBlue
+local refuelStationRed = workspace.Spawns.BaseRed.MainPartRed
 local localPlayer = game.Players.LocalPlayer
 
 local function onTouch(part, team)

@@ -38,7 +38,6 @@ local fakeGame = {
     [C.TEAM.RED] = 0,
     [C.TEAM.BLUE] = 0
   },
-  Round = 1,
   Teams = {[C.TEAM.RED] = {
       [1] = {
         UserId = -1,
@@ -166,6 +165,8 @@ local function onPlayerDied(character)
     if (Game.Wins[opositeTeam] == 2) then
       Game.Status = C.GAME_STATUS.FINISHED
       remoteEvents.EndGame:FireAllClients({Game = Game })
+      wait(5)
+      startNewGame()
     else
       Game.Status = C.GAME_STATUS.NEXT_ROUND
       remoteEvents.NextRound:FireAllClients({Game = Game })
@@ -251,6 +252,10 @@ end
 
 local function createSpawns()
   print("creating spawn locations")
+
+  local spawnFolder = Instance.new("Folder")
+  spawnFolder.Name = "Spawns"
+  spawnFolder.Parent = game.Workspace
   
   local spawnLocationsCountPerTeam = 2
 
@@ -262,7 +267,7 @@ local function createSpawns()
     spawnLocation.Neutral = false
     spawnLocation.Transparency = 1
     spawnLocation.Anchored = true
-    spawnLocation.Parent = workspace
+    spawnLocation.Parent = spawnFolder
     spawnLocation.Position = spawnLocationRed + Vector3.new(i * 5, 2, 0)
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location RED " .. i
@@ -278,7 +283,7 @@ local function createSpawns()
     spawnLocation.Neutral = false
     spawnLocation.Transparency = 1
     spawnLocation.Anchored = true
-    spawnLocation.Parent = workspace
+    spawnLocation.Parent = spawnFolder
     spawnLocation.Position = spawnLocationBlue + Vector3.new(i * 5, 2, 0)
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location BLUE " .. i
@@ -293,14 +298,14 @@ local function createSpawns()
 
   --Red Base
   local CopyBaseRed = Base:Clone()
-  CopyBaseRed.Parent = game.Workspace
+  CopyBaseRed.Parent = spawnFolder
   CopyBaseRed:moveTo(spawnLocationRed)
   CopyBaseRed.Name = "BaseRed"
   CopyBaseRed.MainPart.Name = "MainPartRed"
 
   -- Blue Base
   local CopyBaseBlue = Base:Clone()
-  CopyBaseBlue.Parent = game.Workspace
+  CopyBaseBlue.Parent = spawnFolder
   CopyBaseBlue:moveTo(spawnLocationBlue)
   CopyBaseBlue.Name = "BaseBlue"
   CopyBaseBlue.MainPart.Name = "MainPartBlue"
@@ -310,6 +315,10 @@ end
 
 local function generateMap()
   print("generating map")
+
+  local mapFolder = Instance.new("Folder")
+  mapFolder.Name = "Map"
+  mapFolder.Parent = game.Workspace
 
   -- create map
   local part = Instance.new("Part")
@@ -324,7 +333,7 @@ local function generateMap()
       -- print("create part at " .. x, z)
       local newPart = part:Clone()
       newPart.Anchored = true
-      newPart.Parent = workspace.Parts
+      newPart.Parent = mapFolder
       newPart.Position = Vector3.new(x * 10, 4, z * 10)  
       newPart.Touched:Connect(function(hit)
         newPart:Destroy()
@@ -413,6 +422,28 @@ local function registerListeners()
   servicePlayers.PlayerAdded:Connect(onPlayerAdded)
 end
 
+function startNewGame()
+  print("startNewGame")
+  local children = workspace:GetChildren()
+
+  for i = 1, #children do
+    local child = children[i]
+    if (child.Name == "Map" or child.Name == "Spawns") then
+      child:Destroy()
+    end
+  end
+
+  createSpawns()
+  generateMap()
+
+  Game.Wins = {
+    [C.TEAM.RED] = 0,
+    [C.TEAM.BLUE] = 0
+  }
+  Game.Status = C.GAME_STATUS.RUNNING
+  remoteEvents.NextRound:FireAllClients({Game = Game })
+end
+
 local function init()
   print("init")
   if (checkIfAllPlayersAreConnected()) then
@@ -424,6 +455,7 @@ local function init()
     -- show error message and return to lobby
   end
 end
+
 
 function GamesService.Exec()
   print('GamesService.Exec')

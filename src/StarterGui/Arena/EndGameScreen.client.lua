@@ -14,6 +14,11 @@ local screen = nil
 local function createNextRoundScreen()
   print("Creating End Game screen")
 
+  -- destroy if WinsSceen already exists
+  if playerGui:FindFirstChild("EndGameScreenGui") then
+    playerGui.EndGameScreenGui:Destroy()
+  end
+
   local gameStatus = remoteFunctions.GetGameStatus:InvokeServer()
 
   screen = Instance.new("ScreenGui")
@@ -47,12 +52,17 @@ local function createNextRoundScreen()
   text.Parent = frame
 end
 
-local function showScreen()
+local function show()
   screen.Enabled = true
+end
+
+local function hide()
+  screen.Enabled = false
 end
 
 createNextRoundScreen()
 
-remoteEvents.EndGame.OnClientEvent:Connect(showScreen)
+remoteEvents.EndGame.OnClientEvent:Connect(show)
+remoteEvents.NextRound.OnClientEvent:Connect(hide)
 
 print('End Game Screen script created')
