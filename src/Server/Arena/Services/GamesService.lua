@@ -6,6 +6,7 @@ local servicePlayers = game:GetService("Players")
 local StarterPlayer = game:GetService("StarterPlayer")
 local basePlate = game:GetService("Workspace"):WaitForChild("Parts"):WaitForChild("Baseplate")
 local Rep = game:GetService("ReplicatedStorage")
+local debris = game:GetService("Debris")
 
 local GamesService = {}
 
@@ -187,8 +188,6 @@ local function onCharactedAdded(character)
   end)
 end
 
-
-
 local function onPlayerAdded(player)
   print("Player added: " .. player.Name)
 
@@ -361,21 +360,27 @@ local function fireBullet(player)
   player:SetAttribute("PlayerShooting", true)
   local shootingPart = player.Character:FindFirstChild("Tank"):FindFirstChild("ColorPart")
   local direction = player.Character.HumanoidRootPart.CFrame.lookVector
-	local position = shootingPart.Position + (direction * 3)
+	local position = shootingPart.Position + (direction * 2)
 
   local ball = Instance.new("Part")
   ball.Shape = Enum.PartType.Ball
   ball.Size = Vector3.new(1, 1, 1)
   ball.Parent = workspace
   ball.CFrame = CFrame.new(position + direction)
-  ball.Velocity = direction * 100
+  ball.Velocity = direction * 500
   ball.Touched:Connect(function(hit)
-    if (hit.Parent:FindFirstChild("Humanoid")) then
+    print("hit", hit.Name)
+    if (hit.Parent.Parent:FindFirstChild("Humanoid")) then
       print("player hit")
-      -- hit.Parent:FindFirstChild("Humanoid").Health = hit.Parent:FindFirstChild("Humanoid").Health - 10
+      local hittedPlayer = game.Players:GetPlayerFromCharacter(hit.Parent.Parent:FindFirstChild("Humanoid").Parent)
+      local shields = hittedPlayer:GetAttribute("Shields")
+      shields = shields - 5
+      hittedPlayer:SetAttribute("Shields", shields)
     end
-    wait(0.1)
-    ball:Destroy()
+
+    if not (hit.Name == "MainPartRed" or hit.Name == "MainPartBlue") then
+      ball:Destroy()
+    end
   end)
 
   fireSound:Play()
