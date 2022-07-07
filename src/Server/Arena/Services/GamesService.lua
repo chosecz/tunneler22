@@ -6,6 +6,7 @@ local servicePlayers = game:GetService("Players")
 local StarterPlayer = game:GetService("StarterPlayer")
 local basePlate = game:GetService("Workspace"):WaitForChild("Parts"):WaitForChild("Baseplate")
 local Rep = game:GetService("ReplicatedStorage")
+
 local GamesService = {}
 
 local MAX_WAIT_TIME = 30

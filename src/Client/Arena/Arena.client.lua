@@ -6,6 +6,8 @@ local remoteFunctions = game.ReplicatedStorage:WaitForChild('RemoteFunctions')
 local players = game:GetService('Players')
 local localPlayer = players.LocalPlayer
 
+local ControlModule = require(localPlayer:WaitForChild("PlayerScripts"):WaitForChild("PlayerModule"):WaitForChild("ControlModule"))
+
 local function nextRound(options)
   print('nextRound', options.Game)
 
@@ -16,6 +18,11 @@ local function nextRound(options)
     local hrp = localPlayer.Character:WaitForChild("HumanoidRootPart")
     hrp.CFrame = spawnLocations[1].CFrame
   end
+
+  -- disable controls
+  ControlModule:Disable()
+  wait(5)
+  ControlModule:Enable()
 end
 
 local function endGame(options)
