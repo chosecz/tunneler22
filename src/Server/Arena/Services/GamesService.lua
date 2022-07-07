@@ -72,6 +72,8 @@ end
 local function updateEnergy(player)
   -- print("updateEnergy", player)
   local energy = player:GetAttribute("Energy")
+  local shields = player:GetAttribute("Shields")
+
   local inRefuelStation = player:GetAttribute("InRefuelStation")
   if (inRefuelStation and energy < 100) then
     energy = energy + 1
@@ -83,12 +85,12 @@ local function updateEnergy(player)
   player:SetAttribute("Energy", energy);
 
   -- kill player, if energy is 0
-  if (energy == 0) then
+  if (energy == 0 or shields == 0) then
     killPlayer(player)
   end
 
   -- return value
-  return energy
+  return { Energy = energy, Shields = shields }
 end
 
 local function getGame()
