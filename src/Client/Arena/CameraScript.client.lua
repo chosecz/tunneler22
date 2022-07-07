@@ -4,7 +4,7 @@ print("CamScript started")
 local localPlayer = game.Players.LocalPlayer
 local camera = workspace.CurrentCamera
 
-camera.CameraSubject = localPlayer.Character.HumanoidRootPart
+camera.CameraSubject = localPlayer.Character:WaitForChild("HumanoidRootPart")
 camera.FieldOfView = 40
 camera.CameraType = Enum.CameraType.Scriptable
 
