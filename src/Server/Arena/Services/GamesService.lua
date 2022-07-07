@@ -171,17 +171,6 @@ local function onPlayerAdded(player)
       end
     end
   end
-  
-  local tank = StarterPlayer.StarterCharacter.Tank
-  local tankParts = tank:GetChildren()
-
-  for i, child in ipairs(tankParts) do
-    if child.Name == "ColorPart" then
-      child.BrickColor = player.TeamColor
-    end
-  end
-
-  
 end
 
 local function createTeams()
@@ -304,11 +293,25 @@ local function generateMap()
   print("done generating map")
 end
 
+local function colorTank(player)
+  print("colorTank", player)
+
+  local tank = player.Character:FindFirstChild("Tank")
+  local tankParts = tank:GetChildren()
+
+  for i, child in ipairs(tankParts) do
+    if child.Name == "ColorPart" then
+      child.BrickColor = player.TeamColor
+    end
+  end
+end
+
 local function registerListeners()
   remoteFunctions.GetGame.OnServerInvoke = getGame
   remoteFunctions.GetGameStatus.OnServerInvoke = getGameStatus
   remoteFunctions.GetWins.OnServerInvoke = getWins
   remoteFunctions.GetSpawnLocations.OnServerInvoke = getSpawnLocations
+  remoteFunctions.ColorTank.OnServerInvoke = colorTank
 
   servicePlayers.PlayerAdded:Connect(onPlayerAdded)
 end

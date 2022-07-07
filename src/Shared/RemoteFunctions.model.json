@@ -44,6 +44,10 @@
     {
       "Name": "GetSpawnLocations",
       "ClassName": "RemoteFunction"
+    },
+    {
+      "Name": "ColorTank",
+      "ClassName": "RemoteFunction"
     }
   ]
 }
