@@ -8,6 +8,14 @@ local localPlayer = players.LocalPlayer
 
 local function nextRound(options)
   print('nextRound', options.Game)
+
+  if (not localPlayer:GetAttribute("playerIsDead")) then
+    local spawnLocations = remoteFunctions.GetSpawnLocations:InvokeServer()
+    local team = localPlayer.Team.Name;
+    local spawnLocations = spawnLocations[team]
+    local hrp = localPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = spawnLocations[1].CFrame
+  end
 end
 
 local function endGame(options)

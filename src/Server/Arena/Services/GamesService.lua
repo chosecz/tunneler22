@@ -21,7 +21,7 @@ local MinZ = -MaxZ
 -- holt information about game
 local Game = nil
 local Teams = nil
-local spawnLocations = {}
+local spawnLocations = {[C.TEAM.RED] = {}, [C.TEAM.BLUE] = {}}
 
 -- just fake game data for development
 local fakeGame = {
@@ -66,6 +66,10 @@ local function getWins()
   return Game.Wins
 end
 
+local function getSpawnLocations()
+  return spawnLocations
+end
+
 local function waitForAllPlayerInGameToBeConnected()
   if (not Game) then return false end
   local StartGame = false
@@ -104,14 +108,13 @@ local function onPlayerDied(character)
   local player = game.Players:GetPlayerFromCharacter(character)
   local team = player.Team.Name
 
-  print("Player died", player)
-  print("Player team", team)
+  -- attr
+  player:SetAttribute("playerIsDead", true)
 
   if (Game.GameMode == C.GAME_MODE.ONE) then 
     -- increase team wins
     Game.Wins[team] = Game.Wins[team] + 1
     if (Game.Wins[team] == 2) then
-      print("Team won", team)
       Game.Status = C.GAME_STATUS.FINISHED
       remoteEvents.EndGame:FireAllClients({Game = Game })
     else
@@ -126,6 +129,10 @@ end
 
 local function onCharactedAdded(character)
   print("onCharactedAdded", character)
+  
+  local player = game.Players:GetPlayerFromCharacter(character)
+  player:SetAttribute("playerIsDead", false)
+
   character:WaitForChild("Humanoid").Died:Connect(function()
     onPlayerDied(character)
   end)
@@ -133,7 +140,7 @@ end
 
 local function onPlayerAdded(player)
   print("Player added: " .. player.Name)
-  
+
   -- characted added
   player.CharacterAdded:Connect(onCharactedAdded)
 
@@ -211,29 +218,33 @@ local function createSpawns()
   for i = 1, spawnLocationsCountPerTeam do
     local spawnLocation = Instance.new("SpawnLocation")
     spawnLocation.Neutral = false
+    spawnLocation.Transparency = 1
     spawnLocation.Anchored = true
     spawnLocation.Parent = workspace
-    spawnLocation.Position = spawnLocationRed + Vector3.new(i * 5, -0.5, 0)
+    spawnLocation.Position = spawnLocationRed + Vector3.new(i * 5, 0, 0)
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location RED " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright red")
     spawnLocation:SetAttribute("Team", C.TEAM.RED)
-    spawnLocations[i + spawnLocationsCountPerTeam] = spawnLocation
+    spawnLocations[C.TEAM.RED][i] = spawnLocation
   end
 
   local spawnLocationBlue = generateRandomPositionInMap(C.TEAM.BLUE)
   for i = 1, spawnLocationsCountPerTeam do
     local spawnLocation = Instance.new("SpawnLocation")
     spawnLocation.Neutral = false
+    spawnLocation.Transparency = 1
     spawnLocation.Anchored = true
     spawnLocation.Parent = workspace
-    spawnLocation.Position = spawnLocationBlue + Vector3.new(i * 5, -0.5, 0)
+    spawnLocation.Position = spawnLocationBlue + Vector3.new(i * 5, 0, 0)
     spawnLocation.Size = Vector3.new(1, 1, 1)
     spawnLocation.Name = "Spawn Location BLUE " .. i
     spawnLocation.TeamColor = BrickColor.new("Bright blue")
     spawnLocation:SetAttribute("Team", C.TEAM.BLUE)
-    spawnLocations[i + spawnLocationsCountPerTeam] = spawnLocation
+    spawnLocations[C.TEAM.BLUE][i] = spawnLocation
   end
+
+  print("spawnLocations", spawnLocations)
 
   local Base = Rep.Meshes.PlayerBase
 
@@ -306,6 +317,7 @@ function GamesService.Exec()
   remoteFunctions.GetGame.OnServerInvoke = getGame
   remoteFunctions.GetGameStatus.OnServerInvoke = getGameStatus
   remoteFunctions.GetWins.OnServerInvoke = getWins
+  remoteFunctions.GetSpawnLocations.OnServerInvoke = getSpawnLocations
 
   createTeams()
   createSpawns()

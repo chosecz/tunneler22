@@ -40,6 +40,10 @@
     {
       "Name": "GetWins",
       "ClassName": "RemoteFunction"
+    },
+    {
+      "Name": "GetSpawnLocations",
+      "ClassName": "RemoteFunction"
     }
   ]
 }
