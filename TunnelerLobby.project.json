@@ -39,12 +39,12 @@
       "StarterCharacterScripts": {
         "$className": "StarterCharacterScripts",
         "$ignoreUnknownInstances": true,
-        "$path": "src/Lobby/StarterCharacterScripts"
+        "$path": "src/StarterPlayer/Lobby/StarterCharacterScripts"
       },
       "StarterPlayerScripts": {
         "$className": "StarterPlayerScripts",
         "$ignoreUnknownInstances": true,
-        "$path": "src/Lobby/StarterPlayerScripts"
+        "$path": "src/StarterPlayer/Lobby/StarterPlayerScripts"
       },
       "$ignoreUnknownInstances": true
     }
