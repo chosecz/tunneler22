@@ -39,12 +39,12 @@
       "StarterCharacterScripts": {
         "$className": "StarterCharacterScripts",
         "$ignoreUnknownInstances": true,
-        "$path": "src/CharacterScripts/Arena"
+        "$path": "src/Arena/StarterCharacterScripts"
       },
       "StarterPlayerScripts": {
         "$className": "StarterPlayerScripts",
         "$ignoreUnknownInstances": true,
-        "$path": "src/Client/Arena"
+        "$path": "src/Arena/StarterPlayerScripts"
       },
       "$ignoreUnknownInstances": true
     }
