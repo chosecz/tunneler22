@@ -204,6 +204,10 @@ local function onPlayerAdded(player)
   elseif (not Game) then
     Game = teleportData
   end
+
+  print("Game data from teleport: ", Game)
+  print("Game data from teleport Teams: ", Game.Teams)
+  print("Game data from teleport Wins: ", Game.Wins)
   
   if (Game) then
     for teamColor, playersInTeam in pairs(Game.Teams) do
@@ -383,7 +387,10 @@ local function fireBullet(player)
       print("player hit")
       local hittedPlayer = game.Players:GetPlayerFromCharacter(hit.Parent.Parent:FindFirstChild("Humanoid").Parent)
       local shields = hittedPlayer:GetAttribute("Shields")
-      shields = shields - 5
+      shields = shields - 10
+      if (shields < 0) then
+        shields = 0
+      end
       hittedPlayer:SetAttribute("Shields", shields)
     end
 

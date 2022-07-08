@@ -2,7 +2,7 @@
 	<Meta name="ExplicitAutoJoints">true</Meta>
 	<External>null</External>
 	<External>nil</External>
-	<Item class="Model" referent="RBX2cc90e8910734292b7eec21a54e03338">
+	<Item class="Model" referent="RBX6bb789c13dfc4225a52f93d135ea8fdd">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<token name="LevelOfDetail">0</token>
@@ -28,27 +28,12 @@
 			</Vector3>
 			<string name="Name">PlayerBase</string>
 			<bool name="NeedsPivotMigration">false</bool>
-			<Ref name="PrimaryPart">RBXa896817d1d22419c8dcf3f90c4324b8e</Ref>
+			<Ref name="PrimaryPart">RBXf8f58f0b53294676afeef1bc3e99d362</Ref>
 			<int64 name="SourceAssetId">-1</int64>
 			<BinaryString name="Tags"></BinaryString>
-			<OptionalCoordinateFrame name="WorldPivotData">
-				<CFrame>
-					<X>4.66365433</X>
-					<Y>4.49594021</Y>
-					<Z>-11.2850037</Z>
-					<R00>-1</R00>
-					<R01>0</R01>
-					<R02>0</R02>
-					<R10>0</R10>
-					<R11>-1</R11>
-					<R12>0</R12>
-					<R20>0</R20>
-					<R21>0</R21>
-					<R22>1</R22>
-				</CFrame>
-			</OptionalCoordinateFrame>
+			<OptionalCoordinateFrame name="WorldPivotData"></OptionalCoordinateFrame>
 		</Properties>
-		<Item class="Part" referent="RBXe5a69b0d325547cf9cd3adf752a26d1c">
+		<Item class="Part" referent="RBXd5c2870923864f3db108644e03f3a8a9">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -95,7 +80,7 @@
 				<bool name="Massless">false</bool>
 				<token name="Material">272</token>
 				<string name="MaterialVariantSerialized"></string>
-				<string name="Name">Part</string>
+				<string name="Name">Wall</string>
 				<CoordinateFrame name="PivotOffset">
 					<X>0</X>
 					<Y>0</Y>
@@ -142,7 +127,7 @@
 				</Vector3>
 			</Properties>
 		</Item>
-		<Item class="Part" referent="RBX85328074110f4a1bb482b1874e91eb65">
+		<Item class="Part" referent="RBX8b6b5f7e6b1d43bab0391dc5a013f1be">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -189,7 +174,7 @@
 				<bool name="Massless">false</bool>
 				<token name="Material">272</token>
 				<string name="MaterialVariantSerialized"></string>
-				<string name="Name">Part</string>
+				<string name="Name">Wall</string>
 				<CoordinateFrame name="PivotOffset">
 					<X>0</X>
 					<Y>0</Y>
@@ -236,7 +221,7 @@
 				</Vector3>
 			</Properties>
 		</Item>
-		<Item class="Part" referent="RBX7e74447fd103488d8ebb8de1036daa57">
+		<Item class="Part" referent="RBX7652d6227e5c45f3ba1376ea432afc04">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -283,7 +268,7 @@
 				<bool name="Massless">false</bool>
 				<token name="Material">272</token>
 				<string name="MaterialVariantSerialized"></string>
-				<string name="Name">Part</string>
+				<string name="Name">Wall</string>
 				<CoordinateFrame name="PivotOffset">
 					<X>0</X>
 					<Y>0</Y>
@@ -330,7 +315,7 @@
 				</Vector3>
 			</Properties>
 		</Item>
-		<Item class="Part" referent="RBXebdc14d3f9404cff96ca1bd53a683439">
+		<Item class="Part" referent="RBXfa5344c63fbd4f4884c83321ca015f90">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -377,7 +362,7 @@
 				<bool name="Massless">false</bool>
 				<token name="Material">272</token>
 				<string name="MaterialVariantSerialized"></string>
-				<string name="Name">Part</string>
+				<string name="Name">Wall</string>
 				<CoordinateFrame name="PivotOffset">
 					<X>0</X>
 					<Y>0</Y>
@@ -424,7 +409,7 @@
 				</Vector3>
 			</Properties>
 		</Item>
-		<Item class="Part" referent="RBXa896817d1d22419c8dcf3f90c4324b8e">
+		<Item class="Part" referent="RBXf8f58f0b53294676afeef1bc3e99d362">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -518,7 +503,7 @@
 				</Vector3>
 			</Properties>
 		</Item>
-		<Item class="Part" referent="RBXa445ba41887744fa850690d62b896838">
+		<Item class="Part" referent="RBXa033ab96cf6848629de933c8458d6c25">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -612,7 +597,7 @@
 				</Vector3>
 			</Properties>
 		</Item>
-		<Item class="Part" referent="RBX7f8bc790f2a1438a8679eaef008b7410">
+		<Item class="Part" referent="RBX0f24d84a77964663bb022fae32aee8b4">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>

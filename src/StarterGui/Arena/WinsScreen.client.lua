@@ -29,7 +29,6 @@ local function renderWins()
   winsScreenFrame.Name = "WinsScreenFrame"
   winsScreenFrame.Size = UDim2.new(0.5, 0, 0.1, 0)
   winsScreenFrame.Position = UDim2.new(0.25, 0, 0.01, 0)
-  -- winsScreenFrame.BackgroundColor3 = Color3.new(255, 0, 0)
   winsScreenFrame.BackgroundTransparency = 1
   winsScreenFrame.Parent = screenGui
 
