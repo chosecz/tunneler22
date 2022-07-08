@@ -10,7 +10,7 @@ local players = game:GetService("Players")
 local localPlayer = players.LocalPlayer
 local playerGui = localPlayer:WaitForChild("PlayerGui")
 
-local function renderWins()
+local function createWinsScreen()
   print("Creating Wins Screen")
 
   local wins = remoteFunctions.GetWins:InvokeServer()
@@ -58,10 +58,10 @@ local function renderWins()
   })
 end
 
-renderWins()
+createWinsScreen()
 
-remoteEvents.NextRound.OnClientEvent:Connect(renderWins)
-remoteEvents.EndGame.OnClientEvent:Connect(renderWins)
-remoteEvents.NextGame.OnClientEvent:Connect(renderWins)
+remoteEvents.NextRound.OnClientEvent:Connect(createWinsScreen)
+remoteEvents.EndGame.OnClientEvent:Connect(createWinsScreen)
+remoteEvents.NextGame.OnClientEvent:Connect(createWinsScreen)
 
 print('Arena Wins Screen created')

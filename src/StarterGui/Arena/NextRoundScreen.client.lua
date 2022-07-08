@@ -11,7 +11,7 @@ local playerGui = player:WaitForChild("PlayerGui")
 
 local nextRoundScreen = nil
 
-local function createNextRoundScreen()
+local function createNextGameScreen()
   print("Creating Next Round screen")
 
   local gameStatus = remoteFunctions.GetGameStatus:InvokeServer()
@@ -56,7 +56,7 @@ local function showNextRoundScreen()
   end
 end
 
-createNextRoundScreen()
+createNextGameScreen()
 
 remoteEvents.NextRound.OnClientEvent:Connect(showNextRoundScreen)
 

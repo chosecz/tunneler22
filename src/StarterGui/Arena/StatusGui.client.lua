@@ -15,7 +15,6 @@ local ShieldBackgroundFrame = Instance.new("Frame")
 local ShieldStatusFrame = Instance.new("Frame")
 local ShieldLabel = Instance.new("TextLabel")
 
-
 --Properties:
 ScreenGui.Name = "EnergyShieldStatus"
 ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
