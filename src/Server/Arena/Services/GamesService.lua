@@ -26,6 +26,8 @@ local Teams = nil
 local spawnLocations = {[C.TEAM.RED] = {}, [C.TEAM.BLUE] = {}}
 
 local fireSound = Instance.new("Sound", game.Workspace)
+fireSound.RollOffMinDistance = 50
+fireSound.RollOffMode = Enum.RollOffMode.Linear
 fireSound.SoundId = "rbxassetid://10146043055"
 
 -- just fake game data for development
