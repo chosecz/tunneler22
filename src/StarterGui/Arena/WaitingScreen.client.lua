@@ -30,7 +30,7 @@ local function createWaitingScreen()
   waitingScreenFrame.Size = UDim2.new(1, 0, 1, 0)
   waitingScreenFrame.Position = UDim2.new(0, 0, 0, 0)
   waitingScreenFrame.BackgroundTransparency = 0
-  waitingScreenFrame.BackgroundColor3 = Color3.new(0, 0, 255)
+  waitingScreenFrame.BackgroundColor3 = Color3.new(0.133333, 0.133333, 0.133333)
   waitingScreenFrame.BackgroundTransparency = 0
   waitingScreenFrame.Parent = waitingScreen
 
@@ -40,10 +40,10 @@ local function createWaitingScreen()
   waitingScreenText.Size = UDim2.new(1, 0, 1, 0)
   waitingScreenText.Position = UDim2.new(0, 0, 0, 0)
   waitingScreenText.BackgroundTransparency = 1
-  waitingScreenText.Font = Enum.Font.SourceSans
+  waitingScreenText.Font = Enum.Font.Arcade
   waitingScreenText.FontSize = Enum.FontSize.Size36
   waitingScreenText.TextColor3 = Color3.new(1, 1, 1)
-  waitingScreenText.TextStrokeTransparency = 0
+  waitingScreenText.TextStrokeTransparency = 1
   waitingScreenText.Parent = waitingScreenFrame
 
   remoteEvents.StartGame.OnClientEvent:Connect(function(options)

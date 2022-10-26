@@ -381,6 +381,7 @@ local function fireBullet(player)
   ball.Shape = Enum.PartType.Ball
   ball.Size = Vector3.new(1, 1, 1)
   ball.Parent = workspace
+  ball.Anchored = false
   ball.CFrame = CFrame.new(position + direction)
   ball.Velocity = direction * 500
   ball.Touched:Connect(function(hit)
@@ -416,7 +417,7 @@ local function PlayerWantsFire(player)
 end
 
 function startNewGame()
-  print("startNewGame")
+  print("STARTNEWGAME")
   local children = workspace:GetChildren()
 
   for i = 1, #children do
@@ -426,9 +427,11 @@ function startNewGame()
     end
   end
 
+ 
+
   createSpawns()
   generateMap()
-
+  
   Game.Wins = {
     [C.TEAM.RED] = 0,
     [C.TEAM.BLUE] = 0
