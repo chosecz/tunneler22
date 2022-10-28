@@ -174,7 +174,7 @@ local function onPlayerDied(character)
       Game.Status = C.GAME_STATUS.RUNNING
     end
   end
-  
+
   if (Game.GameMode == C.GAME_MODE.TWO) then
     -- neco
   end
@@ -427,11 +427,10 @@ function startNewGame()
     end
   end
 
- 
-
   createSpawns()
   generateMap()
-  
+
+
   Game.Wins = {
     [C.TEAM.RED] = 0,
     [C.TEAM.BLUE] = 0

@@ -1,3 +1,4 @@
+--[[
 game.workspace:WaitForChild("Map"):WaitForChild("Part")
 
 -- Random Child Generator
@@ -5,6 +6,7 @@ game.workspace:WaitForChild("Map"):WaitForChild("Part")
     local FolderChildren = Folder:GetChildren()
     local chosen = {} -- where we will be storing the randomly selected objects
     local MAX_OBJECTS = 0
+
 
     local function GetChildrenOfMap()
 
@@ -27,9 +29,9 @@ game.workspace:WaitForChild("Map"):WaitForChild("Part")
    
 
 
-    local bedrocks = Instance.new("Folder")
-        bedrocks.Parent = workspace
-        bedrocks.Name = "Bedrocks-Folder"
+    local badrocks = Instance.new("Folder")
+        badrocks.Parent = workspace
+        badrocks.Name = "Badrocks-Folder"
 
         local function generateBedrock()
         chosen = {}
@@ -41,7 +43,7 @@ game.workspace:WaitForChild("Map"):WaitForChild("Part")
             chosen.CanTouch = false
             chosen.Name = "Bedrock"
             chosen.CanCollide = true
-            chosen.Parent = bedrocks
+            chosen.Parent = badrocks
         end
     end
     MAX_OBJECTS = 40  
@@ -66,9 +68,12 @@ local batteries = Instance.new("Folder")
             local pos = newbattery.posPart
             newbattery.Parent = batteries
             newbattery:PivotTo(CFrame.new(posOfNewBattery)) 
-            newbattery:PivotTo(newbattery:GetPivot() * CFrame.Angles(math.rad(0), math.rad(4), math.rad(-80)))
+            newbattery:PivotTo(newbattery:GetPivot() * CFrame.Angles(math.rad(0), math.rad(4), math.rad(-60)))
             print(pos.Position)
         end
     end
     MAX_OBJECTS = 10
-    generateBatteries()  
+    generateBatteries()
+
+    --]]
+
