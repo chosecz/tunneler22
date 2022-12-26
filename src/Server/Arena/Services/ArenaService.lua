@@ -8,6 +8,8 @@ local basePlate = game:GetService("Workspace"):WaitForChild("Parts"):WaitForChil
 local Rep = game:GetService("ReplicatedStorage")
 local debris = game:GetService("Debris")
 
+local GeneratorService = require(game.ServerScriptService:WaitForChild('GeneratorExtra'))
+
 local GamesService = {}
 
 local MAX_WAIT_TIME = 30
@@ -325,21 +327,23 @@ local function generateMap()
   mapFolder.Parent = game.Workspace
 
   -- create map
+  local partSize = 5
   local part = Instance.new("Part")
   part.Material = "Slate"
   part.BrickColor = BrickColor.new("Brown")
-  part.Size = Vector3.new(10, 8, 10)
+  part.Size = Vector3.new(partSize, 8, partSize)
   part.Position = Vector3.new(0, 0, 0)
   part.CanCollide = false
   
-  for x = MinX/10, MaxX/10 do
-    for z = MinZ/10, MaxZ/10 do
+  for x = MinX/partSize, MaxX/partSize do
+    for z = MinZ/partSize, MaxZ/partSize do
       -- print("create part at " .. x, z)
       local newPart = part:Clone()
       newPart.Anchored = true
       newPart.Parent = mapFolder
-      newPart.Position = Vector3.new(x * 10, 4, z * 10)  
+      newPart.Position = Vector3.new(x * partSize, 4, z * partSize)  
       newPart.Touched:Connect(function(hit)
+        newPart.Transparency = 1
         newPart:Destroy()
         --[[
         if (hit.Parent:FindFirstChild("Humanoid")) then
@@ -351,6 +355,9 @@ local function generateMap()
       end)
     end
   end
+
+  GeneratorService.Exec()
+
   print("done generating map")
 end
 
@@ -429,7 +436,6 @@ function startNewGame()
 
   createSpawns()
   generateMap()
-
 
   Game.Wins = {
     [C.TEAM.RED] = 0,

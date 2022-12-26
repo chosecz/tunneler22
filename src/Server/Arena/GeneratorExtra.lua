@@ -1,37 +1,33 @@
-wait()
--- Random Child Generator
-local Folder = game.workspace.Map
-local FolderChildren = Folder:GetChildren()
-local chosen = {} -- where we will be storing the randomly selected objects
-local MAX_OBJECTS = 0
+local GeneratorService = {}
 
+local function GetChildrenOfMap(number)
+    local Folder = game.Workspace:WaitForChild("Map")
+    local FolderChildren = Folder:GetChildren()
 
-local function GetChildrenOfMap()
+    local chosen = {}
+    for _ = 1, number do
+        local index = math.random(1, #FolderChildren)
+        local obj = FolderChildren[index]
 
-for _ = 1, MAX_OBJECTS do
-local index = math.random(1, #FolderChildren)
-local obj = FolderChildren[index]
-
-if not table.find(chosen, obj) then
-    table.insert(chosen, obj)
+        if not table.find(chosen, obj) then
+            table.insert(chosen, obj)
         else
-    repeat
-        index = math.random(1, #FolderChildren)
-         obj = FolderChildren[index]
-          until not table.find(chosen, obj)
-
-          table.insert(chosen, obj)
-       end
+            repeat
+                index = math.random(1, #FolderChildren)
+                obj = FolderChildren[index]
+            until not table.find(chosen, obj)
+            table.insert(chosen, obj)
+        end
     end
+    return chosen
 end
 
-
-
 local badrocks = Instance.new("Folder")
-    badrocks.Parent = workspace
-    badrocks.Name = "BadrocksFolder"
+badrocks.Parent = workspace
+badrocks.Name = "BadrocksFolder"
 
-    local function generateBedrock()
+local function generateBedrock(maxNumber)
+    local chosen = GetChildrenOfMap(maxNumber)
     for _, chosen in ipairs(chosen) do
         chosen.BrickColor = BrickColor.new("Dark grey metallic")
         chosen.Material = "Rock"
@@ -45,12 +41,11 @@ end
 -- Battery Generator
 
 local batteries = Instance.new("Folder")
-    batteries.Parent = workspace
-    batteries.Name = "BatteriesFolder"
+batteries.Parent = workspace
+batteries.Name = "BatteriesFolder"
 
-local function generateBatteries()
-    chosen = {}
-    GetChildrenOfMap()
+local function generateBatteries(numberOfBatteries)
+    local chosen = GetChildrenOfMap(numberOfBatteries)
     for _, chosen in ipairs(chosen) do
         local rep = game:GetService("ReplicatedStorage")
         local posOfNewBattery = chosen.Position
@@ -64,6 +59,10 @@ local function generateBatteries()
               local player = game.Players:GetPlayerFromCharacter(char)
               local Energy = player:GetAttribute("Energy")
               Energy = Energy + 25
+              if Energy > 100 then
+                Energy = 100
+              end
+              player:SetAttribute("Energy", Energy)
               newbattery:Destroy()
             end
           end)
@@ -74,17 +73,13 @@ local function generateBatteries()
         print(pos.Position)
     end
 end
-MAX_OBJECTS = 40
-chosen = {}
-GetChildrenOfMap()
-generateBedrock()
 
-MAX_OBJECTS = 20
-chosen = {}
-GetChildrenOfMap()
-generateBatteries()
 
-wait(5)  
-local batteryT = workspace.BatteriesFolder.Battery
 
-  
+function GeneratorService.Exec()
+    print('Arena GeneratorService.Exec')
+    generateBedrock(100)
+    generateBatteries(20)
+end
+ 
+return GeneratorService
