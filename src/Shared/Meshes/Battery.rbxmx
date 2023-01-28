@@ -2,7 +2,7 @@
 	<Meta name="ExplicitAutoJoints">true</Meta>
 	<External>null</External>
 	<External>nil</External>
-	<Item class="Model" referent="RBXCDA765C85F8043E2AB6BD8C50E5CEAD1">
+	<Item class="Model" referent="RBXfc2af058e6d1497b9fc6d1335efc5efa">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<token name="LevelOfDetail">0</token>
@@ -34,8 +34,8 @@
 			<BinaryString name="Tags"></BinaryString>
 			<OptionalCoordinateFrame name="WorldPivotData">
 				<CFrame>
-					<X>-187.027512</X>
-					<Y>4.39620256</Y>
+					<X>-186.81662</X>
+					<Y>6.0194664</Y>
 					<Z>-57.0749969</Z>
 					<R00>0.939692616</R00>
 					<R01>0.342020154</R01>
@@ -49,7 +49,7 @@
 				</CFrame>
 			</OptionalCoordinateFrame>
 		</Properties>
-		<Item class="Part" referent="RBX42AD31572583447298CE4B604AFCC617">
+		<Item class="Part" referent="RBX8d29d3d1db7e4b71be69eda70a052175">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -144,7 +144,7 @@
 				</Vector3>
 			</Properties>
 		</Item>
-		<Item class="Part" referent="RBX1A62C3DB200F4B86B74E994C46488F02">
+		<Item class="Part" referent="RBX661f02f300a94036a99a54abcd94dbd8">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -239,7 +239,7 @@
 				</Vector3>
 			</Properties>
 		</Item>
-		<Item class="Part" referent="RBXD2CCD217CA004EAE872383E39713A28C">
+		<Item class="Part" referent="RBX5e8b6f2c34b44562acb3843447daca3b">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -334,7 +334,7 @@
 				</Vector3>
 			</Properties>
 		</Item>
-		<Item class="Part" referent="RBX0E3245856683479690B23D094401C868">
+		<Item class="Part" referent="RBXa8736d9e487a40dd955fefa5876a1862">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -382,7 +382,7 @@
 				<bool name="Massless">false</bool>
 				<token name="Material">1088</token>
 				<string name="MaterialVariantSerialized"></string>
-				<string name="Name">Part</string>
+				<string name="Name">posPart</string>
 				<CoordinateFrame name="PivotOffset">
 					<X>0</X>
 					<Y>0</Y>
@@ -429,7 +429,7 @@
 				</Vector3>
 			</Properties>
 		</Item>
-		<Item class="Part" referent="RBX7452814570784EB1B1F6C21E25622176">
+		<Item class="Part" referent="RBX184be2a5c0b24d2dbb5736d08f8bdd4d">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -523,7 +523,7 @@
 					<Z>2</Z>
 				</Vector3>
 			</Properties>
-			<Item class="BillboardGui" referent="RBXECD8CF95356640AC882F118A7B618BD0">
+			<Item class="BillboardGui" referent="RBX3f35621bc5a54bc6bb7657187f354999">
 				<Properties>
 					<bool name="Active">true</bool>
 					<Ref name="Adornee">null</Ref>
@@ -581,7 +581,7 @@
 					<BinaryString name="Tags"></BinaryString>
 					<token name="ZIndexBehavior">1</token>
 				</Properties>
-				<Item class="TextLabel" referent="RBX283477ABC48A40E7A9FDC5F918B2DA02">
+				<Item class="TextLabel" referent="RBXf168a0994ef34ffb82a44f4fe845d437">
 					<Properties>
 						<bool name="Active">false</bool>
 						<Vector2 name="AnchorPoint">
@@ -606,11 +606,11 @@
 						<int name="BorderSizePixel">1</int>
 						<bool name="ClipsDescendants">false</bool>
 						<bool name="Draggable">false</bool>
-						<token name="Font">13</token>
 						<Font name="FontFace">
 							<Family><url>rbxasset://fonts/families/PressStart2P.json</url></Family>
 							<Weight>400</Weight>
 							<Style>Normal</Style>
+							<CachedFaceId><url>rbxasset://fonts/PressStart2P-Regular.ttf</url></CachedFaceId>
 						</Font>
 						<int name="LayoutOrder">0</int>
 						<float name="LineHeight">1</float>
