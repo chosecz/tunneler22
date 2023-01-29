@@ -415,6 +415,18 @@ local function PlayerWantsFire(player)
   end
 end
 
+function deletemap()
+  local children = workspace:GetChildren()
+
+  for i = 1, #children do
+    local child = children[i]
+    if (child.Name == "Map" or child.Name == "Spawns" or child.Name == "BatteriesFolder" or child.Name == "BadrockFolder") then
+      child:Destroy()
+    end
+  end
+
+end
+
 function startNewGame()
   print("STARTNEWGAME")
   local children = workspace:GetChildren()

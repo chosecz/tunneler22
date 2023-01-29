@@ -27,7 +27,7 @@ local function createNextGameScreen()
   frame.Size = UDim2.new(1, 0, 1, 0)
   frame.Position = UDim2.new(0, 0, 0, 0)
   frame.BackgroundTransparency = 0
-  frame.BackgroundColor3 = Color3.new(0, 0, 255)
+  frame.BackgroundColor3 = Color3.new(0.133333, 0.133333, 0.133333)
   frame.BackgroundTransparency = 0.8
   frame.Parent = nextRoundScreen
 
@@ -36,7 +36,7 @@ local function createNextGameScreen()
   text.Size = UDim2.new(1, 0, 1, 0)
   text.Position = UDim2.new(0, 0, 0, 0)
   text.BackgroundTransparency = 1
-  text.Font = Enum.Font.SourceSans
+  text.Font = Enum.Font.Arcade
   text.FontSize = Enum.FontSize.Size36
   text.TextColor3 = Color3.new(1, 1, 1)
   text.TextStrokeTransparency = 0
