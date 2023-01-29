@@ -343,15 +343,7 @@ local function generateMap()
       newPart.Parent = mapFolder
       newPart.Position = Vector3.new(x * partSize, 4, z * partSize)  
       newPart.Touched:Connect(function(hit)
-        newPart.Transparency = 1
         newPart:Destroy()
-        --[[
-        if (hit.Parent:FindFirstChild("Humanoid")) then
-          newPart:Destroy()
-        else
-          newPart:Destroy()
-        end
-        ]]
       end)
     end
   end
