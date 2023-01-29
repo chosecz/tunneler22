@@ -42,12 +42,14 @@ local fakeGame = {
     [C.TEAM.RED] = 0,
     [C.TEAM.BLUE] = 0
   },
-  Teams = {[C.TEAM.RED] = {
+  Teams = {
+    [C.TEAM.RED] = {
       [1] = {
         UserId = -1,
         Name = "Fake Player 1",
       }
-    }, [C.TEAM.BLUE] = {
+    },
+    [C.TEAM.BLUE] = {
       [1] = {
         UserId = -2,
         Name = "Fake Player 2",
@@ -415,7 +417,7 @@ local function PlayerWantsFire(player)
   end
 end
 
-function deletemap()
+function deleteMap()
   local children = workspace:GetChildren()
 
   for i = 1, #children do
@@ -427,16 +429,13 @@ function deletemap()
 
 end
 
+local readytorematch = 0
+
 function startNewGame()
   print("STARTNEWGAME")
   local children = workspace:GetChildren()
-
-  for i = 1, #children do
-    local child = children[i]
-    if (child.Name == "Map" or child.Name == "Spawns") then
-      child:Destroy()
-    end
-  end
+  readytorematch = 0
+  deleteMap()
 
   createSpawns()
   generateMap()
@@ -449,6 +448,30 @@ function startNewGame()
   remoteEvents.NextGame:FireAllClients({Game = Game })
 end
 
+
+
+function rematchGame(player)
+  local playersInGame = servicePlayers:GetPlayers()
+  local playersInGameCount = #playersInGame
+  local wantRematch = player:GetAttribute("WantRematch")
+  readytorematch = readytorematch + 1
+  if not wantRematch then
+    wantRematch = true
+  else
+    wantRematch = false
+  end
+  player:SetAttribute("WantRematch", wantRematch)
+  local rematchText = readytorematch .."/".. playersInGameCount
+
+  remoteEvents.UpdateRematchText:FireAllClients(rematchText)
+
+  --if readytorematch == playersInGameCount then
+  -- startNewGame()
+  --end
+
+  print("Rematch", playersInGame, wantRematch)
+end
+
 local function registerListeners()
   remoteFunctions.GetGame.OnServerInvoke = getGame
   remoteFunctions.GetGameStatus.OnServerInvoke = getGameStatus
@@ -459,7 +482,7 @@ local function registerListeners()
   remoteFunctions.UpdateEnergy.OnServerInvoke = updateEnergy
   remoteFunctions.ResetPlayer.OnServerInvoke = resetPlayer
   remoteFunctions.StartNewGame.OnServerInvoke = startNewGame
-  
+  remoteFunctions.RematchGame.OnServerInvoke = rematchGame
 
   remoteEvents.PlayerWantsFire.OnServerEvent:Connect(PlayerWantsFire)
   servicePlayers.PlayerAdded:Connect(onPlayerAdded)

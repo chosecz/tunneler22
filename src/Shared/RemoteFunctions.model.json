@@ -64,6 +64,10 @@
     {
       "Name": "StartNewGame",
       "ClassName": "RemoteFunction"
+    },
+    {
+      "Name": "RematchGame",
+      "ClassName": "RemoteFunction"
     }
   ]
 }
