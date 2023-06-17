@@ -36,7 +36,7 @@ fireSound.SoundId = "rbxassetid://10146043055"
 local fakeGame = {
   Id = "GID_-1",
   GameType = C.GAME_TYPE.PUBLIC,
-  GameMode = C.GAME_MODE.ONE,
+  GameMode = C.GAME_MODE.TWO,
   Status = C.GAME_STATUS.WAITING,
   Wins = {
     [C.TEAM.RED] = 0,
@@ -47,14 +47,22 @@ local fakeGame = {
       [1] = {
         UserId = -1,
         Name = "Fake Player 1",
+      },
+      [2] = {
+        UserId = -3,
+        Name = "Fake Player 3",
       }
     },
     [C.TEAM.BLUE] = {
       [1] = {
         UserId = -2,
         Name = "Fake Player 2",
+      },
+      [2] = {
+        UserId = -4,
+        Name = "Fake Player 4",
       }
-    }
+    },
   }
 }
 
@@ -166,7 +174,7 @@ local function onPlayerDied(character)
     opositeTeam = C.TEAM.RED
   end
 
-  if (Game.GameMode == C.GAME_MODE.ONE) then 
+  local function updateStatus()
     Game.Wins[opositeTeam] = Game.Wins[opositeTeam] + 1
     if (Game.Wins[opositeTeam] == 2) then
       Game.Status = C.GAME_STATUS.FINISHED
@@ -179,8 +187,28 @@ local function onPlayerDied(character)
     end
   end
 
+  if (Game.GameMode == C.GAME_MODE.ONE) then 
+    updateStatus()
+  end
+
   if (Game.GameMode == C.GAME_MODE.TWO) then
-    -- neco
+    
+    local allPlayersDead = true
+    local playersInGame = servicePlayers:GetPlayers()
+
+    for j, p in pairs(playersInGame) do
+      if p:GetAttribute("playerIsDead") == false then
+        allPlayersDead = false
+      end
+      print("***", allPlayersDead)
+    end
+    
+    print("allPlayersDead", allPlayersDead)
+
+    if allPlayersDead then
+      updateStatus()
+    end
+
   end
 end
 
