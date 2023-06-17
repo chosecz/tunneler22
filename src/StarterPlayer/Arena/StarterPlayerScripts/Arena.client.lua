@@ -14,7 +14,7 @@ local function nextRound(options)
   ControlModule:Disable()
   wait(5)
 
-  if (not localPlayer:GetAttribute("playerIsDead")) then
+  if (not localPlayer:GetAttribute("PlayerIsDead")) then
     local spawnLocations = remoteFunctions.GetSpawnLocations:InvokeServer()
     local team = localPlayer.Team.Name;
     local spawnLocations = spawnLocations[team]
@@ -24,6 +24,9 @@ local function nextRound(options)
     -- reset player
     remoteFunctions.ResetPlayer:InvokeServer()
   end
+
+  -- respawn players
+  remoteEvents.RespawnEvent:FireServer();
 
   ControlModule:Enable()
 end
