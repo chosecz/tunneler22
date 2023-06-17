@@ -1,19 +1,14 @@
-local players = game:GetService("Players")
-local rep = game:GetService("ReplicatedStorage")
-local respawnevent = Instance.New("RemoteEvents")
-respawnevent.Parent = rep.RemoteEvents
-respawnevent.Name = "RespawnEvent"
-
--- players.CharacterAutoLoads = false
-
 print("RespawnServerScript")
 
-function loadplayer(plr)
+local players = game:GetService("Players")
+local rep = game:GetService("ReplicatedStorage")
+local remoteEvents = game.ReplicatedStorage:WaitForChild('RemoteEvents')
+
+function loadPlayer(plr)
     plr:LoadCharacter()
 end
 
-players.CharacterAdded:Connect(loadplayer)
+players.CharacterAdded:Connect(loadPlayer)
 
-loadplayer()
-
-respawnevent.OnServerEvent:Connect(loadplayer)
+-- kde a kdy se tohle vola?
+remoteEvents.RespawnEvent.OnServerEvent:Connect(loadPlayer)

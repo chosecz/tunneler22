@@ -40,6 +40,10 @@
     {
       "Name": "UpdateRematchText",
       "ClassName": "RemoteEvent"
+    },
+    {
+      "Name": "RespawnEvent",
+      "ClassName": "RemoteEvent"
     }
   ]
 }
