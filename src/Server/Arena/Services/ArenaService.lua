@@ -514,8 +514,16 @@ end
 
 local function init()
   print("init")
+  
   if (checkIfAllPlayersAreConnected()) then
     print("all connected")
+
+    local playersInGame = servicePlayers:GetPlayers()
+    for j, player in pairs(playersInGame) do
+      print("load player character", player)
+      player:LoadCharacter()
+    end
+    
     -- run the game
     remoteEvents.StartGame:FireAllClients({ Game = Game })
   else
