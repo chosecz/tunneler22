@@ -8,6 +8,8 @@ return {
     MING = Color3.fromRGB(50, 103, 113),
     BLUE_MUNSELL = Color3.fromRGB(44, 140, 153),
     TURQUOISE = Color3.fromRGB(66, 217, 200),
+    LIGHT_BLACK =   Color3.fromRGB(34, 32, 52),
+    LIGHT_BLACK2 = Color3.fromRGB(42, 40, 55)
   },
   GAME_TYPE = {
     PUBLIC = 'PUBLIC',

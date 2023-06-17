@@ -12,8 +12,8 @@ local function customButtonFunctions(button)
 			button.BorderColor3 = C.COLOR.CATAWBA
 		end,
 		Unselect = function ()
-			button.BackgroundColor3 = C.COLOR.BLUE_MUNSELL
-			button.BorderColor3 = C.COLOR.MING
+			button.BackgroundColor3 = C.COLOR.LIGHT_BLACK
+			button.BorderColor3 = C.COLOR.LIGHT_BLACK2
 		end,
 		Activated = function(...)
 			button.Activated:Connect(...)
@@ -49,9 +49,9 @@ function F.createButton(options)
 	wrapper.Size = options.Size or UDim2.new(0.2, 0, 0.05, 0)
 	wrapper.Position = options.Position or UDim2.new(0.4, 0, 0.025, 0)
 	wrapper.TextScaled = options.TextScaled or true
-	wrapper.BackgroundColor3 = options.BackgroundColor3 or C.COLOR.BLUE_MUNSELL
+	wrapper.BackgroundColor3 = options.BackgroundColor3 or C.COLOR.LIGHT_BLACK
 	wrapper.BackgroundTransparency = options.BackgroundTransparency or 0
-	wrapper.BorderColor3 = options.BorderColor3 or C.COLOR.MING
+	wrapper.BorderColor3 = options.BorderColor3 or C.COLOR.LIGHT_BLACK2
 	wrapper.BorderSizePixel = options.BorderSizePixel or 5
 	wrapper.LineHeight = options.LineHeight or 1
 	wrapper.TextColor3 = options.TextColor3 or Color3.fromRGB(255, 255, 255)
@@ -63,6 +63,28 @@ function F.createButton(options)
 	end
 	return wrapper
 end
+
+function F.createImgButton(options)
+	local button = Instance.new("ImageButton")
+	  local wrapper = Wrapper.new(button, customButtonFunctions(button))
+	  wrapper.Image = options.Image or ""
+	  wrapper.ResampleMode = options.ResampleMode or "Pixelated"
+	  wrapper.Parent = options.Parent or nil
+	  wrapper.Size = options.Size or UDim2.new(0.2, 0, 0.05, 0)
+	  wrapper.Position = options.Position or UDim2.new(0.4, 0, 0.025, 0)
+	  wrapper.BackgroundColor3 = options.BackgroundColor3 or C.COLOR.LIGHT_BLACK
+	  wrapper.BackgroundTransparency = options.BackgroundTransparency or 0
+	  wrapper.BorderColor3 = options.BorderColor3 or C.COLOR.LIGHT_BLACK2
+	  wrapper.BorderSizePixel = options.BorderSizePixel or 0
+	  wrapper.ScaleType = options.ScaleType or "Fit"
+	  if (options.Activated) then
+		  wrapper.Activated(options.Activated)
+	  end
+	  if (options.Selected == true) then
+		  wrapper.Select()
+	  end
+	  return wrapper
+  end
 
 function F.createTextLabel(options)
 	local label = Instance.new("TextLabel")

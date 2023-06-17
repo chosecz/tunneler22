@@ -11,7 +11,7 @@ local remoteEvents = game:GetService('ReplicatedStorage'):WaitForChild('RemoteEv
 print("GamesGui: Creating")
 local gamesGuiFrame = Instance.new("Frame")
 gamesGuiFrame.Name = "GamesGui"
-gamesGuiFrame.BackgroundColor3 = C.COLOR.TURQUOISE
+gamesGuiFrame.BackgroundColor3 = C.COLOR.LIGHT_BLACK
 gamesGuiFrame.BackgroundTransparency = 0.5
 gamesGuiFrame.Position = UDim2.new(0.1, 0, 0, 0)
 gamesGuiFrame.Size = UDim2.new(0.8, 0, 0.9, 0)

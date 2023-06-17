@@ -14,9 +14,28 @@ screenGui.Enabled = true
 
 -- create button
 print("GamesButton: Creating")
-local gamesButton = F.createButton({
-	Text = 'Games',
+local gamesButton = F.createImgButton({
+	Name = "Button",
+	ResampleMode = "Pixelated",
 	Parent = screenGui,
+	Size = UDim2.new(0.12,0, 0.09, 0),
+	Position = UDim2.new(0.015, 0, 0.4, 0),
+	Image = "rbxassetid://13776910126",
+	ScaleType = "Stretch",
+	Activated = function()
+		bindableEvents.ShowGamesGui:Fire()
+	end
+})
+
+print("ShopButton: Creating")
+local shopButton = F.createImgButton({
+	Name = "Button",
+	ResampleMode = "Pixelated",
+	Parent = screenGui,
+	Size = UDim2.new(0.12,0, 0.09, 0),
+	Position = UDim2.new(0.015, 0, 0.4, 0),
+	Image = "rbxassetid://13776910126",
+	ScaleType = "Stretch",
 	Activated = function()
 		bindableEvents.ShowGamesGui:Fire()
 	end

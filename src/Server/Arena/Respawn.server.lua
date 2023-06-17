@@ -14,6 +14,6 @@ end
 
 players.CharacterAdded:Connect(loadplayer)
 
-loadplayer()
+
 
 respawnevent.OnServerEvent:Connect(loadplayer)
