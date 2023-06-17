@@ -25,6 +25,9 @@ local function nextRound(options)
     remoteFunctions.ResetPlayer:InvokeServer()
   end
 
+  -- respawn players
+  remoteEvents.RespawnEvent:FireServer();
+
   ControlModule:Enable()
 end
 
