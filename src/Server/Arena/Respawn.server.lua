@@ -8,7 +8,9 @@ function loadPlayer(plr)
     plr:LoadCharacter()
 end
 
-players.CharacterAdded:Connect(loadPlayer)
+players.PlayerAdded:Connect(function (player)
+    player.CharacterAdded:Connect(loadPlayer)
+end)
 
 -- kde a kdy se tohle vola?
 remoteEvents.RespawnEvent.OnServerEvent:Connect(loadPlayer)
