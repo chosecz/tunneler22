@@ -72,7 +72,7 @@ end
 
 local function setDefaltPlayerAttributes(player)
   player:SetAttribute("PlayerShooting", false)
-  player:SetAttribute("playerIsDead", false)
+  player:SetAttribute("PlayerIsDead", false)
   player:SetAttribute("InRefuelStation", true)
   player:SetAttribute("Shields", 100)
   player:SetAttribute("Energy", 100)
@@ -167,7 +167,7 @@ local function onPlayerDied(character)
   local team = player.Team.Name
 
   -- attr
-  player:SetAttribute("playerIsDead", true)
+  player:SetAttribute("PlayerIsDead", true)
   
   local opositeTeam = C.TEAM.BLUE
   if (team == C.TEAM.BLUE) then
@@ -193,7 +193,7 @@ local function onPlayerDied(character)
     local playersInGame = servicePlayers:GetPlayers()
 
     for j, p in pairs(playersInGame) do
-      if (p.Team.Name == team and p:GetAttribute("playerIsDead") == false) then
+      if (p.Team.Name == team and p:GetAttribute("PlayerIsDead") == false) then
         allPlayersDead = false
       end
     end
