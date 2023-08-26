@@ -5,7 +5,7 @@ registry = "test"
 [[package]]
 name = "chose/tunneler22"
 version = "0.1.0"
-dependencies = [["Knit", "sleitnick/knit@1.5.1"]]
+dependencies = [["EnumList", "sleitnick/enum-list@2.0.1"], ["Knit", "sleitnick/knit@1.5.1"]]
 
 [[package]]
 name = "evaera/promise"
@@ -16,6 +16,11 @@ dependencies = []
 name = "sleitnick/comm"
 version = "0.3.1"
 dependencies = [["Option", "sleitnick/option@1.0.4"], ["Promise", "evaera/promise@4.0.0"], ["Signal", "sleitnick/signal@1.5.0"]]
+
+[[package]]
+name = "sleitnick/enum-list"
+version = "2.0.1"
+dependencies = []
 
 [[package]]
 name = "sleitnick/knit"

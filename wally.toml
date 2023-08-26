@@ -6,3 +6,4 @@ realm = "shared"
 
 [dependencies]
 Knit = "sleitnick/knit@1.5"
+EnumList = "sleitnick/enum-list@2.0.1"
