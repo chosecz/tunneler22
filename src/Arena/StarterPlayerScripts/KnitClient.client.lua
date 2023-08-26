@@ -4,7 +4,8 @@ local Knit = require(ReplicatedStorage.Packages.Knit)
 -- add controllers
 Knit.AddControllers(ReplicatedStorage.Source.Controllers)
 
-Knit.Start({
+Knit.Start( --[[
+	{
   Middleware = {
     Inbound = {
 			function(args)
@@ -13,6 +14,4 @@ Knit.Start({
 			end
 		},
   },
-}):andThen(function()
-  print("Knit client started")
-end):catch(warn)
+}]] ):andThen(function() print("Knit client started") end):catch(warn)

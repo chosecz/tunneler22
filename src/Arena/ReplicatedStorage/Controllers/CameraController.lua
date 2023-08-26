@@ -35,7 +35,10 @@ function CameraController:KnitInit()
     game:GetService("RunService").RenderStepped:Connect(updateCamera)
 end
 
-function CameraController:KnitStart() print("CameraController started") end
+function CameraController:KnitStart() 
+    print("CameraController started")
+    print("CameraController state: " .. self.State)
+end
 
 return CameraController
 
