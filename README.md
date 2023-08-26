@@ -1,16 +1,15 @@
 # Tunneler 22
-
-This is game inspired by old DOS game Tunneler from Geoffrey Silverton (https://tunneler.org). I loved this game and I have decided to recreate this game in Roblox as open source.
+This is game inspired by old DOS game Tunneler from Geoffrey Silverton (https://tunneler.org). I loved this game and I have decided to recreate this game in Roblox as open source with my son.
 
 ## Install
-```npm run install```
-## Run Rojo server
-```npm run arena```
+```cargo install aftman```
+```aftman install```
+```wally init```
 
-```npm run lobby```
+## Run Rojo server
+```rojo run```
 
 ## Contributing
-
 If you like this game you can contribute in many ways to this project. Just write me or create PR.
 
 ### Reporting Issues
