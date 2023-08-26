@@ -22,7 +22,6 @@ function CameraController:KnitInit()
 
     -- Function to update the camera position and rotation
     local function updateCamera()
-        print("updateCamera", self.State)
         if character and character:FindFirstChild("HumanoidRootPart") then
             local targetPosition = character.HumanoidRootPart.Position +
                                        cameraOffset
