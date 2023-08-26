@@ -7,24 +7,23 @@ local MoneyService = Knit.CreateService({
   Client = {
     MoneyChanged = Knit.CreateSignal(),
   },
-  _MoneyPerPlayer = {},
-  _StartingMoney = 10,
+  MoneyPerPlayer = {},
+  StartingMoney = 10,
 })
+
+function MoneyService:GetMoney(player)
+  return self.MoneyPerPlayer[player] or self.StartingMoney
+end
 
 function MoneyService.Client:GetMoney(player)
   return self.Server:GetMoney(player)
-end
-
-function MoneyService:GetMoney(player)
-  local money = self._MoneyPerPlayer[player] or self._StartingMoney
-  return money
 end
 
 function MoneyService:AddMoney(player, amount)
   local currentMoney = self:GetMoney(player)
   if amount > 0 then
     local newMoney = currentMoney + amount
-    self._MoneyPerPlayer[player] = newMoney
+    self.MoneyPerPlayer[player] = newMoney
     self.Client.MoneyChanged:Fire(player, newMoney)
   end
 end
@@ -32,7 +31,7 @@ end
 function MoneyService:KnitInit()
   print("MoneyService initialized")
   Players.PlayerRemoving:Connect(function(player)
-    self._MoneyPerPlayer[player] = nil
+    self.MoneyPerPlayer[player] = nil
   end)
 end
 
