@@ -21,12 +21,15 @@ function MoneyService:GetMoney(player)
     return playerMoney
   end
 
-  local success, savedMoney = pcall(function()
+  local success, errorMessage = pcall(function()
     return PlayerStoreMoney:GetAsync(player.UserId)
   end)
+  if not success then
+    print(errorMessage)
+  end
 
   -- return money from serveer of
-  return savedMoney or self.StartingMoney
+  return playerMoney or self.StartingMoney
 end
 
 function MoneyService.Client:GetMoney(player)
@@ -69,7 +72,6 @@ end
 
 function MoneyService:KnitStart()
   print("MoneyService started")
-  print('Players', Players:GetPlayers())
   while true do
     wait(5)
     for _, player in ipairs(Players:GetPlayers()) do

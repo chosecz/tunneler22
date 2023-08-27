@@ -20,7 +20,9 @@ end
 function CameraController:KnitStart() 
     print("CameraController started")
 
-    repeat task.wait() until game.Players.LocalPlayer.Character
+    repeat  
+        task.wait() 
+    until game.Players.LocalPlayer.Character
 
     local player = game.Players.LocalPlayer
     local character = player.Character
