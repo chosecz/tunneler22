@@ -2,7 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Knit = require(ReplicatedStorage.Packages.Knit)
 local Players = game:GetService("Players")
 local DataStoreService = game:GetService("DataStoreService")
-local PlayerStore = DataStoreService:GetDataStore("PlayerStore", "Money")
+local PlayerStoreMoney = DataStoreService:GetDataStore("PlayerStore", "Money")
 
 local MoneyService = Knit.CreateService({
   Name = "MoneyService",
@@ -22,7 +22,7 @@ function MoneyService:GetMoney(player)
   end
 
   local success, savedMoney = pcall(function()
-    return PlayerStore:GetAsync(player.UserId)
+    return PlayerStoreMoney:GetAsync(player.UserId)
   end)
 
   -- return money from serveer of
@@ -50,7 +50,7 @@ function MoneyService:RemovePlayer(player)
   if currentMoney and userId then
     local success, errorMessage = pcall(function()
       print("Going to save money ".. currentMoney .." for Player:", userId)
-      PlayerStore:SetAsync(userId, currentMoney) 
+      PlayerStoreMoney:SetAsync(userId, currentMoney) 
     end)
     if not success then
       print(errorMessage)
